@@ -9,13 +9,13 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    public class CityExplorerData : IThesesSystemData
+    public class ThesesSystemData : IThesesSystemData
     {
         private readonly IThesesSystemDbContext context;
 
         private readonly Dictionary<Type, object> repositories = new Dictionary<Type, object>();
 
-        public CityExplorerData(IThesesSystemDbContext context)
+        public ThesesSystemData(IThesesSystemDbContext context)
         {
             this.context = context;
         }
@@ -37,12 +37,15 @@
         // TODO: Create IDelatableEntityRepositories
 
 
-        //public IDeletableEntityRepository<City> Cities
-        //{
-        //    get { return this.GetDeletableEntityRepository<City>(); }
-        //}
+        public IDeletableEntityRepository<Faculty> Faculties
+        {
+            get { return this.GetDeletableEntityRepository<Faculty>(); }
+        }
 
-       
+        public IDeletableEntityRepository<Specialty> Specialties
+        {
+            get { return this.GetDeletableEntityRepository<Specialty>(); }
+        }
 
         /// <summary>
         /// Saves all changes made in this context to the underlying database.

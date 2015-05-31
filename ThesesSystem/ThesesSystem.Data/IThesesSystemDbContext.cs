@@ -8,7 +8,11 @@
     {
         IDbSet<User> Users { get; set; }
 
-       DbContext DbContext { get; }
+        IDbSet<Faculty> Faculties { get; set; }
+
+        IDbSet<Specialty> Specialties { get; set; }
+
+        DbContext DbContext { get; }
 
         int SaveChanges();
 

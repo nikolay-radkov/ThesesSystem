@@ -13,12 +13,14 @@ namespace ThesesSystem.Web
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
-            routes.MapRoute(
-                name: "Static Pages",
-                url: "{action}",
-                defaults: new { controller = "Home" },
-                namespaces: new[] { "ThesesSystem.Web.Controllers" }
-            );
+            // TODO: Static pages
+
+            //routes.MapRoute(
+            //    name: "Static Pages",
+            //    url: "{action}",
+            //    defaults: new { controller = "Home" },
+            //    namespaces: new[] { "ThesesSystem.Web.Controllers" }
+            //);
 
             routes.MapRoute(
                 name: "Default",

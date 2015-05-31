@@ -8,13 +8,16 @@
     using ThesesSystem.Contracts.CodeFirstConventions;
     using ThesesSystem.Contracts;
     using System;
+    using ThesesSystem.Data.Migrations;
 
     public class ThesesSystemDbContext : IdentityDbContext<User>, IThesesSystemDbContext
     {
         public ThesesSystemDbContext(string nameOrConnectionString)
             : base(nameOrConnectionString)
         {
-           // Database.SetInitializer(new MigrateDatabaseToLatestVersion<CityExplorerDbContext, Configuration>());
+            Database.SetInitializer(new DropCreateDatabaseAlways<ThesesSystemDbContext>());
+             // TODO: Change it
+           // Database.SetInitializer(new MigrateDatabaseToLatestVersion<ThesesSystemDbContext, Configuration>());
         }
 
         public ThesesSystemDbContext()
@@ -24,9 +27,10 @@
 
         // TODO: Add tables db sets
 
-       // public virtual IDbSet<City> Cities { get; set; }
+        public virtual IDbSet<Faculty> Faculties { get; set; }
 
-      
+        public virtual IDbSet<Specialty> Specialties { get; set; }
+
         public static ThesesSystemDbContext Create()
         {
             return new ThesesSystemDbContext();

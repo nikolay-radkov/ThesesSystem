@@ -1,14 +1,17 @@
 ﻿namespace ThesesSystem.Data
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
+    using ThesesSystem.Contracts;
+    using ThesesSystem.Models;
 
     public interface IThesesSystemData
     {
         IThesesSystemDbContext Context { get; }
+
+        IDeletableEntityRepository<Faculty> Faculties { get; }
+
+        IDeletableEntityRepository<Specialty> Specialties { get; }
+        
+        IRepository<User> Users { get; }
 
         int SaveChanges();
     }
