@@ -41,12 +41,12 @@
         {
             get
             {
-                return thesisParts;
+                return this.thesisParts;
             }
 
             set
             {
-                thesisParts = value;
+                this.thesisParts = value;
             }
         }
 

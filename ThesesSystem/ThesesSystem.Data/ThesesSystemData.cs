@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    
     using ThesesSystem.Contracts;
     using ThesesSystem.Data.Repositories.Base;
     using ThesesSystem.Models;
@@ -29,10 +30,6 @@
         {
             get { return this.GetRepository<User>(); }
         }
-
-
-        // TODO: Create IDelatableEntityRepositories
-
 
         public IDeletableEntityRepository<Faculty> Faculties
         {
@@ -143,6 +140,5 @@
 
             return (IDeletableEntityRepository<T>)this.repositories[typeof(T)];
         }
-
     }
 }

@@ -15,6 +15,5 @@
         public virtual User FromUser { get; set; }
 
         public virtual User ToUser { get; set; }
-
     }
 }

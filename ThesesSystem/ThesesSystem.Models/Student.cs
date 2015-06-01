@@ -33,12 +33,12 @@
         {
             get
             {
-                return theses;
+                return this.theses;
             }
 
             set
             {
-                theses = value;
+                this.theses = value;
             }
         }
     }

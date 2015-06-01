@@ -31,6 +31,8 @@
     </div>
     <div class="container body-content">
      <h1>Different Layout!!!</h1>
+       
+        @Html.DropDownList("MyType", EnumHelper.GetSelectList(typeof(ThesesSystem.Models.Oks)), "Изберете ОКС", new { @class = "form-control" })
         <hr />
         <footer>
             <p>&copy; @DateTime.Now.Year - Theses System</p>

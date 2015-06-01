@@ -1,10 +1,6 @@
 ﻿namespace ThesesSystem.Models
 {
-    using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
     using ThesesSystem.Contracts;
 
     public class Version : DeletableEntity
@@ -26,9 +22,15 @@
 
         public virtual ICollection<Comment> Comments
         {
-            get { return comments; }
-            set { comments = value; }
-        }
+            get
+            {
+                return this.comments;
+            }
 
+            set
+            {
+                this.comments = value;
+            }
+        }
     }
 }

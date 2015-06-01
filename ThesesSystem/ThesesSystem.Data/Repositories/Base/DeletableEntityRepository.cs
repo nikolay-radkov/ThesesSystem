@@ -1,9 +1,10 @@
 ﻿namespace ThesesSystem.Data.Repositories.Base
 {
-    using ThesesSystem.Contracts;
     using System;
     using System.Data.Entity;
     using System.Linq;
+
+    using ThesesSystem.Contracts;
 
     public class DeletableEntityRepository<T> :
     GenericRepository<T>, IDeletableEntityRepository<T> where T : class, IDeletableEntity

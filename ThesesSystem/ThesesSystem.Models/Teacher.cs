@@ -33,12 +33,12 @@
         {
             get
             {
-                return thesisTutorials;
+                return this.thesisTutorials;
             }
 
             set
             {
-                thesisTutorials = value;
+                this.thesisTutorials = value;
             }
         }
 
@@ -46,12 +46,12 @@
         {
             get
             {
-                return thesisThemes;
+                return this.thesisThemes;
             }
 
             set
             {
-                thesisThemes = value;
+                this.thesisThemes = value;
             }
         }
 
@@ -59,12 +59,12 @@
         {
             get
             {
-                return theses;
+                return this.theses;
             }
 
             set
             {
-                theses = value;
+                this.theses = value;
             }
         }
 
@@ -72,12 +72,12 @@
         {
             get
             {
-                return evaluations;
+                return this.evaluations;
             }
 
             set
             {
-                evaluations = value;
+                this.evaluations = value;
             }
         }
     }

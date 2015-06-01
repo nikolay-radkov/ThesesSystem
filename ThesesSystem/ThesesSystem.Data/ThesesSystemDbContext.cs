@@ -1,14 +1,15 @@
 ﻿namespace ThesesSystem.Data
 {
-    using System.Linq;
-    using System.Data.Entity;
-    //using ThesesSystem.Data.Migrations;
-    using ThesesSystem.Models;
-    using Microsoft.AspNet.Identity.EntityFramework;
-    using ThesesSystem.Contracts.CodeFirstConventions;
-    using ThesesSystem.Contracts;
     using System;
+    using System.Data.Entity;
+    using System.Linq;
+
+    using Microsoft.AspNet.Identity.EntityFramework;
+
+    using ThesesSystem.Contracts;
+    using ThesesSystem.Contracts.CodeFirstConventions;
     using ThesesSystem.Data.Migrations;
+    using ThesesSystem.Models;
 
     public class ThesesSystemDbContext : IdentityDbContext<User>, IThesesSystemDbContext
     {
@@ -23,7 +24,13 @@
         {
         }
 
-        // TODO: Add tables db sets
+        public DbContext DbContext
+        {
+            get
+            {
+                return this;
+            }
+        }
 
         public virtual IDbSet<Faculty> Faculties { get; set; }
 
@@ -52,14 +59,6 @@
         public static ThesesSystemDbContext Create()
         {
             return new ThesesSystemDbContext();
-        }
-
-        public DbContext DbContext
-        {
-            get
-            {
-                return this;
-            }
         }
 
         public override int SaveChanges()

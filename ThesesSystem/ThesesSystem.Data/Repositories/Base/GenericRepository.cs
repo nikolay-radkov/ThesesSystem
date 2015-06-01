@@ -1,6 +1,5 @@
 ﻿namespace ThesesSystem.Data.Repositories.Base
 {
-    using ThesesSystem.Contracts;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
@@ -9,7 +8,9 @@
     using System.Data.Entity.Infrastructure;
     using System.Linq;
     using System.Linq.Expressions;
+    
     using ThesesSystem.Common.Extensions;
+    using ThesesSystem.Contracts;
 
     public class GenericRepository<T> : IRepository<T> where T : class
     {

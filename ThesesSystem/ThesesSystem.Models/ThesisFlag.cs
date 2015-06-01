@@ -3,8 +3,11 @@
     public enum ThesisFlag
     {
         NotStarted,
+
         InProgress,
+
         ForEvaluating,
+
         Complete
     }
 }
