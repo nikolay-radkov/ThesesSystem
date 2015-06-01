@@ -47,6 +47,7 @@
 
         public virtual IDbSet<Evaluation> Evaluations { get; set; }
 
+        public virtual IDbSet<Message> Messages { get; set; }
 
         public static ThesesSystemDbContext Create()
         {
@@ -75,7 +76,7 @@
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            // Many-to-Many relationship with external table
+            // Many-to-Many relationship with external model
             modelBuilder.Entity<Message>()
                    .HasRequired(m => m.FromUser)
                    .WithMany(u => u.UserMessages)
@@ -88,7 +89,7 @@
                         .HasForeignKey(m => m.ToUserId)
                         .WillCascadeOnDelete(false);
 
-            // Many-to-Many relationship without external table
+            // Many-to-Many relationship without external model
             modelBuilder.Entity<User>()
                .HasMany(u => u.Friends)
                .WithMany()

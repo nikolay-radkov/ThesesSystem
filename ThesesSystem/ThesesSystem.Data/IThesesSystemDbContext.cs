@@ -30,6 +30,8 @@
 
         IDbSet<Evaluation> Evaluations { get; set; }
 
+        IDbSet<Message> Messages { get; set; }
+
         DbContext DbContext { get; }
 
         int SaveChanges();

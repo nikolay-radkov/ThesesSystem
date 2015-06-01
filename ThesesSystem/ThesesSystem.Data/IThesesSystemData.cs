@@ -7,7 +7,13 @@
     {
         IThesesSystemDbContext Context { get; }
 
+        IDeletableEntityRepository<Comment> Comments { get; }
+
+        IDeletableEntityRepository<Evaluation> Evaluations { get; }
+
         IDeletableEntityRepository<Faculty> Faculties { get; }
+
+        IDeletableEntityRepository<Message> Messages { get; }
 
         IDeletableEntityRepository<Specialty> Specialties { get; }
 
@@ -15,20 +21,15 @@
 
         IDeletableEntityRepository<Teacher> Teachers { get; }
 
+        IDeletableEntityRepository<Thesis> Theses { get; }
+
+        IDeletableEntityRepository<ThesisPart> ThesisParts { get; }
+
         IDeletableEntityRepository<ThesisTheme> ThesisThemes { get; }
 
         IDeletableEntityRepository<ThesisTutorial> ThesisTutorials { get; }
 
-        IDeletableEntityRepository<Thesis> Theses { get; }
-
-        IDeletableEntityRepository<Comment> Comments { get; }
-
         IDeletableEntityRepository<Version> Versions { get; }
-
-        IDeletableEntityRepository<ThesisPart> ThesisParts { get; }
-
-        IDeletableEntityRepository<Evaluation> Evaluations { get; }
-
 
         IRepository<User> Users { get; }
 

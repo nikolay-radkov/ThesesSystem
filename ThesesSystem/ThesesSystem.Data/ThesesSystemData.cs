@@ -89,6 +89,11 @@
             get { return this.GetDeletableEntityRepository<Evaluation>(); }
         }
 
+        public IDeletableEntityRepository<Message> Messages
+        {
+            get { return this.GetDeletableEntityRepository<Message>(); }
+        }
+
         /// <summary>
         /// Saves all changes made in this context to the underlying database.
         /// </summary>
