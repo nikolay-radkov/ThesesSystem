@@ -1,13 +1,10 @@
 ﻿namespace ThesesSystem.Data
 {
+    using System;
+    using System.Collections.Generic;
     using ThesesSystem.Contracts;
     using ThesesSystem.Data.Repositories.Base;
     using ThesesSystem.Models;
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
 
     public class ThesesSystemData : IThesesSystemData
     {
@@ -45,6 +42,51 @@
         public IDeletableEntityRepository<Specialty> Specialties
         {
             get { return this.GetDeletableEntityRepository<Specialty>(); }
+        }
+
+        public IDeletableEntityRepository<Student> Students
+        {
+            get { return this.GetDeletableEntityRepository<Student>(); }
+        }
+
+        public IDeletableEntityRepository<Teacher> Teachers
+        {
+            get { return this.GetDeletableEntityRepository<Teacher>(); }
+        }
+
+        public IDeletableEntityRepository<ThesisTheme> ThesisThemes
+        {
+            get { return this.GetDeletableEntityRepository<ThesisTheme>(); }
+        }
+
+        public IDeletableEntityRepository<ThesisTutorial> ThesisTutorials
+        {
+            get { return this.GetDeletableEntityRepository<ThesisTutorial>(); }
+        }
+
+        public IDeletableEntityRepository<Thesis> Theses
+        {
+            get { return this.GetDeletableEntityRepository<Thesis>(); }
+        }
+
+        public IDeletableEntityRepository<Comment> Comments
+        {
+            get { return this.GetDeletableEntityRepository<Comment>(); }
+        }
+
+        public IDeletableEntityRepository<ThesesSystem.Models.Version> Versions
+        {
+            get { return this.GetDeletableEntityRepository<ThesesSystem.Models.Version>(); }
+        }
+
+        public IDeletableEntityRepository<ThesisPart> ThesisParts
+        {
+            get { return this.GetDeletableEntityRepository<ThesisPart>(); }
+        }
+
+        public IDeletableEntityRepository<Evaluation> Evaluations
+        {
+            get { return this.GetDeletableEntityRepository<Evaluation>(); }
         }
 
         /// <summary>

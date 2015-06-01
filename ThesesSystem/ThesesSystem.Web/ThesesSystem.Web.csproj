@@ -308,7 +308,6 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
     <Folder Include="Areas\Administration\ViewModels\" />
     <Folder Include="Areas\Administration\Views\Home\" />
   </ItemGroup>

@@ -12,6 +12,24 @@
 
         IDbSet<Specialty> Specialties { get; set; }
 
+        IDbSet<Student> Students { get; set; }
+
+        IDbSet<Teacher> Teachers { get; set; }
+
+        IDbSet<ThesisTheme> ThesisThemes { get; set; }
+
+        IDbSet<ThesisTutorial> ThesisTutorials { get; set; }
+
+        IDbSet<Thesis> Theses { get; set; }
+
+        IDbSet<Comment> Comments { get; set; }
+
+        IDbSet<Version> Versions { get; set; }
+
+        IDbSet<ThesisPart> ThesisParts { get; set; }
+
+        IDbSet<Evaluation> Evaluations { get; set; }
+
         DbContext DbContext { get; }
 
         int SaveChanges();
