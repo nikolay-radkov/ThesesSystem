@@ -1,9 +1,12 @@
 ﻿@using ThesesSystem.Web.Infrastructure.Constants
+@using Microsoft.AspNet.Identity
+
 @model ThesesSystem.Web.ViewModels.Home.HomeViewModel
 @{
     ViewBag.Title = "Начало";
     Layout = null;
 }
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -58,7 +61,7 @@
                     </div>
                     <div class="col-md-4">
                         <i class="glyphicon glyphicon-user"> </i>
-                        <h2>@Model.ThesesNumber потребители</h2>
+                        <h2>@Model.UsersNumber потребители</h2>
                     </div>
                 </div>
             </div>

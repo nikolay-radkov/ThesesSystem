@@ -219,6 +219,7 @@
     <Compile Include="Controllers\BaseControllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\StorageController.cs" />
     <Compile Include="GlimpseSecurityPolicy.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -235,6 +236,7 @@
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\Students\OksViewModel.cs" />
     <Compile Include="ViewModels\Students\StudentProfileViewModel.cs" />
+    <Compile Include="ViewModels\Theses\ThesisViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.cosmo.css" />
@@ -261,6 +263,9 @@
     <Content Include="Images\about.png" />
     <Content Include="Images\first.jpg" />
     <Content Include="Images\logo-tu.png" />
+    <Content Include="Images\question1.png" />
+    <Content Include="Images\question2.jpg" />
+    <Content Include="Images\question3.png" />
     <Content Include="Images\tu-sofia.jpg" />
     <Content Include="Images\tusofia.jpg" />
     <Content Include="Scripts\bootstrap.js" />
@@ -293,16 +298,11 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Account\_ChangePasswordPartial.cshtml" />
-    <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Account\_RemoveAccountPartial.cshtml" />
     <Content Include="Views\Account\_SetPasswordPartial.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
-    <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
-    <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
     <Content Include="Views\Account\ForgotPassword.cshtml" />
     <Content Include="Views\Account\ForgotPasswordConfirmation.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
@@ -311,14 +311,13 @@
     <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
     <Content Include="Views\Account\SendCode.cshtml" />
     <Content Include="Views\Account\VerifyCode.cshtml" />
-    <Content Include="Views\Manage\AddPhoneNumber.cshtml" />
     <Content Include="Views\Manage\ChangePassword.cshtml" />
     <Content Include="Views\Manage\Index.cshtml" />
     <Content Include="Views\Manage\ManageLogins.cshtml" />
     <Content Include="Views\Manage\SetPassword.cshtml" />
-    <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Storage\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Administration\ViewModels\" />
@@ -329,6 +328,10 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ThesesSystem.Contracts\ThesesSystem.Contracts.csproj">
+      <Project>{a6d26ed9-04bc-4efa-8392-78650e98bff7}</Project>
+      <Name>ThesesSystem.Contracts</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ThesesSystem.Data\ThesesSystem.Data.csproj">
       <Project>{2a08f1ef-de47-4cfd-a08a-03d6f383583f}</Project>
       <Name>ThesesSystem.Data</Name>

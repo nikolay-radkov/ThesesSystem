@@ -10,11 +10,6 @@ namespace ThesesSystem.Web.ViewModels
         public string Email { get; set; }
     }
 
-    public class ExternalLoginListViewModel
-    {
-        public string ReturnUrl { get; set; }
-    }
-
     public class SendCodeViewModel
     {
         public string SelectedProvider { get; set; }
@@ -42,42 +37,65 @@ namespace ThesesSystem.Web.ViewModels
     public class ForgotViewModel
     {
         [Required]
-        [Display(Name = "Email")]
+        [Display(Name = "Е-поща")]
         public string Email { get; set; }
     }
 
     public class LoginViewModel
     {
         [Required]
-        [Display(Name = "Email")]
+        [Display(Name = "Е-поща")]
         [EmailAddress]
         public string Email { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "Парола")]
         public string Password { get; set; }
 
-        [Display(Name = "Remember me?")]
+        [Display(Name = "Запомни ме")]
         public bool RememberMe { get; set; }
     }
 
     public class RegisterViewModel
     {
         [Required]
+        [StringLength(20, ErrorMessage = "{0} трябва да е поне {2} символа дълга.", MinimumLength = 2)]
+        [Display(Name = "Първо име")]
+        public string FirstName { get; set; }
+
+        [StringLength(20)]
+        [Display(Name = "Бащино име")]
+        public string MiddleName { get; set; }
+
+        [Required]
+        [Display(Name = "Фамилно име")]
+        [StringLength(20, ErrorMessage = "{0} трябва да е поне {2} символа дълга.", MinimumLength = 2)]
+        public string LastName { get; set; }
+
+        [Required]
+        [Phone]
+        [Display(Name = "Телефонен номер")]
+        public string Number { get; set; }
+
+        [Required]
+        [Display(Name = "ЕГН")]
+        public long EGN { get; set; }
+
+        [Required]
         [EmailAddress]
-        [Display(Name = "Email")]
+        [Display(Name = "Е-поща")]
         public string Email { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "{0} трябва да е поне {2} символа дълга.", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "Парола")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [Display(Name = "Повторете паролата")]
+        [Compare("Password", ErrorMessage = "Паролите не съвпадат.")]
         public string ConfirmPassword { get; set; }
     }
 
