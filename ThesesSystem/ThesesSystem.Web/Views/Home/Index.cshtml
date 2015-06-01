@@ -1,6 +1,7 @@
 ﻿@using ThesesSystem.Web.Infrastructure.Constants
+@model ThesesSystem.Web.ViewModels.Home.HomeViewModel
 @{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "Начало";
     Layout = null;
 }
 <!DOCTYPE html>
@@ -14,7 +15,7 @@
     @Styles.Render("~/Content/custom")
 </head>
 <body>
-    <div class="navbar navbar-default navbar-fixed-top">
+    <nav class="navbar navbar-default navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -22,23 +23,217 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink(GlobalConstants.APPLICATION_NAME, "Index", "Home", new { area = string.Empty }, new { @class = "navbar-brand" })
             </div>
+            @Html.ActionLink(GlobalConstants.APPLICATION_NAME, "Index", "Home", new { area = string.Empty }, new { @class = "navbar-brand" })
             <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="#top">Начало</a></li>
+                    <li><a href="#state">Състояние</a></li>
+                    <li><a href="#questions">Въпроси</a></li>
+                    <li><a href="#services">Услуги</a></li>
+                </ul>
                 @Html.Partial("_LoginPartial")
             </div>
         </div>
-    </div>
+
+    </nav>
+
     <div class="container body-content">
-     <h1>Different Layout!!!</h1>
-       
-        @Html.DropDownList("MyType", EnumHelper.GetSelectList(typeof(ThesesSystem.Models.Oks)), "Изберете ОКС", new { @class = "form-control" })
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - Theses System</p>
-        </footer>
+        <section id="top" class="module parallax parallax-1">
+            <div class="container">
+                <h1>Добре дошли</h1>
+            </div>
+        </section>
+
+        <section id="state" class="module content first">
+            <div class="container text-center">
+                <div class="row">
+                    <div class="col-md-4">
+                        <i class="glyphicon glyphicon-book"> </i>
+                        <h2>@Model.ThesesNumber дипломни работи</h2>
+                    </div>
+                    <div class="col-md-4">
+                        <i class="glyphicon glyphicon-tags"> </i>
+                        <h2>@Model.ThesisThemesNumber идеи за дипломни работи</h2>
+                    </div>
+                    <div class="col-md-4">
+                        <i class="glyphicon glyphicon-user"> </i>
+                        <h2>@Model.ThesesNumber потребители</h2>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        @*<section class="module parallax parallax-2 text-center">
+            <div class="row">
+
+            </div>
+        </section>*@
+
+        <section id="questions" class="module content second text-center">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1>Задавали ли сте си някои от тези въпроси?</h1>
+                    </div>
+                </div>
+                <div class="row paralax-content">
+                    <div class="col-sm-6 col-md-4">
+                        <div class="thumbnail">
+                            <img src="~/Images/question1.png" class="img-circle">
+                            <div class="caption">
+                                <h3>Каква тема да избера?</h3>
+                                <hr />
+                                <p>Не се чудете, а рагледайте идеите на преподавателите или използвайте генераторът ни на идеи.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-4">
+                        <div class="thumbnail">
+                            <img src="~/Images/question2.jpg" class="img-circle">
+                            <div class="caption">
+                                <h3>Кой преподавател да избера?</h3>
+                                <hr />
+                                <p>
+                                    В системата ще намерите информация за всеки преподавател, дипломните работи, на които е бил научен ръководител и предложенията му за Вас.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-4">
+                        <div class="thumbnail">
+                            <img src="~/Images/question3.png" class="img-circle">
+                            <div class="caption">
+                                <h3>Какви са точните изисквания към една дипломна работа?</h3>
+                                <hr />
+                                <p>Разполагаме с обща информация за съдържанието на дипломната работа, както й някои препоръки от страна на преподавателите.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="services" class="module parallax parallax-3">
+            <div class="container">
+                <h1>При нас ще намерите:</h1>
+            </div>
+        </section>
+
+        <section class="module content third">
+            <div class="container">
+                <div class="row text-center">
+                    <div class="col-sm-4 col-xs-6 col-md-4">
+                        <i class="glyphicon glyphicon-cloud"> </i>
+                        <h4>Реални идеи</h4>
+                    </div>
+                    <div class="col-sm-4 col-xs-6 col-md-4">
+                        <i class="glyphicon glyphicon-leaf"> </i>
+                        <h4>Съхранение на различни версии на дипломната Ви работа</h4>
+                    </div>
+                    <div class="col-sm-4 col-xs-6 col-md-4">
+                        <i class="glyphicon glyphicon-phone-alt"> </i>
+                        <h4>Комуникация с научни ръководители</h4>
+                    </div>
+                </div>
+            </div>
+        </section>
     </div>
+    <footer>
+        <div id="black-footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3">
+                        <h4 class="line3 center standart-h4title"><span>Navigation</span></h4>
+                        <ul class="footer-links">
+                            <li><a href="#">Home</a></li>
+                            <li><a href="#">project</a></li>
+                            <li><a href="#">Elements</a></li>
+                            <li><a href="#">Contact</a></li>
+                            <li><a href="#">Blog</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3">
+                        <h4 class="line3 center standart-h4title"><span>Useful Links</span></h4>
+                        <ul class="footer-links">
+                            <li><a href="http://www.bootstraptor.com">Bootstraptor.com</a></li>
+                            <li><a href="http://www.bootstraptor.com">Bootstraptor.com</a></li>
+                            <li><a href="http://www.bootstraptor.com">Bootstraptor.com</a></li>
+                            <li><a href="http://www.bootstraptor.com">Bootstraptor.com</a></li>
+                            <li><a href="http://www.bootstraptor.com">Bootstrap templates</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3">
+                        <h4 class="line3 center standart-h4title"><span>Useful Links</span></h4>
+                        <ul class="footer-links">
+                            <li><a href="http://www.bootstraptor.com">Bootstraptor.com</a></li>
+                            <li><a href="http://www.bootstraptor.com">Bootstraptor.com</a></li>
+                            <li><a href="http://www.bootstraptor.com">Bootstraptor.com</a></li>
+                            <li><a href="http://www.bootstraptor.com">Bootstraptor.com</a></li>
+                            <li><a href="http://www.bootstraptor.com">Bootstrap templates</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3">
+                        <h4 class="line3 center standart-h4title"><span>Our office</span></h4>
+                        <address>
+                            <strong>bootstraptor.com, LLC.</strong><br>
+                            <i class="icon-map-marker"></i> 795 Folsom Ave, Suite 600<br>
+                            San Francisco, CA 94107<br>
+                            <i class="icon-phone-sign"></i> + 4 (123) 456-7890
+
+                        </address>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="container">
+                <hr>
+                <div class="row">
+                    <div class="col-sm-12 col-lg-12">
+                        <p>© 2013 Build with <a class="" href="http://www.bootstraptor.com">www.bootstraptor.com</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <section>
+            <div id="google_map"></div>
+        </section>
+    </footer>
+
 
     @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/maps");
+    @Scripts.Render("~/bundles/parallax");
+
+    <script>
+        $(function () {
+            $('a[href*=#]:not([href=#])').click(function () {
+                if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
+                    var target = $(this.hash);
+                    target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
+                    if (target.length) {
+                        $('html,body').animate({
+                            scrollTop: target.offset().top
+                        }, 1000);
+                        return false;
+                    }
+                }
+            });
+        });
+
+        $('.parallax-1').parallax({
+            speed: 0.15
+        });
+        $('.parallax-2').parallax({
+            speed: 0.15
+        });
+        $('.parallax-3').parallax({
+            speed: 0.15
+        });
+    </script>
 </body>
 </html>

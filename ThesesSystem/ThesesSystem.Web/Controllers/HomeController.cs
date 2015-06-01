@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using ThesesSystem.Data;
 using ThesesSystem.Web.Controllers.BaseControllers;
+using ThesesSystem.Web.ViewModels.Home;
 
 namespace ThesesSystem.Web.Controllers
 {
@@ -18,7 +19,9 @@ namespace ThesesSystem.Web.Controllers
 
         public ActionResult Index()
         {
-            return View();
+            var home = new HomeViewModel();
+
+            return View(home);
         }
 
         public ActionResult About()

@@ -1,12 +1,12 @@
-﻿body {
-    padding-top: 50px;
-    padding-bottom: 20px;
+﻿body, .body-content {
+    padding: 0;
+    margin: 0;
 }
 
-/* Set padding to keep content from hitting the edges */
 .body-content {
-    padding-left: 15px;
-    padding-right: 15px;
+    margin-top: 50px;
+
+    width: 100%;
 }
 
 /* Override the default bootstrap behavior where horizontal description lists 
@@ -21,4 +21,148 @@ input,
 select,
 textarea {
     max-width: 280px;
+}
+
+
+#black-footer {
+    background: url(../Images/about.png) 50% 0 fixed;
+    -moz-box-shadow: 0 0 50px rgba(0,0,0,0.8);
+    -webkit-box-shadow: 0 0 50px rgba(0,0,0,0.8);
+    box-shadow: 0 0 50px rgba(0,0,0,0.8);
+    padding: 100px 0;
+    color: #fff;
+    height: auto;
+    margin: 0 auto;
+    width: 100%;
+    position: relative;
+}
+
+#google_map {
+    height: 500px;
+}
+
+
+/* ============================================================
+  SECTIONS
+============================================================ */
+section.module.first {
+    background-color: rgb(195, 15, 0);
+    color: #ffffff;
+}
+
+section.module.second {
+    background-color: rgb(255, 234, 0);
+    color: #ffffff;
+}
+
+section.module.third {
+    background-color: rgb(156, 244, 10);
+    color: #ffffff;
+}
+
+    section.module:last-child {
+        margin-bottom: 0;
+    }
+
+    section.module h2 {
+        margin-bottom: 20px;
+        font-family: "Roboto Slab", serif;
+        font-size: 30px;
+    }
+
+    section.module p {
+        margin-bottom: 40px;
+        font-size: 16px;
+        font-weight: 300;
+    }
+
+    section.module .glyphicon {
+        border: 2px solid #FFFFFF;
+        border-radius: 50%;
+        display: inline-block;
+        font-size: 60px;
+        height: 140px;
+        line-height: 140px;
+        text-align: center;
+        vertical-align: middle;
+        width: 140px;
+    }
+
+    section.module p:last-child {
+        margin-bottom: 0;
+    }
+
+    section.module.content {
+        padding: 40px 0;
+    }
+
+    section.module.parallax {
+        height: 600px;
+        background-position: 50% 50%;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: cover;
+    }
+
+        section.module.parallax h1 {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 48px;
+            line-height: 600px;
+            font-weight: 700;
+            text-align: center;
+            text-transform: uppercase;
+            text-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+         section.module.parallax h2 {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 48px;
+            line-height: 150px;
+            font-weight: 250;
+            text-align: center;
+            text-transform: uppercase;
+            text-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+    section.module.parallax-1 {
+        background-image:  linear-gradient(
+                                          rgba(0, 0, 0, 0.6), 
+                                          rgba(0, 0, 0, 0.6)
+                            ),url("../Images/first.jpg");
+    }
+
+    section.module.parallax-2 {
+        background-image: url("../Images/tu-sofia.jpg");
+    }
+
+    section.module.parallax-3 {
+        background-image: url("../Images/tusofia.jpg");
+    }
+
+@media all and (min-width: 600px) {
+    section.module h2 {
+        font-size: 42px;
+    }
+
+    section.module p {
+        font-size: 20px;
+    }
+
+    section.module.parallax h1 {
+        font-size: 70px;
+    }
+}
+
+@media all and (min-width: 960px) {
+    section.module.parallax h1 {
+        font-size: 100px;
+    }
+}
+
+
+
+.thumbnail {
+    background-color: yellow;
+    border: 3px solid white;
+    border-radius: 10px;
 }

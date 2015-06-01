@@ -25,12 +25,20 @@ namespace ThesesSystem.Web
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/respond.js"));
+
+
+            bundles.Add(new ScriptBundle("~/bundles/maps")
+                .Include("~/Scripts/Custom/google-maps.js",
+                      "~/Scripts/Custom/google-maps-handler.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/parallax")
+                .Include("~/Scripts/Custom/simple-parallax.js"));
         }
 
         private static void RegisterStyleBundels(BundleCollection bundles)
         {
             bundles.Add(new StyleBundle("~/Content/css")
-                .Include("~/Content/bootstrap.css"));
+                .Include("~/Content/bootstrap.cosmo.css"));
 
             bundles.Add(new StyleBundle("~/Content/custom")
                 .Include("~/Content/site.css"));
