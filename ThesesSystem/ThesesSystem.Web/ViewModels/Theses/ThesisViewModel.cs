@@ -14,7 +14,6 @@
 
         public string SupervisorName { get; set; }
 
-
         public void CreateMappings(AutoMapper.IConfiguration configuration)
         {
             configuration.CreateMap<Thesis, ThesisViewModel>()

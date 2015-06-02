@@ -236,6 +236,7 @@
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\Students\OksViewModel.cs" />
     <Compile Include="ViewModels\Students\StudentProfileViewModel.cs" />
+    <Compile Include="ViewModels\Theses\ThesisProfileViewModel.cs" />
     <Compile Include="ViewModels\Theses\ThesisViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -318,6 +319,7 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Storage\Index.cshtml" />
+    <Content Include="Views\Storage\ThesisProfile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Administration\ViewModels\" />

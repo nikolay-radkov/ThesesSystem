@@ -1,9 +1,12 @@
 namespace ThesesSystem.Data.Migrations
 {
     using System;
+    using System.Collections.Generic;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
+    using ThesesSystem.Common.DataGenerators;
+    using ThesesSystem.Data.TableGenerator;
 
     public sealed class Configuration : DbMigrationsConfiguration<ThesesSystemDbContext>
     {
@@ -15,18 +18,28 @@ namespace ThesesSystem.Data.Migrations
 
         protected override void Seed(ThesesSystemDbContext context)
         {
-            /*  This method will be called after migrating to the latest version.
+            var generator = DefaultRandomGenerator.Instance;
+       
+            context.Configuration.AutoDetectChangesEnabled = false;
 
-              You can use the DbSet<T>.AddOrUpdate() helper extension method 
-              to avoid creating duplicate seed data. E.g.
-            
-                context.People.AddOrUpdate(
-                  p => p.FullName,
-                  new Person { FullName = "Andrew Peters" },
-                  new Person { FullName = "Brice Lambson" },
-                  new Person { FullName = "Rowan Miller" }
-                );
-            */
+
+            ICollection<ITableGenerator> populators = new List<ITableGenerator>()
+            {
+                // new FacultyGenerator(generator, context),
+                // new SpecialtyGenerator(generator,context),
+                // new UserGenerator(generator, context),
+                //  new ThesisGenerator(generator, context),
+                // new RoleGenerator(generator, context),
+                // new ThesisThemeGenerator(generator, context)
+            };
+
+            foreach (var populator in populators)
+            {
+                populator.Generate();
+                populator.Context.SaveChanges();
+            }
+
+            context.Configuration.AutoDetectChangesEnabled = true;
         }
     }
 }

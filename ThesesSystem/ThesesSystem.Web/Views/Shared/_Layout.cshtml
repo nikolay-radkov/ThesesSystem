@@ -25,6 +25,12 @@
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Архив", "Index", "Storage", new { area = string.Empty }, new { @class = string.Empty })</li>
                 </ul>
+                <form class="navbar-form navbar-left" role="search">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search">
+                    </div>
+                    <button type="submit" class="btn btn-danger">Търси</button>
+                </form>
                 @Html.Partial("_LoginPartial")
             </div>
         </div>

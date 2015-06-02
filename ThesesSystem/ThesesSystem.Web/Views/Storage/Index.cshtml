@@ -5,21 +5,32 @@
 
 <h2>Добре дошли в Архива!</h2>
 <div class="container">
-    <div class="row">
-        @foreach (var item in Model)
-        {
-            <div class="col-md-3 col-sm-4">
-                <div class="panel panel-info">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">@item.Title</h3>
-                    </div>
-                    <div class="panel-body">
-                        Автор: @item.StudentName
-                        <br />
-                        Научен ръководител: @item.SupervisorName
-                    </div>
-                </div>
-            </div>
-        }
+    <div class="col-md-3">
+        <aside>
+            <button class="btn btn-lg btn-danger">!!!FILTERS!!!</button>
+        </aside>
     </div>
-</div>
+    <div class="col-md-9">
+        <div class="container">
+            <div class="row">
+                @foreach (var item in Model)
+                {
+                    <a href="@Url.Action("ThesisProfile", "Storage",  routeValues: new { id = item.Id  })">
+                        <div class="col-md-3 col-sm-4">
+                            <div class="panel panel-info">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">@item.Title</h3>
+                                </div>
+                                <div class="panel-body">
+                                    Автор: <strong>@item.StudentName</strong>
+                                    <br />
+                                    Научен ръководител: <strong>@item.SupervisorName</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                }
+            </div>
+        </div>
+    </div>
+</div> 

@@ -64,6 +64,14 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\Base\DeletableEntityRepository.cs" />
     <Compile Include="Repositories\Base\GenericRepository.cs" />
+    <Compile Include="TableGenerator\FacultyGenerator.cs" />
+    <Compile Include="TableGenerator\ITableGenerator.cs" />
+    <Compile Include="TableGenerator\RoleGenerator.cs" />
+    <Compile Include="TableGenerator\SpecialtyGenerator.cs" />
+    <Compile Include="TableGenerator\TableGenerator.cs" />
+    <Compile Include="TableGenerator\ThesisGenerator.cs" />
+    <Compile Include="TableGenerator\ThesisThemeGenerator.cs" />
+    <Compile Include="TableGenerator\UserGenerator.cs" />
     <Compile Include="ThesesSystemData.cs" />
     <Compile Include="ThesesSystemDbContext.cs" />
   </ItemGroup>

@@ -11,6 +11,7 @@
    
     using ThesesSystem.Models;
     using ThesesSystem.Web.ViewModels;
+    using ThesesSystem.Web.Infrastructure.Constants;
 
     [Authorize]
     public class AccountController : Controller
@@ -166,6 +167,11 @@
 
                 if (result.Succeeded)
                 {
+                    // TODO: Redirect to Student registration
+                    var currentUser = UserManager.FindByName(user.UserName);
+
+                    var roleresult = UserManager.AddToRole(currentUser.Id, GlobalConstants.STUDENT);
+
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771

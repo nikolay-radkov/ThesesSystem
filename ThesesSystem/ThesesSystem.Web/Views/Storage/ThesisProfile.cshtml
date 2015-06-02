@@ -1,0 +1,56 @@
+﻿@model ThesesSystem.Web.ViewModels.Theses.ThesisProfileViewModel
+@{
+    ViewBag.Title = "Профил на дипломна работа";
+}
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-offset-3 col-md-3">
+            @Html.LabelFor(m => Model.Title)
+            </div>
+        <div class="col-md-3">
+            @Html.DisplayFor(m => Model.Title)
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-offset-3 col-md-3">
+            @Html.LabelFor(m => Model.StudentName)
+        </div>
+        <div class="col-md-3">
+            @Html.DisplayFor(m => Model.StudentName)
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-offset-3 col-md-3">
+            @Html.LabelFor(m => Model.FinishedAt)
+        </div>
+        <div class="col-md-3">
+            @Html.DisplayFor(m => Model.FinishedAt)
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-offset-3 col-md-3">
+            @Html.LabelFor(m => Model.Pages)
+        </div>
+        <div class="col-md-3">
+            @Html.DisplayFor(m => Model.Pages)
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-offset-3 col-md-3">
+            @Html.LabelFor(m => Model.FinalEvaluation)
+        </div>
+        <div class="col-md-3">
+            @Html.DisplayFor(m => Model.FinalEvaluation)
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-offset-3 col-md-3">
+            @Html.LabelFor(m => Model.SupervisorName)
+        </div>
+        <div class="col-md-3">
+            @Html.DisplayFor(m => Model.SupervisorName)
+        </div>
+    </div>
+</div>
