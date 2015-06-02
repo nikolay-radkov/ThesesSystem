@@ -1,0 +1,44 @@
+﻿@model ThesesSystem.Web.ViewModels.Partial.PaginationViewModel
+<nav>
+    <ul class="pagination">
+        @if (Model.HasPrevious)
+        {
+            <li>
+                <a href="@Url.Action(Model.Action, Model.Controller, routeValues: new { page = Model.CurrentPage - 1 })" aria-label="Назад">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+        }
+
+        @for (int i = Model.CurrentPage - 3; i < Model.CurrentPage; i++)
+        {
+            if (i < 0)
+            {
+                continue;
+            }
+            
+            <li><a href="@Url.Action(Model.Action, Model.Controller, routeValues: new { page = i })">@(i + 1)</a></li>
+        }
+
+        <li class="disabled"><a href="#">@(Model.CurrentPage + 1)</a></li>
+
+        @for (int i = Model.CurrentPage + 1; i < Model.CurrentPage + 3; i++)
+        {
+            if (i >= Model.PagesNumber)
+            {
+                break;
+            }
+            
+            <li><a href="@Url.Action(Model.Action, Model.Controller, routeValues: new { page = i })">@(i + 1)</a></li>
+        }
+
+        @if (Model.HasNext)
+        {
+            <li>
+                <a href="@Url.Action(Model.Action, Model.Controller, routeValues: new { page = Model.CurrentPage + 1 })" aria-label="Напред">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        }
+    </ul>
+</nav>

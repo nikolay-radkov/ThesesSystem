@@ -9,6 +9,8 @@
     using ThesesSystem.Web.Controllers.BaseControllers;
     using ThesesSystem.Web.Infrastructure.Constants;
     using ThesesSystem.Web.ViewModels.Theses;
+    using ThesesSystem.Web.Infrastructure.Helper;
+    using ThesesSystem.Models;
 
     [Authorize]
     public class StorageController : BaseController
@@ -29,8 +31,7 @@
 
             var theses = this.Data.Theses
                                     .All()
-                                    // TODO: change it when there is more entries
-                                    .Where(u => !u.IsComplete)
+                                    .Where(u => u.IsComplete)
                                     .OrderBy(t => t.FinishedAt)
                                     .Skip(GlobalConstants.ELEMENTS_PER_PAGE * currentPage)
                                     .Take(GlobalConstants.ELEMENTS_PER_PAGE)
@@ -38,6 +39,8 @@
                                     .Project()
                                     .To<ThesisViewModel>()
                                     .ToList();
+
+            ViewData["Pagination"] = PaginationHelper.CreatePagination("Index", "Storage", this.Data, currentPage);
 
             return View(theses);
         }

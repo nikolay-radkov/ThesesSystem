@@ -3,6 +3,7 @@
     using System.Web.Mvc;
     using ThesesSystem.Data;
     using ThesesSystem.Models;
+    using ThesesSystem.Web.ViewModels.Partial;
 
     public abstract class BaseController : Controller
     {

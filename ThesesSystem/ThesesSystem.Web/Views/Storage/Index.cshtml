@@ -1,17 +1,18 @@
 ﻿@model ICollection<ThesesSystem.Web.ViewModels.Theses.ThesisViewModel>
+@using ThesesSystem.Web.ViewModels.Partial
 @{
     ViewBag.Title = "Архив";
 }
 
 <h2>Добре дошли в Архива!</h2>
 <div class="container">
-    <div class="col-md-3">
-        <aside>
-            <button class="btn btn-lg btn-danger">!!!FILTERS!!!</button>
-        </aside>
-    </div>
-    <div class="col-md-9">
-        <div class="container">
+    <div class="row">
+        <div class="col-md-3">
+            <aside>
+                <button class="btn btn-lg btn-danger">!!!FILTERS!!!</button>
+            </aside>
+        </div>
+        <div class="col-md-9">
             <div class="row">
                 @foreach (var item in Model)
                 {
@@ -31,6 +32,11 @@
                     </a>
                 }
             </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-offset-3 text-center">
+            @Html.Partial("_PaginationPartial", (PaginationViewModel)ViewData["Pagination"])
         </div>
     </div>
 </div> 

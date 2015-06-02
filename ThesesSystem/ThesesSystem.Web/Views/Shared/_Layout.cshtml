@@ -23,7 +23,8 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Архив", "Index", "Storage", new { area = string.Empty }, new { @class = string.Empty })</li>
+                    <li>@Html.ActionLink("Архив", "Index", "Storage", new { area = string.Empty }, new { @class = string.Empty })</li>  
+                    @Html.Partial("_AdministrationDropdownPartial")
                 </ul>
                 <form class="navbar-form navbar-left" role="search">
                     <div class="form-group">
