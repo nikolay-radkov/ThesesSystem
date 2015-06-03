@@ -1,0 +1,24 @@
+﻿@model ICollection<ThesesSystem.Web.ViewModels.Users.VerificationViewModel>
+@using ThesesSystem.Web.ViewModels.Partial
+@{
+    ViewBag.Title = "Новорегистрирани потребители";
+}
+
+<h1>Новите потребители, който трябва да се проверят</h1>
+
+
+<div class="list-group">
+    <a href="#" class="list-group-item disabled">
+        Потребители
+    </a>
+    @foreach (var item in Model)
+    {
+        <a href='@Url.Action("Account", "User", new { id = item.Id})' class="list-group-item">@item.FullName - @item.EGN</a>
+       }
+</div>
+
+<div class="row">
+    <div class="col-lg-offset-3 text-center">
+        @Html.Partial("_PaginationPartial", (PaginationViewModel)ViewData["Pagination"])
+    </div>
+</div>

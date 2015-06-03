@@ -3,11 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using ThesesSystem.Data;
+using ThesesSystem.Web.Controllers.BaseControllers;
 
 namespace ThesesSystem.Web.Controllers
 {
-    public class SearchController : Controller
+    [Authorize]
+    public class SearchController : BaseController
     {
+        public SearchController(IThesesSystemData data)
+            : base(data)
+        {
+
+        }
+
         // GET: Search
         public ActionResult Index()
         {

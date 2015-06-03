@@ -243,6 +243,7 @@
     <Compile Include="ViewModels\Theses\ThesisProfileViewModel.cs" />
     <Compile Include="ViewModels\Theses\ThesisViewModel.cs" />
     <Compile Include="ViewModels\Users\UserProfileViewModel.cs" />
+    <Compile Include="ViewModels\Users\VerificationViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.cosmo.css" />
@@ -327,8 +328,9 @@
     <Content Include="Views\Storage\ThesisProfile.cshtml" />
     <Content Include="Views\Shared\_PaginationPartial.cshtml" />
     <Content Include="Views\Shared\_AdministrationDropdownPartial.cshtml" />
-    <Content Include="Views\User\Profile.cshtml" />
+    <Content Include="Views\User\Account.cshtml" />
     <Content Include="Views\Search\Index.cshtml" />
+    <Content Include="Views\User\Verification.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Administration\ViewModels\" />

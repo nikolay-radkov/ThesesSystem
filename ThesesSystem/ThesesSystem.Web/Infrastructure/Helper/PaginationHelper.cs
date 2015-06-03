@@ -37,6 +37,9 @@
                 case "StorageIndex":
                     pageNumber = (int)Math.Ceiling((double)data.Theses.All().Where(t => t.IsComplete).Count() / GlobalConstants.ELEMENTS_PER_PAGE);
                     break;
+                case "UserVerification" :
+                    pageNumber = (int)Math.Ceiling((double)data.Users.All().Where(u => !u.IsVerified).Count() / GlobalConstants.ELEMENTS_PER_PAGE);
+                    break;
                 //TODO: Other paging
                 default:
                     pageNumber = 0;
