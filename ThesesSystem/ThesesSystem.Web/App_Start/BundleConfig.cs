@@ -26,6 +26,8 @@ namespace ThesesSystem.Web
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/respond.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/unobtrusive").Include(
+                      "~/Scripts/jquery.unobtrusive-ajax.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/maps")
                 .Include("~/Scripts/Custom/google-maps.js",

@@ -19,7 +19,7 @@
             @Html.LabelFor(m => Model.StudentName)
         </div>
         <div class="col-md-3">
-            <a href='@Url.Action("Profile", "User", new { id = Model.StudentId })'>@Html.DisplayFor(m => Model.StudentName)</a>
+            <a href='@Url.Action("Account", "User", new { id = Model.StudentId })'>@Html.DisplayFor(m => Model.StudentName)</a>
         </div>
     </div>
     <div class="row">
@@ -67,7 +67,7 @@
             @Html.LabelFor(m => Model.SupervisorName)
         </div>
         <div class="col-md-3">
-            <a href='@Url.Action("Profile", "User", new { id = Model.SupervisorId })'>@Html.DisplayFor(m => Model.SupervisorName)</a>
+            <a href='@Url.Action("Account", "User", new { id = Model.SupervisorId })'>@Html.DisplayFor(m => Model.SupervisorName)</a>
         </div>
     </div>
 

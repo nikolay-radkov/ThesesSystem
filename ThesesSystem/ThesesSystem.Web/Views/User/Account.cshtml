@@ -1,6 +1,121 @@
 ﻿@model ThesesSystem.Web.ViewModels.Users.UserProfileViewModel
+@using ThesesSystem.Web.Infrastructure.Constants
 @{
-    ViewBag.Title = "Профил на дипломна работа";
+    ViewBag.Title = "Профил на потребител";
 }
 
+<div class="container">
+    <div class="row">
+        <div class="col-md-offset-3 col-md-3">
+            @Html.LabelFor(m => Model.FullName)
+        </div>
+        <div class="col-md-3">
+            @Html.DisplayFor(m => Model.FullName)
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-offset-3 col-md-3">
+            @Html.LabelFor(m => Model.EGN)
+        </div>
+        <div class="col-md-3">
+            @Html.DisplayFor(m => Model.EGN)
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-offset-3 col-md-3">
+            @Html.LabelFor(m => Model.PhoneNumber)
+        </div>
+        <div class="col-md-3">
+            @Html.DisplayFor(m => Model.PhoneNumber)
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-offset-3 col-md-3">
+            @Html.LabelFor(m => Model.Email)
+        </div>
+        <div class="col-md-3">
+            @Html.DisplayFor(m => Model.Email)
+        </div>
+    </div>
+    <div id="content-loading" style="display: none">Моля изчакайте...</div>
+    <div id="content">
+        @if (Model.IsStudent)
+        {
+            @Ajax.ActionLink(
+                    "Повече информация",
+                    "StudentInfo",
+                    "User",
+                    new
+                    {
+                        id = @Model.Id
+                    },
+                    new AjaxOptions
+                    {
+                        UpdateTargetId = "content",
+                        LoadingElementId = "content-loading",
+                        HttpMethod = "GET",
+                        InsertionMode = InsertionMode.Replace
+                    },
+                    new
+                    {
+                        @class = "btn btn-primary"
+                    })
+        }
+        else
+        {
+            @Ajax.ActionLink(
+                "Повече информация",
+                "TeacherInfo",
+                "User",
+                new
+                {
+                    id = @Model.Id
+                },
+                new AjaxOptions
+                {
+                    UpdateTargetId = "content",
+                    LoadingElementId = "content-loading",
+                    HttpMethod = "GET",
+                    InsertionMode = InsertionMode.Replace
+                },
+                new
+                {
+                    @class = "btn btn-primary"
+                })
+        }
 
+    </div>
+    <div class="row">
+        <div class="col-md-offset-3 col-md-3">
+            @if (User.IsInRole(GlobalConstants.ADMIN) && !Model.IsVerified)
+            {
+                using (Html.BeginForm("Verify", "User",  new { id = Model.Id }, FormMethod.Post))
+                {
+                    <input type="submit" value="Потвърди" class="btn btn-lg btn-danger" />
+                }
+            }
+        </div>
+        <div class="col-md-3">
+            <a href='#' class="btn btn-lg btn-primary">Изпрати съобщение</a>
+        </div>
+        <div class="col-md-3">
+            @if (Model.IsFriend)
+            {
+                using (Html.BeginForm("RemoveFriend", "User", new { id = Model.Id }, FormMethod.Post))
+                {
+                    <input type="submit" value="Премахни от приятели" class="btn btn-lg btn-danger" />
+                }
+            }
+            else
+            {
+                using (Html.BeginForm("NewFriend", "User", new { id = Model.Id }, FormMethod.Post))
+                {
+                    <input type="submit" value="Добави към приятели" class="btn btn-lg btn-success" />
+                }
+            }
+        </div>
+    </div>
+
+
+
+</div>
