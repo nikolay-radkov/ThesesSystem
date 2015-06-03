@@ -7,30 +7,43 @@
 
     public class ThesisProfileViewModel : IMapFrom<Thesis>, IHaveCustomMappings
     {
-        [Display(Name="Заглавие")]
+        public string StudentId { get; set; }
+
+        public string SupervisorId { get; set; }
+
+
+        [Display(Name = "Заглавие")]
         public string Title { get; set; }
 
-         [Display(Name = "Защитена на")]
+        [Display(Name = "Факултет")]
+        public string Faculty { get; set; }
+
+        [Display(Name = "Специалност")]
+        public string Specialty { get; set; }
+
+
+        [Display(Name = "Защитена на")]
         public DateTime? FinishedAt { get; set; }
 
-         [Display(Name = "Страници")]
+        [Display(Name = "Страници")]
         public int? Pages { get; set; }
 
-         [Display(Name = "Оценка")]
+        [Display(Name = "Оценка")]
         public float? FinalEvaluation { get; set; }
 
-        // TODO: Link to profiles
-         [Display(Name = "Научен ръководител")]
+        [Display(Name = "Научен ръководител")]
         public string SupervisorName { get; set; }
 
-         [Display(Name = "Студент")]
+        [Display(Name = "Студент")]
         public string StudentName { get; set; }
 
         public void CreateMappings(AutoMapper.IConfiguration configuration)
         {
             configuration.CreateMap<Thesis, ThesisProfileViewModel>()
-               .ForMember(u => u.StudentName, opt => opt.MapFrom(u => u.Student.User.FirstName + " " + u.Student.User.LastName))
-               .ForMember(u => u.SupervisorName, opt => opt.MapFrom(u => u.Supervisor.User.FirstName + " " + u.Supervisor.User.LastName));
+               .ForMember(u => u.StudentName, opt => opt.MapFrom(u => u.Student.User.FirstName + " " + u.Student.User.MiddleName + " " + u.Student.User.LastName))
+               .ForMember(u => u.SupervisorName, opt => opt.MapFrom(u => u.Supervisor.User.FirstName + " " + u.Supervisor.User.MiddleName + " " + u.Supervisor.User.LastName))
+               .ForMember(u => u.Faculty, opt => opt.MapFrom(u => u.Student.Specialty.Faculty.Title))
+               .ForMember(u => u.Specialty, opt => opt.MapFrom(u => u.Student.Specialty.Title));
         }
     }
 }

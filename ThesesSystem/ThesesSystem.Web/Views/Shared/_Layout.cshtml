@@ -23,15 +23,33 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Архив", "Index", "Storage", new { area = string.Empty }, new { @class = string.Empty })</li>  
+                    <li>@Html.ActionLink("Архив", "Index", "Storage", new { area = string.Empty }, new { @class = string.Empty })</li>
                     @Html.Partial("_AdministrationDropdownPartial")
                 </ul>
-                <form class="navbar-form navbar-left" role="search">
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Search">
+
+                @using (Html.BeginForm("Index", "Search", FormMethod.Post, new { @class = "navbar-form navbar-left", role = "search" }))
+                {
+
+                    <div class="input-append">
+                        <div class="btn-group">
+                            <ul class="dropdown-menu">
+                                <li><a href="#">Action</a></li>
+                                <li><a href="#">Another action</a></li>
+                                <li><a href="#">Something else here</a></li>
+                            </ul>
+                            <button class="btn dropdown-toggle btn-danger" data-toggle="dropdown" tabindex="-1">
+                                <span class="caret"></span>
+                                Всичко
+                            </button>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Търси">
+                        </div>
+                        <div class="btn-group">
+                            <button class="btn btn-danger" tabindex="-1">Намери</button>
+                        </div>
                     </div>
-                    <button type="submit" class="btn btn-danger">Търси</button>
-                </form>
+                }
                 @Html.Partial("_LoginPartial")
             </div>
         </div>

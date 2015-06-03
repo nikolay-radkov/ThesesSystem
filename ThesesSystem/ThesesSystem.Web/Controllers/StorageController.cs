@@ -48,6 +48,8 @@
         [HttpGet]
         public ActionResult ThesisProfile(int id)
         {
+            // TODO: Implement downloading
+
             var thesis = this.Data.Theses.GetById(id);
 
             var thesisViewModel = Mapper.Map<ThesisProfileViewModel>(thesis);

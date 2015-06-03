@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using ThesesSystem.Contracts;
-using ThesesSystem.Data;
-using ThesesSystem.Web.Infrastructure.Constants;
-using ThesesSystem.Web.ViewModels.Partial;
-
-namespace ThesesSystem.Web.Infrastructure.Helper
+﻿namespace ThesesSystem.Web.Infrastructure.Helper
 {
+    using System;
+    using System.Linq;
+    using ThesesSystem.Data;
+    using ThesesSystem.Web.Infrastructure.Constants;
+    using ThesesSystem.Web.ViewModels.Partial;
+
     public static class PaginationHelper
     {
         public static PaginationViewModel CreatePagination(string action, string controller, IThesesSystemData data, int currentPage)
