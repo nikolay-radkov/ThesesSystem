@@ -8,8 +8,7 @@ using ThesesSystem.Web.Controllers.BaseControllers;
 
 namespace ThesesSystem.Web.Controllers
 {
-    [Authorize]
-    public class SearchController : BaseController
+    public class SearchController : AuthorizeController
     {
         public SearchController(IThesesSystemData data)
             : base(data)

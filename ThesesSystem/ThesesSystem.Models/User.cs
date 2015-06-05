@@ -40,6 +40,8 @@
         public long EGN { get; set; }
 
         public bool IsVerified { get; set; }
+        
+        public bool IsRegistrationCompleted { get; set; }
 
         public virtual Student Student { get; set; }
 

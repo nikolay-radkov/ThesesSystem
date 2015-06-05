@@ -14,6 +14,10 @@
         private const string STUDENT = "Student";
         private const string TEACHER = "Teacher";
         private const string ADMIN = "Admin";
+        private const string VERIFIED_USER = "VerifiedUser";
+        private const string NOT_VERIFIED_USER = "NotVerifiedUser";
+        private const string COMPLETE_USER = "CompleteUser";
+        private const string NOT_COMPLETE_USER = "NotCompleteUser";
 
         public RoleGenerator(IRandomGenerator generator, IThesesSystemDbContext companyContext)
             : base(generator, companyContext, MaxCount)
@@ -27,7 +31,10 @@
             roleManager.Create(new IdentityRole(STUDENT));
             roleManager.Create(new IdentityRole(TEACHER));
             roleManager.Create(new IdentityRole(ADMIN));
-
+            roleManager.Create(new IdentityRole(VERIFIED_USER));
+            roleManager.Create(new IdentityRole(NOT_VERIFIED_USER));
+            roleManager.Create(new IdentityRole(COMPLETE_USER));
+            roleManager.Create(new IdentityRole(NOT_COMPLETE_USER));
 
             var userIds = this.Context.Users
                 .Where(u => u.Student != null)

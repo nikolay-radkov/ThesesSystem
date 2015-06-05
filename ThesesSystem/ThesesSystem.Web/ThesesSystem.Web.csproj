@@ -216,18 +216,21 @@
     <Compile Include="Areas\Administration\Controllers\HomeController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseControllers\AdmininistrationController.cs" />
+    <Compile Include="Controllers\BaseControllers\AuthorizeController.cs" />
     <Compile Include="Controllers\BaseControllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\StorageController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Controllers\ValidationController.cs" />
     <Compile Include="GlimpseSecurityPolicy.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Infrastructure\Constants\GlobalConstants.cs" />
     <Compile Include="App_Start\ViewEnginesConfig.cs" />
+    <Compile Include="Infrastructure\Filters\CompleteUserAttribute.cs" />
     <Compile Include="Infrastructure\Helper\PaginationHelper.cs" />
     <Compile Include="Infrastructure\Mapping\AutoMapperConfig.cs" />
     <Compile Include="Infrastructure\Mapping\IHaveCustomMappings.cs" />
@@ -245,6 +248,7 @@
     <Compile Include="ViewModels\Theses\ThesisProfileViewModel.cs" />
     <Compile Include="ViewModels\Theses\ThesisViewModel.cs" />
     <Compile Include="ViewModels\Users\UserProfileViewModel.cs" />
+    <Compile Include="ViewModels\Users\VerificationType.cs" />
     <Compile Include="ViewModels\Users\VerificationViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -337,6 +341,9 @@
     <Content Include="Views\User\Verification.cshtml" />
     <Content Include="Views\User\_TeacherInfoPartial.cshtml" />
     <Content Include="Views\User\_StudentInfoPartial.cshtml" />
+    <Content Include="Views\Validation\NotVerified.cshtml" />
+    <Content Include="Views\Validation\CompleteStudentRegistration.cshtml" />
+    <Content Include="Views\Validation\CompleteTeacherRegistration.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Administration\ViewModels\" />

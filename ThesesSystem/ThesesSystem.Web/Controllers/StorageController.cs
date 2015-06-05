@@ -12,8 +12,7 @@
     using ThesesSystem.Web.Infrastructure.Helper;
     using ThesesSystem.Models;
 
-    [Authorize]
-    public class StorageController : BaseController
+    public class StorageController : AuthorizeController
     {
         public StorageController(IThesesSystemData data)
             : base(data)

@@ -12,6 +12,8 @@
     using ThesesSystem.Models;
     using ThesesSystem.Web.ViewModels;
     using ThesesSystem.Web.Infrastructure.Constants;
+    using Microsoft.AspNet.Identity.EntityFramework;
+    using System.Collections.Generic;
 
     [Authorize]
     public class AccountController : Controller
@@ -162,16 +164,22 @@
         {
             if (ModelState.IsValid)
             {
-                var user = new User { UserName = model.Email, Email = model.Email };
-                var result = await UserManager.CreateAsync(user, model.Password);
+                var user = new User { 
+                    UserName = model.Email, 
+                    Email = model.Email, 
+                    FirstName = model.FirstName,
+                    MiddleName = model.MiddleName,
+                    LastName = model.LastName,
+                    EGN = model.EGN,
+                    PhoneNumber = model.Number
+                };
 
+                var result = await UserManager.CreateAsync(user, model.Password);
+                
+                UserManager.AddToRole(user.Id, GlobalConstants.NOT_VERIFIED_USER);
+           
                 if (result.Succeeded)
                 {
-                    // TODO: Redirect to Student registration
-                    var currentUser = UserManager.FindByName(user.UserName);
-
-                    var roleresult = UserManager.AddToRole(currentUser.Id, GlobalConstants.STUDENT);
-
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
@@ -179,8 +187,8 @@
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-
-                    return RedirectToAction("Index", "Storage");
+                    
+                    return RedirectToAction("NotVerified", "Validation");
                 }
 
                 AddErrors(result);

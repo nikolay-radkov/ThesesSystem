@@ -1,19 +1,20 @@
 ﻿namespace ThesesSystem.Web.Controllers
 {
+    using AutoMapper;
+    using AutoMapper.QueryableExtensions;
+    using Microsoft.AspNet.Identity;
+    using Microsoft.AspNet.Identity.EntityFramework;
     using System.Linq;
     using System.Web.Mvc;
     using ThesesSystem.Data;
+    using ThesesSystem.Models;
     using ThesesSystem.Web.Controllers.BaseControllers;
     using ThesesSystem.Web.Infrastructure.Constants;
     using ThesesSystem.Web.Infrastructure.Helper;
-    using ThesesSystem.Web.ViewModels.Users;
-    using AutoMapper;
-    using AutoMapper.QueryableExtensions;
     using ThesesSystem.Web.ViewModels.Partial;
-    using System;
-    using Microsoft.AspNet.Identity;
-    [Authorize]
-    public class UserController : BaseController
+    using ThesesSystem.Web.ViewModels.Users;
+
+    public class UserController : AuthorizeController
     {
         public UserController(IThesesSystemData data)
             : base(data)
@@ -28,7 +29,7 @@
             var userViewModel = Mapper.Map<UserProfileViewModel>(user);
             var currentUserId = User.Identity.GetUserId();
             var currentUser = this.Data.Users.All().FirstOrDefault(u => u.Id == currentUserId);
-   
+
 
             userViewModel.IsFriend = currentUser.Friends.Where(u => u.Id == id).Count() != 0;
 
@@ -82,11 +83,38 @@
         }
 
         [HttpPost]
-        public ActionResult Verify(string id)
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles=GlobalConstants.ADMIN)]
+        public ActionResult Verify(string id, VerificationType verificationType)
         {
             var user = this.Data.Users.GetById(id);
 
-            user.IsVerified = true;
+            var userStore = new UserStore<User>(this.Data.Context.DbContext);
+            var userManager = new UserManager<User>(userStore);
+        
+
+            // TODO: Implement logic for studen and teacher validation
+            switch (verificationType)
+            {
+                case VerificationType.Student:
+                    user.IsVerified = true;
+                    userManager.AddToRole(user.Id, GlobalConstants.NOT_COMPLETE_USER);
+                    userManager.AddToRole(user.Id, GlobalConstants.STUDENT);
+                    userManager.RemoveFromRole(user.Id, GlobalConstants.NOT_VERIFIED_USER);
+                    break;
+                case VerificationType.Teacher:
+                    user.IsVerified = true;
+                    userManager.AddToRole(user.Id, GlobalConstants.NOT_COMPLETE_USER);
+                    userManager.AddToRole(user.Id, GlobalConstants.TEACHER);
+                    userManager.RemoveFromRole(user.Id, GlobalConstants.NOT_VERIFIED_USER);
+                    break;
+                case VerificationType.Bot:
+                    this.Data.Users.Delete(user);
+                    this.Data.SaveChanges();
+                    return RedirectToAction("Verification", "User", new { id = id });
+                default:
+                    break;
+            }
 
             this.Data.SaveChanges();
 
@@ -94,6 +122,7 @@
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult NewFriend(string id)
         {
             var user = this.Data.Users.GetById(id);
@@ -109,6 +138,7 @@
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult RemoveFriend(string id)
         {
             var user = this.Data.Users.GetById(id);

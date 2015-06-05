@@ -12,7 +12,7 @@
         {
             var pagesNumber = GetPages(data, controller + action);
 
-            var hasNextPage = currentPage != (pagesNumber - 1);
+            var hasNextPage = currentPage != (pagesNumber - 1) && pagesNumber != 0;
             var hasPreviousPage = currentPage != 0;
 
             var pagination = new PaginationViewModel

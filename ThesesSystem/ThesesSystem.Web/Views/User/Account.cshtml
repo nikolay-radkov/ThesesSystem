@@ -86,34 +86,45 @@
 
     </div>
     <div class="row">
-        <div class="col-md-offset-3 col-md-3">
-            @if (User.IsInRole(GlobalConstants.ADMIN) && !Model.IsVerified)
-            {
-                using (Html.BeginForm("Verify", "User",  new { id = Model.Id }, FormMethod.Post))
+        @if (!Model.IsVerified)
+        {
+            <div class="col-md-offset-3 col-md-3">
+                @if (User.IsInRole(GlobalConstants.ADMIN))
                 {
-                    <input type="submit" value="Потвърди" class="btn btn-lg btn-danger" />
+                    using (Html.BeginForm("Verify", "User", new { id = Model.Id }, FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.DropDownList("verificationType", EnumHelper.GetSelectList(typeof(ThesesSystem.Web.ViewModels.Users.VerificationType)), new { @class = "form-control" })
+
+                        <input type="submit" value="Потвърди" class="btn btn-lg btn-danger" />
+                    }
                 }
-            }
-        </div>
-        <div class="col-md-3">
-            <a href='#' class="btn btn-lg btn-primary">Изпрати съобщение</a>
-        </div>
-        <div class="col-md-3">
-            @if (Model.IsFriend)
-            {
-                using (Html.BeginForm("RemoveFriend", "User", new { id = Model.Id }, FormMethod.Post))
+            </div>
+        }
+        else
+        {
+            <div class="col-md-3">
+                <a href='#' class="btn btn-lg btn-primary">Изпрати съобщение</a>
+            </div>
+            <div class="col-md-3">
+                @if (Model.IsFriend)
                 {
-                    <input type="submit" value="Премахни от приятели" class="btn btn-lg btn-danger" />
+                    using (Html.BeginForm("RemoveFriend", "User", new { id = Model.Id }, FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        <input type="submit" value="Премахни от приятели" class="btn btn-lg btn-danger" />
+                    }
                 }
-            }
-            else
-            {
-                using (Html.BeginForm("NewFriend", "User", new { id = Model.Id }, FormMethod.Post))
+                else
                 {
-                    <input type="submit" value="Добави към приятели" class="btn btn-lg btn-success" />
+                    using (Html.BeginForm("NewFriend", "User", new { id = Model.Id }, FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        <input type="submit" value="Добави към приятели" class="btn btn-lg btn-success" />
+                    }
                 }
-            }
-        </div>
+            </div>
+        }
     </div>
 
 

@@ -11,5 +11,14 @@
         public const string TEACHER = "Teacher";
 
         public const string ADMIN = "Admin";
+
+        public const string VERIFIED_USER = "VerifiedUser";
+
+        public const string NOT_VERIFIED_USER = "NotVerifiedUser";
+
+        public const string COMPLETE_USER = "CompleteUser";
+
+        public const string NOT_COMPLETE_USER = "NotCompleteUser";
+
     }
 }
