@@ -4,6 +4,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -30,9 +31,19 @@ namespace ThesesSystem.Web.Controllers
 
         [HttpGet]
         [Authorize(Roles = GlobalConstants.NOT_VERIFIED_USER)]
-        public ActionResult NotVerified()
+        public async Task<ActionResult> NotVerified()
         {
             // TODO: redirect if is verified
+            var id = this.User.Identity.GetUserId();
+            var user = this.Data.Users.GetById(id);
+
+            if (user == null)
+            {
+                return new HttpStatusCodeResult(400, "Bad Request");
+            }
+
+            await this.SignInUser(user);
+
             return View();
         }
 
@@ -79,7 +90,7 @@ namespace ThesesSystem.Web.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = GlobalConstants.NOT_COMPLETE_USER)]
-        public ActionResult CompleteStudentRegistration(string id, StudentRegistrationViewModel model)
+        public async Task<ActionResult> CompleteStudentRegistration(string id, StudentRegistrationViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -105,8 +116,8 @@ namespace ThesesSystem.Web.Controllers
 
                 this.Data.SaveChanges();
                 // TODO: Find out how to sign in a user
-         
-                this.SignInUser(user);
+
+                await this.SignInUser(user);
 
                 return RedirectToAction("Index", "Storage");
             }
@@ -117,7 +128,7 @@ namespace ThesesSystem.Web.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = GlobalConstants.NOT_VERIFIED_USER)]
-        public ActionResult CompleteTeacherRegistration(string id, TeacherInfoViewModel model)
+        public async Task<ActionResult> CompleteTeacherRegistration(string id, TeacherInfoViewModel model)
         {
             //TODO: Implement view
             if (ModelState.IsValid)
@@ -144,7 +155,7 @@ namespace ThesesSystem.Web.Controllers
 
                 this.Data.SaveChanges();
 
-                this.SignInUser(user);
+                await this.SignInUser(user);
 
                 return RedirectToAction("Index", "Storage");
             }
@@ -168,7 +179,7 @@ namespace ThesesSystem.Web.Controllers
 
 
         [NonAction]
-        private async void SignInUser(User user)
+        private async Task SignInUser(User user)
         {
             var signInManager = Request.GetOwinContext().Get<ApplicationSignInManager>();
             await signInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);

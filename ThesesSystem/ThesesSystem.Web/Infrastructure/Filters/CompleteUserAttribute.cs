@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNet.Identity;
 using System;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
@@ -8,17 +9,13 @@ using ThesesSystem.Web.Infrastructure.Constants;
 namespace ThesesSystem.Web.Infrastructure.Filters
 {
     [AttributeUsageAttribute(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = true)]
-    public class CompleteUserAttribute : AuthorizeAttribute
+     public class CompleteUserAttribute : AuthorizeAttribute
     {
-        //Custom named parameters for annotation
-        public string ResourceKey { get; set; }
-        public string OperationKey { get; set; }
-
         //Called when access is denied
         protected override void HandleUnauthorizedRequest(AuthorizationContext filterContext)
         {
             var user = filterContext.HttpContext.User;
-
+          
             //User isn't logged in
             if (!user.Identity.IsAuthenticated)
             {
