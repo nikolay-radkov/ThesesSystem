@@ -1,6 +1,11 @@
-﻿@{
+﻿@model ThesesSystem.Web.ViewModels.Users.UserProfileViewModel
+@{
     ViewBag.Title = "Завършване на регистрацията";
 }
 
 <h2>CompleteRegistration</h2>
 
+<div class="container">
+    @Html.Partial("_CompleteUserRegistrationPartial", Model)
+    @Html.Partial("_CompleteTeacherRegistrationPartial")
+</div>

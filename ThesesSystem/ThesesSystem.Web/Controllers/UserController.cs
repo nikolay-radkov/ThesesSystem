@@ -99,12 +99,14 @@
                 case VerificationType.Student:
                     user.IsVerified = true;
                     userManager.AddToRole(user.Id, GlobalConstants.NOT_COMPLETE_USER);
+                    userManager.AddToRole(user.Id, GlobalConstants.VERIFIED_USER);
                     userManager.AddToRole(user.Id, GlobalConstants.STUDENT);
                     userManager.RemoveFromRole(user.Id, GlobalConstants.NOT_VERIFIED_USER);
                     break;
                 case VerificationType.Teacher:
                     user.IsVerified = true;
                     userManager.AddToRole(user.Id, GlobalConstants.NOT_COMPLETE_USER);
+                    userManager.AddToRole(user.Id, GlobalConstants.VERIFIED_USER);
                     userManager.AddToRole(user.Id, GlobalConstants.TEACHER);
                     userManager.RemoveFromRole(user.Id, GlobalConstants.NOT_VERIFIED_USER);
                     break;

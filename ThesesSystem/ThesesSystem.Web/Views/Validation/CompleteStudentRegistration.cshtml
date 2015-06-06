@@ -1,6 +1,40 @@
-﻿@{
+﻿@model ThesesSystem.Web.ViewModels.Users.UserProfileViewModel
+@{
     ViewBag.Title = "Завършване на регистрацията";
 }
 
 <h2>CompleteRegistration</h2>
 
+<div class="container">
+    @Html.Partial("_CompleteUserRegistrationPartial", Model)
+    @Html.Partial("_CompleteStudentRegistrationPartial", new ThesesSystem.Web.ViewModels.Partial.StudentRegistrationViewModel())
+</div>
+
+@section scripts
+{
+    <script>
+
+        $("#FacultyId").change(function () {
+            var selectedItem = $(this).val();
+            var ddlStates = $("#SpecialtyId");
+            var statesProgress = $("#states-loading-progress");
+            statesProgress.show();
+            $.ajax({
+                cache: false,
+                type: "GET",
+                url: '/Validation/GetSpecialties/' + selectedItem,
+                success: function (data) {
+                    ddlStates.html('');
+                    $.each(data, function (id, option) {
+                        ddlStates.append($('<option></option>').val(option.Id).html(option.Title));
+                    });
+                    statesProgress.hide();
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert('Грешка при зареждане на факултетите.');
+                    statesProgress.hide();
+                }
+            });
+        });
+    </script>
+}

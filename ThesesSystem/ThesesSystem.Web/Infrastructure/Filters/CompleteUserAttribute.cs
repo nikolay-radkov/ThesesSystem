@@ -1,10 +1,9 @@
-﻿using System.Security.Principal;
-using System.Web.Mvc;
-using System.Web;
-
-using ThesesSystem.Web.Infrastructure.Constants;
-using System.Web.Routing;
+﻿using Microsoft.AspNet.Identity;
 using System;
+using System.Web;
+using System.Web.Mvc;
+using System.Web.Routing;
+using ThesesSystem.Web.Infrastructure.Constants;
 
 namespace ThesesSystem.Web.Infrastructure.Filters
 {
@@ -40,13 +39,13 @@ namespace ThesesSystem.Web.Infrastructure.Filters
                 if (user.IsInRole(GlobalConstants.STUDENT))
                 {
                     filterContext.Result = new RedirectToRouteResult(
-                        new RouteValueDictionary(new { controller = "Validation", action = "CompleteStudentRegistration" })
+                        new RouteValueDictionary(new { controller = "Validation", action = "CompleteStudentRegistration", id = user.Identity.GetUserId() })
                 );
                 }
                 else if (user.IsInRole(GlobalConstants.TEACHER))
                 {
                     filterContext.Result = new RedirectToRouteResult(
-                       new RouteValueDictionary(new { controller = "Validation", action = "CompleteTeacherRegistration" })
+                       new RouteValueDictionary(new { controller = "Validation", action = "CompleteTeacherRegistration", id = user.Identity.GetUserId() })
                );
                 }
             }
@@ -56,10 +55,10 @@ namespace ThesesSystem.Web.Infrastructure.Filters
         protected override bool AuthorizeCore(HttpContextBase httpContext)
         {
             var isAuthenticatied = httpContext.User.Identity.IsAuthenticated;
-            var isVerified = httpContext.User.IsInRole(GlobalConstants.NOT_VERIFIED_USER);
-            var isCompleted = httpContext.User.IsInRole(GlobalConstants.NOT_COMPLETE_USER);
+            var isVerified = httpContext.User.IsInRole(GlobalConstants.VERIFIED_USER);
+            var isCompleted = httpContext.User.IsInRole(GlobalConstants.COMPLETE_USER);
 
-            return isAuthenticatied && !isVerified && !isCompleted;
+            return isAuthenticatied && isVerified && isCompleted;
         }
     }
 }
