@@ -37,13 +37,13 @@ namespace ThesesSystem.Web.Infrastructure.Filters
                 {
                     filterContext.Result = new RedirectToRouteResult(
                         new RouteValueDictionary(new { controller = "Validation", action = "CompleteStudentRegistration", id = user.Identity.GetUserId() })
-                );
+                    );
                 }
                 else if (user.IsInRole(GlobalConstants.TEACHER))
                 {
                     filterContext.Result = new RedirectToRouteResult(
                        new RouteValueDictionary(new { controller = "Validation", action = "CompleteTeacherRegistration", id = user.Identity.GetUserId() })
-               );
+                    );
                 }
             }
         }

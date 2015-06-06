@@ -1,3 +1,25 @@
 ﻿@model ThesesSystem.Web.ViewModels.Partial.TeacherInfoViewModel
 
+@using (Html.BeginForm("CompleteTeacherRegistration", "Validation", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <hr />
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(m => m.Cabinet, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.Cabinet, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Cabinet, "", new { @class = "text-danger" })
+        </div>
+    </div>
 
+    <div class="form-group">
+        @Html.LabelFor(m => m.OfficePhoneNumber, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.OfficePhoneNumber, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.OfficePhoneNumber, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <input type="submit" name="name" value="Добави" />
+}

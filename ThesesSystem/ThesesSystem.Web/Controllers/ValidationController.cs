@@ -115,7 +115,6 @@ namespace ThesesSystem.Web.Controllers
                 userManager.RemoveFromRole(user.Id, GlobalConstants.NOT_COMPLETE_USER);
 
                 this.Data.SaveChanges();
-                // TODO: Find out how to sign in a user
 
                 await this.SignInUser(user);
 
@@ -127,13 +126,12 @@ namespace ThesesSystem.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = GlobalConstants.NOT_VERIFIED_USER)]
+        [Authorize(Roles = GlobalConstants.NOT_COMPLETE_USER)]
         public async Task<ActionResult> CompleteTeacherRegistration(string id, TeacherInfoViewModel model)
         {
             //TODO: Implement view
             if (ModelState.IsValid)
             {
-
                 var user = this.Data.Users.GetById(id);
 
                 if (user == null)
