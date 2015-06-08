@@ -1,0 +1,360 @@
+﻿@using Microsoft.AspNet.Identity
+@using ThesesSystem.Web.ViewModels.Message
+@model ICollection<MessageViewModel>
+
+@{
+    ViewBag.Title = "Съобщения";
+}
+
+<div class="container">
+    <h3 class="text-center">Чат</h3>
+    <div class="row">
+        <div class="col-md-8">
+            <div id="chat-window" class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <span class="glyphicon glyphicon-comment"></span> Чат 1
+                        </div>
+                        <div class="panel-body">
+                            <ul id="chat-container" class="chat">
+                                @foreach (var item in Model)
+                                {
+                                    if (this.User.Identity.GetUserId() == item.FromUserId)
+                                    {
+                                        <li class="right clearfix">
+                                            <span class="chat-img pull-right">
+                                                <img src="http://placehold.it/50/FA6F57/fff&text=ME" alt="User Avatar" class="img-circle" />
+                                            </span>
+                                            <div class="chat-body clearfix">
+                                                <div class="header">
+                                                    <small class=" text-muted"><span class="glyphicon glyphicon-time"></span>@item.CreatedOn</small>
+                                                    <strong class="pull-right primary-font">@item.FromUserName</strong>
+                                                </div>
+                                                <p>
+                                                    @item.Text
+                                                </p>
+                                            </div>
+                                        </li>
+                                    }
+                                    else
+                                    {
+                                        <li class="left clearfix">
+                                            <span class="chat-img pull-left">
+                                                <img src="http://placehold.it/50/55C1E7/fff&text=U" alt="User Avatar" class="img-circle" />
+                                            </span>
+                                            <div class="chat-body clearfix">
+                                                <div class="header">
+                                                    <strong class="primary-font">@item.FromUserName</strong> <small class="pull-right text-muted">
+                                                        <span class="glyphicon glyphicon-time"></span>@item.CreatedOn
+                                                    </small>
+                                                </div>
+                                                <p>
+                                                    @item.Text
+                                                </p>
+                                            </div>
+                                        </li>
+                                    }
+                                }
+                            </ul>
+                        </div>
+                        <div class="panel-footer">
+
+                            <div class="input-group">
+                                <textarea id="message-to-send" class="form-control" rows="2" placeholder="Въведете вашето съобщение..."></textarea>
+
+                                <span class="input-group-btn">
+                                    <input type="submit" id="btn-send-message" class="btn btn-warning" value="Изпрати" />
+
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-md-4">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    Приятели
+                </div>
+                <div class="panel-body">
+                    <ul class="media-list">
+
+                        <li class="media">
+
+                            <div class="media-body">
+
+                                <div class="media">
+                                    <a class="pull-left" href="#">
+                                        <img class="media-object img-circle" style="max-height:40px;" src="assets/img/user.png" />
+                                    </a>
+                                    <div class="media-body">
+                                        <h5>Alex Deo | User </h5>
+
+                                        <small class="text-muted">Active From 3 hours</small>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </li>
+                        <li class="media">
+
+                            <div class="media-body">
+
+                                <div class="media">
+                                    <a class="pull-left" href="#">
+                                        <img class="media-object img-circle" style="max-height:40px;" src="assets/img/user.gif" />
+                                    </a>
+                                    <div class="media-body">
+                                        <h5>Jhon Rexa | User </h5>
+
+                                        <small class="text-muted">Active From 3 hours</small>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </li>
+                        <li class="media">
+
+                            <div class="media-body">
+
+                                <div class="media">
+                                    <a class="pull-left" href="#">
+                                        <img class="media-object img-circle" style="max-height:40px;" src="assets/img/user.png" />
+                                    </a>
+                                    <div class="media-body">
+                                        <h5>Alex Deo | User </h5>
+
+                                        <small class="text-muted">Active From 3 hours</small>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </li>
+                        <li class="media">
+
+                            <div class="media-body">
+
+                                <div class="media">
+                                    <a class="pull-left" href="#">
+                                        <img class="media-object img-circle" style="max-height:40px;" src="assets/img/user.gif" />
+                                    </a>
+                                    <div class="media-body">
+                                        <h5>Jhon Rexa | User </h5>
+
+                                        <small class="text-muted">Active From 3 hours</small>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </li>
+                        <li class="media">
+
+                            <div class="media-body">
+
+                                <div class="media">
+                                    <a class="pull-left" href="#">
+                                        <img class="media-object img-circle" style="max-height:40px;" src="assets/img/user.png" />
+                                    </a>
+                                    <div class="media-body">
+                                        <h5>Alex Deo | User </h5>
+
+                                        <small class="text-muted">Active From 3 hours</small>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </li>
+                        <li class="media">
+
+                            <div class="media-body">
+
+                                <div class="media">
+                                    <a class="pull-left" href="#">
+                                        <img class="media-object img-circle" style="max-height:40px;" src="assets/img/user.gif" />
+                                    </a>
+                                    <div class="media-body">
+                                        <h5>Jhon Rexa | User </h5>
+
+                                        <small class="text-muted">Active From 3 hours</small>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </li>
+                        <li class="media">
+
+                            <div class="media-body">
+
+                                <div class="media">
+                                    <a class="pull-left" href="#">
+                                        <img class="media-object img-circle" style="max-height:40px;" src="assets/img/user.png" />
+                                    </a>
+                                    <div class="media-body">
+                                        <h5>Alex Deo | User </h5>
+
+                                        <small class="text-muted">Active From 3 hours</small>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </li>
+                        <li class="media">
+
+                            <div class="media-body">
+
+                                <div class="media">
+                                    <a class="pull-left" href="#">
+                                        <img class="media-object img-circle" style="max-height:40px;" src="assets/img/user.gif" />
+                                    </a>
+                                    <div class="media-body">
+                                        <h5>Jhon Rexa | User </h5>
+
+                                        <small class="text-muted">Active From 3 hours</small>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    @Scripts.Render("~/bundles/signalr")
+    <script src="/signalr/hubs"></script>
+    <script>
+
+        $(function () {
+
+            var chat = $.connection.chat;
+
+            registerClientMethods(chat);
+
+            $.connection.hub.start().done(function () {
+
+                registerEvents(chat)
+
+            });
+        });
+
+        function registerEvents(chat) {
+
+            var chatCredentials = {
+                fromUserId: '@ViewData["FromUserId"]',
+                toUserId: '@ViewData["ToUserId"]',
+                fromUserName: '@ViewData["FromUserName"]'
+            };
+
+            chat.server.connect(chatCredentials.fromUserId);
+
+            $('#btn-send-message').click(function () {
+                var msg = $('#message-to-send').val();
+                chatCredentials.Text = msg;
+
+                chat.server.sendMessage(chatCredentials);
+            });
+        }
+
+        function registerClientMethods(chat) {
+
+            chat.client.addMessage = addMessage;
+            chat.client.showMessage = showMessage;
+        }
+
+        function addMessage(messageModel) {
+            var li = $('<li/>').addClass('left')
+                               .addClass('clearfix');
+
+            var span = $('<span/>').addClass('chat-img')
+                                    .addClass('pull-left');
+
+            var img = $('<img/>').attr('src', "http://placehold.it/50/55C1E7/fff&text=U")
+                                .attr('alt', 'User Avatar')
+                                .addClass('img-circle');
+            span.html(img);
+
+            var div = $('<div/>').addClass('chat-body')
+                                .addClass('clearfix');
+
+            var secondDiv = $('<div/>').addClass('header');
+            var strong = $('<strong/>').addClass('primary-font')
+                                        .text(messageModel.FromUserName);
+            var small = $('<small/>').addClass('pull-right')
+                                    .addClass('text-muted');
+            var secondSpan = $('<span/>').addClass('glyphicon')
+                                        .addClass('glyphicon-time');
+            small.html(secondSpan)
+                .append(messageModel.CreatedOn);
+
+            secondDiv.append(strong)
+                .append(small);
+            var p = $('<p/>').text(messageModel.Text);
+
+            div.append(secondDiv)
+                .append(p);
+            li.append(span)
+                .append(div);
+
+            $('#chat-container').append(li);
+        }
+
+        function showMessage(messageModel) {
+            var li = $('<li/>').addClass('right')
+                               .addClass('clearfix');
+
+            var span = $('<span/>').addClass('chat-img')
+                                    .addClass('pull-right');
+
+            var img = $('<img/>').attr('src', "http://placehold.it/50/FA6F57/fff&text=ME")
+                                .attr('alt', 'User Avatar')
+                                .addClass('img-circle');
+            span.html(img);
+
+            var div = $('<div/>').addClass('chat-body')
+                                .addClass('clearfix');
+
+            var secondDiv = $('<div/>').addClass('header');
+    
+            var small = $('<small/>').addClass('text-muted');
+            var secondSpan = $('<span/>').addClass('glyphicon')
+                                        .addClass('glyphicon-time');
+            small.html(secondSpan)
+                .append(messageModel.CreatedOn);
+            var strong = $('<strong/>').addClass('pull-right')
+                                .addClass('primary-font')
+                                .text(messageModel.FromUserName);
+            secondDiv.append(small)
+                    .append(strong);
+
+            var p = $('<p/>').text(messageModel.Text);
+
+            div.append(secondDiv)
+                .append(p);
+            li.append(span)
+                .append(div);
+
+            $('#chat-container').append(li);
+        }
+    </script>
+}
+@*<li class="right clearfix">
+    <span class="chat-img pull-right">
+        <img src="http://placehold.it/50/FA6F57/fff&text=ME" alt="User Avatar" class="img-circle" />
+    </span>
+    <div class="chat-body clearfix">
+        <div class="header">
+            <small class=" text-muted"><span class="glyphicon glyphicon-time"></span>@item.CreatedOn</small>
+            <strong class="pull-right primary-font">@item.FromUserName</strong>
+        </div>
+        <p>
+            @item.Text
+        </p>
+    </div>
+</li>*@

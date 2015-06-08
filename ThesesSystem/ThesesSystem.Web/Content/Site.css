@@ -16,14 +16,6 @@
     white-space: normal;
 }
 
-/* Set width on the form input elements since they're 100% wide by default */
-input,
-select,
-textarea {
-    max-width: 280px;
-}
-
-
 #black-footer {
     background: url(../Images/about.png) 50% 0 fixed;
     -moz-box-shadow: 0 0 50px rgba(0,0,0,0.8);
@@ -160,13 +152,100 @@ section.module.third {
 }
 
 
-
 .thumbnail {
     background-color: yellow;
     border: 3px solid white;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
     border-radius: 10px;
 }
 
 .navbar-brand img{
     height: 100%;
+}
+
+
+/* CHAT */
+#chat-window .chat
+{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+#chat-window .chat li
+{
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    border-bottom: 1px dotted #B3A9A9;
+}
+
+#chat-window .chat li.left .chat-body
+{
+    margin-left: 60px;
+}
+
+#chat-window .chat li.right .chat-body
+{
+    margin-right: 60px;
+}
+
+
+#chat-window .chat li .chat-body p
+{
+    margin: 0;
+    color: #777777;
+}
+
+#chat-window .panel .slidedown .glyphicon, .chat .glyphicon
+{
+    margin-right: 5px;
+}
+
+#chat-window .panel-body
+{
+    overflow-y: scroll;
+    height: 350px;
+}
+
+#chat-window textarea {
+    resize: none;
+    width: 100%;
+    margin: 10px auto;
+    -webkit-border-top-left-radius: 20px;
+    border-top-left-radius: 20px;
+    -webkit-border-bottom-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+}
+
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    -moz-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    background-color: #555;
+}
+
+::-webkit-scrollbar
+{
+    width: 12px;
+    background-color: #555;
+    
+}
+
+::-webkit-scrollbar-thumb {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+    -moz-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+    box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+    background-color: #F5F5F5;
+}
+
+#btn-send-message {
+    height: 100%;
+    -webkit-border-top-right-radius: 20px;
+    border-top-right-radius: 20px;
+    -webkit-border-bottom-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    -moz-box-shadow: 0 0 2px rgba(0, 0, 0, 0.6);
+    -webkit-box-shadow: 0 0 2px rgba(0, 0, 0, 0.6);
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.6);
 }
