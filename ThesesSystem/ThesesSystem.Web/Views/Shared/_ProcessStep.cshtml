@@ -1,0 +1,20 @@
+﻿@model ThesesSystem.Web.ViewModels.Partial.ProcessStepViewModel
+
+<div class="container-fluid">
+    <div class="process">
+        <div class="process-row">
+            <div class="process-step">
+                <button type="button" class='btn @( Model.CurrentStep == 1 ? "btn-danger" : "btn-default") btn-circle' disabled="disabled"><i class="fa fa-user fa-3x"></i></button>
+                <p>Регистрация</p>
+            </div>
+            <div class="process-step">
+                <button type="button" class='btn @( Model.CurrentStep == 2 ? "btn-danger" : "btn-default") btn-circle' disabled="disabled"><i class="fa fa-thumbs-up fa-3x"></i></button>
+                <p>Изчакване на потрвърждение от администратор</p>
+            </div>
+            <div class="process-step">
+                <button type="button" class='btn @( Model.CurrentStep == 3 ? "btn-danger" : "btn-default") btn-circle' disabled="disabled"><i class="fa fa-pencil-square-o fa-3x "></i></button>
+                <p>Завършване на регистрацията</p>
+            </div>
+        </div>
+    </div>
+</div>

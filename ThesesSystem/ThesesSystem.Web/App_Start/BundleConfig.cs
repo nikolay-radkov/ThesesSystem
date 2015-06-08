@@ -44,7 +44,8 @@ namespace ThesesSystem.Web
         private static void RegisterStyleBundels(BundleCollection bundles)
         {
             bundles.Add(new StyleBundle("~/Content/css")
-                .Include("~/Content/bootstrap.cosmo.css"));
+                .Include("~/Content/bootstrap.cosmo.css",
+                        "~/Content/font-awesome.min.css"));
 
             bundles.Add(new StyleBundle("~/Content/custom")
                 .Include("~/Content/site.css"));

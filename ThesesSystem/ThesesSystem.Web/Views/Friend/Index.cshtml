@@ -1,0 +1,50 @@
+﻿@using ThesesSystem.Web.ViewModels.Friends
+@model IList<FriendViewModel>
+@{
+    ViewBag.Title = "Приятели";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<div class="container">
+    <div class="row">
+        <div class="col-"></div>
+    </div>
+    @for (int i = 0; i < Model.Count; i++)
+    {
+        <div class="row text-center">
+            @for (int j = 0; j < 4; j++, i++)
+            {
+                if (i == Model.Count)
+                {
+                    break;
+                }
+                <div class="col-md-3 col-sm-3 col-xs-6 panel panel-default">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-12 ">
+                                <a href='@Url.Action("Account", "User", new { area = string.Empty, id = Model[j].Id })' class="text-center">
+                                    <strong>@Model[j].UserName</strong>
+                                    <br>
+                                    <span>@Model[j].FullName</span>
+                                </a>
+                                <img class="friend-profile img-thumbnail img-circle pull-left" src="~/Images/unknown.jpg">
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row">
+                            <div class="col-md-12">
+                                <a href='@Url.Action("Index", "Message", new { area = string.Empty, friendId = Model[j].Id })'>
+                                    <span class="glyphicon glyphicon-envelope"></span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        {
+            i--;
+        }
+    }
+</div>

@@ -226,6 +226,7 @@
     <Compile Include="Controllers\BaseControllers\AdmininistrationController.cs" />
     <Compile Include="Controllers\BaseControllers\AuthorizeController.cs" />
     <Compile Include="Controllers\BaseControllers\BaseController.cs" />
+    <Compile Include="Controllers\FriendController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MessageController.cs" />
@@ -247,6 +248,7 @@
     <Compile Include="Infrastructure\Mapping\IMapFrom.cs" />
     <Compile Include="ViewModels\AccountViewModels.cs" />
     <Compile Include="ViewModels\Faculties\FacultyDropDownListItemViewModel.cs" />
+    <Compile Include="ViewModels\Friends\FriendViewModel.cs" />
     <Compile Include="ViewModels\Home\HomeViewModel.cs" />
     <Compile Include="ViewModels\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -255,6 +257,7 @@
     <Compile Include="ViewModels\Message\FriendItemViewModel.cs" />
     <Compile Include="ViewModels\Message\MessageViewModel.cs" />
     <Compile Include="ViewModels\Partial\PaginationViewModel.cs" />
+    <Compile Include="ViewModels\Partial\ProcessStepViewModel.cs" />
     <Compile Include="ViewModels\Partial\StudentInfoViewModel.cs" />
     <Compile Include="ViewModels\Partial\StudentRegistrationViewModel.cs" />
     <Compile Include="ViewModels\Partial\TeacherInfoViewModel.cs" />
@@ -270,11 +273,17 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.cosmo.css" />
     <Content Include="Content\bootstrap.cosmo.min.css" />
+    <Content Include="Content\css\font-awesome.css" />
+    <Content Include="Content\css\font-awesome.min.css" />
+    <Content Include="Content\font-awesome.css" />
+    <Content Include="Content\font-awesome.min.css" />
+    <Content Include="Content\fonts\fontawesome-webfont.svg" />
     <Content Include="favicon.ico" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -287,6 +296,15 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Content\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\fonts\FontAwesome.otf" />
+    <Content Include="fonts\fontawesome-webfont.woff" />
+    <Content Include="fonts\fontawesome-webfont.ttf" />
+    <Content Include="fonts\fontawesome-webfont.eot" />
+    <Content Include="fonts\FontAwesome.otf" />
     <None Include="Scripts\jquery-2.1.4.intellisense.js" />
     <Content Include="Icon.png" />
     <Content Include="Images\about.png" />
@@ -367,6 +385,8 @@
     <Content Include="Views\Validation\_CompleteUserRegistrationPartial.cshtml" />
     <Content Include="Views\Validation\_CompleteTeacherRegistrationPartial.cshtml" />
     <Content Include="Views\Message\Index.cshtml" />
+    <Content Include="Views\Friend\Index.cshtml" />
+    <Content Include="Views\Shared\_ProcessStep.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Administration\ViewModels\" />
