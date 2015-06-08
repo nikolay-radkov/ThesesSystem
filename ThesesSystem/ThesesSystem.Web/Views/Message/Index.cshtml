@@ -14,7 +14,7 @@
                 <div class="col-md-12">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
-                            <span class="glyphicon glyphicon-comment"></span> Чат 1
+                            <span class="glyphicon glyphicon-comment"></span> @ViewData["ToUserName"]
                         </div>
                         <div class="panel-body">
                             <ul id="chat-container" class="chat">
@@ -259,11 +259,11 @@
                 chatCredentials.Text = msg;
 
                 chat.server.sendMessage(chatCredentials);
+                $('#message-to-send').val('');
             });
         }
 
         function registerClientMethods(chat) {
-
             chat.client.addMessage = addMessage;
             chat.client.showMessage = showMessage;
         }
@@ -344,17 +344,3 @@
         }
     </script>
 }
-@*<li class="right clearfix">
-    <span class="chat-img pull-right">
-        <img src="http://placehold.it/50/FA6F57/fff&text=ME" alt="User Avatar" class="img-circle" />
-    </span>
-    <div class="chat-body clearfix">
-        <div class="header">
-            <small class=" text-muted"><span class="glyphicon glyphicon-time"></span>@item.CreatedOn</small>
-            <strong class="pull-right primary-font">@item.FromUserName</strong>
-        </div>
-        <p>
-            @item.Text
-        </p>
-    </div>
-</li>*@

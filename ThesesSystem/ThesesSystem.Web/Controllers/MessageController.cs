@@ -32,9 +32,9 @@ namespace ThesesSystem.Web.Controllers
                                .To<MessageViewModel>()
                                .ToList();
 
-            var userId = this.User.Identity.GetUserId();
-
             ViewData["FromUserName"] = this.Data.Users.All().Where(u => u.Id == userId).Select(u => u.FirstName + " " + u.LastName).FirstOrDefault();
+            ViewData["ToUserName"] = this.Data.Users.All().Where(u => u.Id == friendId).Select(u => u.FirstName + " " + u.LastName).FirstOrDefault();
+           
             ViewData["ToUserId"] = friendId;
             ViewData["FromUserId"] = userId;
 
