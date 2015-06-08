@@ -12,79 +12,78 @@
         <div class="col-md-8">
             <div id="chat-window" class="row">
                 <div class="col-md-12">
-                    <div id='chat_@ViewData["ToUserId"]' class="panel panel-primary">
+                    <div id='chat_@ViewData["ToUserId"]' class="panel panel-success">
                         <div class="panel-heading">
                             <span class="glyphicon glyphicon-comment"></span> @ViewData["ToUserName"]
                         </div>
-                        @if (Model.Messages.Count == 0)
-                        {
-                            <h1>Изберете потребител, с когото да си комуникирате</h1>
-                        }
-                        else
-                        {
-                            <div id="chat-body" class="panel-body">
-                                <ul id="chat-container" class="chat">
-                                    @foreach (var item in Model.Messages)
+
+                        <div id="chat-body" class="panel-body">
+                            <ul id="chat-container" class="chat">
+                                @if (Model.Messages.Count == 0)
+                                {
+                                    <li><h2>Все още нямате съобщения</h2></li>
+                                }
+                                @foreach (var item in Model.Messages)
+                                {
+                                    if (this.User.Identity.GetUserId() == item.FromUserId)
                                     {
-                                        if (this.User.Identity.GetUserId() == item.FromUserId)
-                                        {
-                                            <li class="right clearfix">
-                                                <span class="chat-img pull-right">
-                                                    <img src="http://placehold.it/50/FA6F57/fff&text=ME" alt="User Avatar" class="img-circle" />
-                                                </span>
-                                                <div class="chat-body clearfix">
-                                                    <div class="header">
-                                                        <small class=" text-muted"><span class="glyphicon glyphicon-time"></span>@item.CreatedOn</small>
-                                                        <strong class="pull-right primary-font">@item.FromUserName</strong>
-                                                    </div>
-                                                    <p>
-                                                        @item.Text
-                                                    </p>
+                                        <li class="right clearfix">
+                                            <span class="chat-img pull-right">
+                                                <img src="http://placehold.it/50/FA6F57/fff&text=ME" alt="User Avatar" class="img-circle" />
+                                            </span>
+                                            <div class="chat-body clearfix">
+                                                <div class="header">
+                                                    <small class=" text-muted"><span class="glyphicon glyphicon-time"></span>@item.CreatedOn</small>
+                                                    <strong class="pull-right primary-font">@item.FromUserName</strong>
                                                 </div>
-                                            </li>
-                                        }
-                                        else
-                                        {
-                                            <li class="left clearfix">
-                                                <span class="chat-img pull-left">
-                                                    <img src="http://placehold.it/50/55C1E7/fff&text=U" alt="User Avatar" class="img-circle" />
-                                                </span>
-                                                <div class="chat-body clearfix">
-                                                    <div class="header">
-                                                        <strong class="primary-font">@item.FromUserName</strong> <small class="pull-right text-muted">
-                                                            <span class="glyphicon glyphicon-time"></span>@item.CreatedOn
-                                                        </small>
-                                                    </div>
-                                                    <p>
-                                                        @item.Text
-                                                    </p>
-                                                </div>
-                                            </li>
-                                        }
+                                                <p>
+                                                    @item.Text
+                                                </p>
+                                            </div>
+                                        </li>
                                     }
-                                </ul>
+                                    else
+                                    {
+                                        <li class="left clearfix">
+                                            <span class="chat-img pull-left">
+                                                <img src="http://placehold.it/50/55C1E7/fff&text=U" alt="User Avatar" class="img-circle" />
+                                            </span>
+                                            <div class="chat-body clearfix">
+                                                <div class="header">
+                                                    <strong class="primary-font">@item.FromUserName</strong> <small class="pull-right text-muted">
+                                                        <span class="glyphicon glyphicon-time"></span>@item.CreatedOn
+                                                    </small>
+                                                </div>
+                                                <p>
+                                                    @item.Text
+                                                </p>
+                                            </div>
+                                        </li>
+                                    }
+                                }
+                            </ul>
 
+                        </div>
+
+                        <div class="panel-footer">
+
+                            <div class="input-group">
+                                <textarea id="message-to-send" class="form-control" rows="2" placeholder="Въведете вашето съобщение..."></textarea>
+
+                                <span class="input-group-btn">
+                                    <input type="submit" id="btn-send-message" class="btn btn-warning" value="Изпрати" />
+
+                                </span>
                             </div>
+                        </div>
 
-                            <div class="panel-footer">
-
-                                <div class="input-group">
-                                    <textarea id="message-to-send" class="form-control" rows="2" placeholder="Въведете вашето съобщение..."></textarea>
-
-                                    <span class="input-group-btn">
-                                        <input type="submit" id="btn-send-message" class="btn btn-warning" value="Изпрати" />
-
-                                    </span>
-                                </div>
-                            </div>
-                        }
                     </div>
                 </div>
             </div>
 
         </div>
         <div class="col-md-4">
-            <div id="history-window" class="panel panel-primary">
+            <div id="history-window" class="panel panel-success">
                 <div class="panel-heading">
                     История
                 </div>
@@ -123,42 +122,42 @@
     <script src="/signalr/hubs"></script>
 
     <script>
-        $(function () {
-            var chatCointainer = $('#chat-body');
-            chatCointainer.animate({ scrollTop: chatCointainer[0].scrollHeight });
-            var chat = $.connection.chat;
-            registerClientMethods(chat);
+    $(function () {
+        var chatCointainer = $('#chat-body');
+        chatCointainer.animate({ scrollTop: chatCointainer[0].scrollHeight });
+        var chat = $.connection.chat;
+        registerClientMethods(chat);
 
-            $.connection.hub.start().done(function () {
-                registerEvents(chat)
-            });
+        $.connection.hub.start().done(function () {
+            registerEvents(chat)
         });
+    });
 
-        function registerEvents(chat) {
-            var chatCredentials = {
-                fromUserId: '@ViewData["FromUserId"]',
-                toUserId: '@ViewData["ToUserId"]',
-                fromUserName: '@ViewData["FromUserName"]'
-            };
+    function registerEvents(chat) {
+        var chatCredentials = {
+            fromUserId: '@ViewData["FromUserId"]',
+            toUserId: '@ViewData["ToUserId"]',
+            fromUserName: '@ViewData["FromUserName"]'
+        };
 
-            chat.server.connect(chatCredentials.fromUserId);
+        chat.server.connect(chatCredentials.fromUserId);
 
-            $('#btn-send-message').click(function () {
-                var msg = $('#message-to-send').val();
-                chatCredentials.Text = msg;
+        $('#btn-send-message').click(function () {
+            var msg = $('#message-to-send').val();
+            chatCredentials.Text = msg;
 
-                chat.server.sendMessage(chatCredentials);
-                $('#message-to-send').val('');
-            });
-        }
+            chat.server.sendMessage(chatCredentials);
+            $('#message-to-send').val('');
+        });
+    }
 
-        function registerClientMethods(chat) {
-            chat.client.addMessage = addMessage;
-            chat.client.showMessage = showMessage;
-        }
+    function registerClientMethods(chat) {
+        chat.client.addMessage = addMessage;
+        chat.client.showMessage = showMessage;
+    }
 
-        function addMessage(messageModel) {
-            if (messageModel.FromUserId == '@ViewData["ToUserId"]') {
+    function addMessage(messageModel) {
+        if (messageModel.FromUserId == '@ViewData["ToUserId"]') {
 
                 var li = $('<li/>')
                     .addClass('left')
@@ -217,10 +216,59 @@
                 var ul = $("ul#friends-container");
                 var li = ul.find('#friend_' + messageModel.FromUserId);
 
-                li.detach();
-                li.addClass('new-message');
+                if (li.length == 0) {
+                    var newLi = $('<li/>')
+                            .attr('id', 'friend_' + messageModel.FromUserId)
+                            .addClass('new-message');
 
-                ul.prepend(li);
+                    var newA = $('<a/>')
+                            .attr('href', '/Message?friendId=' + messageModel.FromUserId);
+                    var newDiv = $('<div/>')
+                        .addClass('media-body');
+
+                    var newSecondDive = $('<div/>')
+                        .addClass('media');
+
+                    var newSpan = $('<span/>')
+                        .addClass('pull-left');
+
+                    var newImg = $('<img/>')
+                        .attr('src', "/Images/unknown.jpg")
+                        .addClass('media-object')
+                        .addClass('img-circle')
+                        .css('max-height', '40px');
+
+                    newSpan.append(newImg);
+
+                    var newThirdDiv = $('<div/>')
+                        .addClass('media-body');
+
+                    var newH5 = $('<h5/>')
+                        .text(messageModel.FromUserName);
+
+                    var newSmall = $('<small/>')
+                        .text(messageModel.CreatedOn);
+
+                    newThirdDiv.append(newH5)
+                                .append(newSmall);
+
+                    newSecondDive.append(newSpan)
+                                .append(newThirdDiv);
+
+                    newDiv.append(newSecondDive);
+
+                    newA.append(newDiv);
+
+                    newLi.append(newA);
+                        
+                    ul.prepend(newLi);
+                } else {
+
+                    li.detach();
+                    li.addClass('new-message');
+
+                    ul.prepend(li);
+                }
             }
         }
 

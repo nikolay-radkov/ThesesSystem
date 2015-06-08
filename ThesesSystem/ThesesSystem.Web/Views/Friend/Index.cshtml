@@ -13,38 +13,45 @@
     @for (int i = 0; i < Model.Count; i++)
     {
         <div class="row text-center">
-            @for (int j = 0; j < 4; j++, i++)
+            @for (int j = 0; j < 3; j++, i++)
             {
                 if (i == Model.Count)
                 {
                     break;
                 }
-                <div class="col-md-3 col-sm-3 col-xs-6 panel panel-default">
-                    <div class="panel-body">
-                        <div class="row">
-                            <div class="col-md-12 ">
-                                <a href='@Url.Action("Account", "User", new { area = string.Empty, id = Model[j].Id })' class="text-center">
-                                    <strong>@Model[j].UserName</strong>
-                                    <br>
-                                    <span>@Model[j].FullName</span>
-                                </a>
-                                <img class="friend-profile img-thumbnail img-circle pull-left" src="~/Images/unknown.jpg">
-                            </div>
-                        </div>
-                        <hr />
-                        <div class="row">
-                            <div class="col-md-12">
-                                <a href='@Url.Action("Index", "Message", new { area = string.Empty, friendId = Model[j].Id })'>
-                                    <span class="glyphicon glyphicon-envelope"></span>
-                                </a>
+
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                    <div class="form_hover" style="background-color: #ffffff;">
+                        <p style="text-align: center; margin-top: 20px;">
+                            <i class="fa fa-user" style="font-size: 147px;"></i>
+                        </p>
+                        <div class="header">
+                            <div class="header-text">
+                                <div class="panel panel-success" style="height: 247px;">
+                                    <div class="panel-heading">
+                                        <h3><strong>@Model[j].FullName</strong></h3>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="form-group">
+                                            Е-поща:<b>@Model[j].UserName</b>
+                                        </div>
+                                        <hr />
+                                        <div class="form-group">
+                                            <a href='@Url.Action("Account", "User", new { area = string.Empty, id = Model[j].Id })' class="btn btn-danger">Профил <i class="fa fa-user fa-1x"></i></a>
+
+                                            <a href='@Url.Action("Index", "Message", new { area = string.Empty, friendId = Model[j].Id })' class="btn btn-danger">Чат <i class="fa fa-comments fa-1x"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             }
         </div>
-        {
-            i--;
-        }
+        <br />
+            {
+                i--;
+            }
     }
 </div>

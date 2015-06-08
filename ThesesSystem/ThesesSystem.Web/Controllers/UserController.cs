@@ -30,15 +30,7 @@
             var currentUserId = User.Identity.GetUserId();
             var currentUser = this.Data.Users.All().FirstOrDefault(u => u.Id == currentUserId);
 
-
             userViewModel.IsFriend = currentUser.Friends.Where(u => u.Id == id).Count() != 0;
-
-            // adim -> verify user
-            // loking teacher profile
-            // loking user profile
-
-            // Add/Remove friend
-            // Send message
 
             return View(userViewModel);
         }
