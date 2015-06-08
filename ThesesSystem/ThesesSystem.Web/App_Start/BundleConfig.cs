@@ -38,6 +38,7 @@ namespace ThesesSystem.Web
 
             bundles.Add(new ScriptBundle("~/bundles/signalr")
                 .Include("~/Scripts/jquery.signalR-2.2.0.min.js"));
+            
         }
 
         private static void RegisterStyleBundels(BundleCollection bundles)

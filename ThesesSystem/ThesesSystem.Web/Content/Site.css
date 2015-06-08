@@ -202,10 +202,10 @@ section.module.third {
     margin-right: 5px;
 }
 
-#chat-window .panel-body
+#chat-window .panel-body, #history-window .panel-body
 {
     overflow-y: scroll;
-    height: 350px;
+    max-height: 350px;
 }
 
 #chat-window textarea {
@@ -248,4 +248,8 @@ section.module.third {
     -moz-box-shadow: 0 0 2px rgba(0, 0, 0, 0.6);
     -webkit-box-shadow: 0 0 2px rgba(0, 0, 0, 0.6);
     box-shadow: 0 0 2px rgba(0, 0, 0, 0.6);
+}
+
+.new-message {
+    background-color: chartreuse;
 }

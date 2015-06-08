@@ -8,10 +8,8 @@ namespace ThesesSystem.Web.ViewModels.Message
 {
     public class ChatViewModel
     {
-        public string FromUserId { get; set; }
+        public ICollection<FriendItemViewModel> FriendsList { get; set; }
 
-        public string ToUserId { get; set; }
-
-        public string FromUser { get; set; }
+        public ICollection<MessageViewModel> Messages { get; set; }
     }
 }

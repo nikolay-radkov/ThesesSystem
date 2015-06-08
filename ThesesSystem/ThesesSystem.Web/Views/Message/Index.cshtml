@@ -1,6 +1,6 @@
 ﻿@using Microsoft.AspNet.Identity
 @using ThesesSystem.Web.ViewModels.Message
-@model ICollection<MessageViewModel>
+@model ChatViewModel
 
 @{
     ViewBag.Title = "Съобщения";
@@ -12,13 +12,13 @@
         <div class="col-md-8">
             <div id="chat-window" class="row">
                 <div class="col-md-12">
-                    <div class="panel panel-primary">
+                    <div id='chat_@ViewData["ToUserId"]' class="panel panel-primary">
                         <div class="panel-heading">
                             <span class="glyphicon glyphicon-comment"></span> @ViewData["ToUserName"]
                         </div>
-                        <div class="panel-body">
+                        <div id="chat-body" class="panel-body">
                             <ul id="chat-container" class="chat">
-                                @foreach (var item in Model)
+                                @foreach (var item in Model.Messages)
                                 {
                                     if (this.User.Identity.GetUserId() == item.FromUserId)
                                     {
@@ -75,149 +75,32 @@
 
         </div>
         <div class="col-md-4">
-            <div class="panel panel-primary">
+            <div id="history-window" class="panel panel-primary">
                 <div class="panel-heading">
-                    Приятели
+                    История
                 </div>
                 <div class="panel-body">
-                    <ul class="media-list">
-
-                        <li class="media">
-
-                            <div class="media-body">
-
-                                <div class="media">
-                                    <a class="pull-left" href="#">
-                                        <img class="media-object img-circle" style="max-height:40px;" src="assets/img/user.png" />
-                                    </a>
+                    <ul id="friends-container" class="media-list">
+                        @foreach (var item in Model.FriendsList)
+                        {
+                            <li id='friend_@item.FromUserId' class='media @(item.IsSeen ? "" : "new-message")'>
+                                <a href='@Url.Action("Index", "Message", new { friendId = item.FromUserId })'>
                                     <div class="media-body">
-                                        <h5>Alex Deo | User </h5>
 
-                                        <small class="text-muted">Active From 3 hours</small>
+                                        <div class="media">
+                                            <span class="pull-left">
+                                                <img class="media-object img-circle" style="max-height:40px;" src="~/Images/unknown.jpg" />
+                                            </span>
+                                            <div class="media-body">
+                                                <h5>@item.FromUserName</h5>
+                                                <small>@item.CreatedOn</small>
+                                            </div>
+                                        </div>
+
                                     </div>
-                                </div>
-
-                            </div>
-                        </li>
-                        <li class="media">
-
-                            <div class="media-body">
-
-                                <div class="media">
-                                    <a class="pull-left" href="#">
-                                        <img class="media-object img-circle" style="max-height:40px;" src="assets/img/user.gif" />
-                                    </a>
-                                    <div class="media-body">
-                                        <h5>Jhon Rexa | User </h5>
-
-                                        <small class="text-muted">Active From 3 hours</small>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </li>
-                        <li class="media">
-
-                            <div class="media-body">
-
-                                <div class="media">
-                                    <a class="pull-left" href="#">
-                                        <img class="media-object img-circle" style="max-height:40px;" src="assets/img/user.png" />
-                                    </a>
-                                    <div class="media-body">
-                                        <h5>Alex Deo | User </h5>
-
-                                        <small class="text-muted">Active From 3 hours</small>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </li>
-                        <li class="media">
-
-                            <div class="media-body">
-
-                                <div class="media">
-                                    <a class="pull-left" href="#">
-                                        <img class="media-object img-circle" style="max-height:40px;" src="assets/img/user.gif" />
-                                    </a>
-                                    <div class="media-body">
-                                        <h5>Jhon Rexa | User </h5>
-
-                                        <small class="text-muted">Active From 3 hours</small>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </li>
-                        <li class="media">
-
-                            <div class="media-body">
-
-                                <div class="media">
-                                    <a class="pull-left" href="#">
-                                        <img class="media-object img-circle" style="max-height:40px;" src="assets/img/user.png" />
-                                    </a>
-                                    <div class="media-body">
-                                        <h5>Alex Deo | User </h5>
-
-                                        <small class="text-muted">Active From 3 hours</small>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </li>
-                        <li class="media">
-
-                            <div class="media-body">
-
-                                <div class="media">
-                                    <a class="pull-left" href="#">
-                                        <img class="media-object img-circle" style="max-height:40px;" src="assets/img/user.gif" />
-                                    </a>
-                                    <div class="media-body">
-                                        <h5>Jhon Rexa | User </h5>
-
-                                        <small class="text-muted">Active From 3 hours</small>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </li>
-                        <li class="media">
-
-                            <div class="media-body">
-
-                                <div class="media">
-                                    <a class="pull-left" href="#">
-                                        <img class="media-object img-circle" style="max-height:40px;" src="assets/img/user.png" />
-                                    </a>
-                                    <div class="media-body">
-                                        <h5>Alex Deo | User </h5>
-
-                                        <small class="text-muted">Active From 3 hours</small>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </li>
-                        <li class="media">
-
-                            <div class="media-body">
-
-                                <div class="media">
-                                    <a class="pull-left" href="#">
-                                        <img class="media-object img-circle" style="max-height:40px;" src="assets/img/user.gif" />
-                                    </a>
-                                    <div class="media-body">
-                                        <h5>Jhon Rexa | User </h5>
-
-                                        <small class="text-muted">Active From 3 hours</small>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </li>
+                                </a>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>
@@ -229,23 +112,20 @@
 @section scripts {
     @Scripts.Render("~/bundles/signalr")
     <script src="/signalr/hubs"></script>
+
     <script>
-
         $(function () {
-
+            var chatCointainer = $('#chat-body');
+            chatCointainer.animate({ scrollTop: chatCointainer[0].scrollHeight });
             var chat = $.connection.chat;
-
             registerClientMethods(chat);
 
             $.connection.hub.start().done(function () {
-
                 registerEvents(chat)
-
             });
         });
 
         function registerEvents(chat) {
-
             var chatCredentials = {
                 fromUserId: '@ViewData["FromUserId"]',
                 toUserId: '@ViewData["ToUserId"]',
@@ -269,40 +149,70 @@
         }
 
         function addMessage(messageModel) {
-            var li = $('<li/>').addClass('left')
-                               .addClass('clearfix');
+            if (messageModel.FromUserId == '@ViewData["ToUserId"]') {
 
-            var span = $('<span/>').addClass('chat-img')
-                                    .addClass('pull-left');
+                var li = $('<li/>')
+                    .addClass('left')
+                    .addClass('clearfix');
 
-            var img = $('<img/>').attr('src', "http://placehold.it/50/55C1E7/fff&text=U")
-                                .attr('alt', 'User Avatar')
-                                .addClass('img-circle');
-            span.html(img);
+                var span = $('<span/>')
+                    .addClass('chat-img')
+                    .addClass('pull-left');
 
-            var div = $('<div/>').addClass('chat-body')
-                                .addClass('clearfix');
+                var img = $('<img/>')
+                    .attr('src', "http://placehold.it/50/55C1E7/fff&text=U")
+                    .attr('alt', 'User Avatar')
+                    .addClass('img-circle');
 
-            var secondDiv = $('<div/>').addClass('header');
-            var strong = $('<strong/>').addClass('primary-font')
-                                        .text(messageModel.FromUserName);
-            var small = $('<small/>').addClass('pull-right')
-                                    .addClass('text-muted');
-            var secondSpan = $('<span/>').addClass('glyphicon')
-                                        .addClass('glyphicon-time');
-            small.html(secondSpan)
-                .append(messageModel.CreatedOn);
+                span.html(img);
 
-            secondDiv.append(strong)
-                .append(small);
-            var p = $('<p/>').text(messageModel.Text);
+                var div = $('<div/>')
+                    .addClass('chat-body')
+                    .addClass('clearfix');
 
-            div.append(secondDiv)
-                .append(p);
-            li.append(span)
-                .append(div);
+                var secondDiv = $('<div/>')
+                    .addClass('header');
 
-            $('#chat-container').append(li);
+                var strong = $('<strong/>')
+                    .addClass('primary-font')
+                    .text(messageModel.FromUserName);
+
+                var small = $('<small/>')
+                    .addClass('pull-right')
+                    .addClass('text-muted');
+
+                var secondSpan = $('<span/>')
+                    .addClass('glyphicon')
+                    .addClass('glyphicon-time');
+
+                small.html(secondSpan)
+                    .append(messageModel.CreatedOn);
+
+                secondDiv.append(strong)
+                    .append(small);
+
+                var p = $('<p/>')
+                    .text(messageModel.Text);
+
+                div.append(secondDiv)
+                    .append(p);
+
+                li.append(span)
+                    .append(div);
+
+                $('#chat-container').append(li);
+
+                var chatCointainer = $('#chat-body');
+                chatCointainer.animate({ scrollTop: chatCointainer[0].scrollHeight });
+            } else {
+                var ul = $("ul#friends-container");
+                var li = ul.find('#friend_' + messageModel.FromUserId);
+
+                li.detach();
+                li.addClass('new-message');
+
+                ul.prepend(li);
+            }
         }
 
         function showMessage(messageModel) {
@@ -321,7 +231,7 @@
                                 .addClass('clearfix');
 
             var secondDiv = $('<div/>').addClass('header');
-    
+
             var small = $('<small/>').addClass('text-muted');
             var secondSpan = $('<span/>').addClass('glyphicon')
                                         .addClass('glyphicon-time');
@@ -341,6 +251,9 @@
                 .append(div);
 
             $('#chat-container').append(li);
+
+            var chatCointainer = $('#chat-body');
+            chatCointainer.animate({ scrollTop: chatCointainer[0].scrollHeight });
         }
     </script>
 }
