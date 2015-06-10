@@ -21,7 +21,7 @@
                 }
 
                 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                    <div class="form_hover" style="background-color: #ffffff;">
+                    <div class="form_hover shadowed" style="background-color: #ffffff;">
                         <p style="text-align: center; margin-top: 20px;">
                             <i class="fa fa-user" style="font-size: 147px;"></i>
                         </p>
@@ -29,17 +29,17 @@
                             <div class="header-text">
                                 <div class="panel panel-success" style="height: 247px;">
                                     <div class="panel-heading">
-                                        <h3><strong>@Model[j].FullName</strong></h3>
+                                        <h3><strong>@Model[i].FullName</strong></h3>
                                     </div>
                                     <div class="panel-body">
                                         <div class="form-group">
-                                            Е-поща:<b>@Model[j].UserName</b>
+                                            Е-поща:<b>@Model[i].UserName</b>
                                         </div>
                                         <hr />
                                         <div class="form-group">
-                                            <a href='@Url.Action("Account", "User", new { area = string.Empty, id = Model[j].Id })' class="btn btn-danger">Профил <i class="fa fa-user fa-1x"></i></a>
+                                            <a href='@Url.Action("Account", "User", new { area = string.Empty, id = Model[i].Id })' class="btn btn-danger">Профил <i class="fa fa-user fa-1x"></i></a>
 
-                                            <a href='@Url.Action("Index", "Message", new { area = string.Empty, friendId = Model[j].Id })' class="btn btn-danger">Чат <i class="fa fa-comments fa-1x"></i></a>
+                                            <a href='@Url.Action("Index", "Message", new { area = string.Empty, friendId = Model[i].Id })' class="btn btn-danger">Чат <i class="fa fa-comments fa-1x"></i></a>
                                         </div>
                                     </div>
                                 </div>

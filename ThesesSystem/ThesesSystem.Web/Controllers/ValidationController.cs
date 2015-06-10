@@ -33,7 +33,6 @@ namespace ThesesSystem.Web.Controllers
         [Authorize(Roles = GlobalConstants.NOT_VERIFIED_USER)]
         public async Task<ActionResult> NotVerified()
         {
-            // TODO: redirect if is verified
             var id = this.User.Identity.GetUserId();
             var user = this.Data.Users.GetById(id);
 
@@ -128,7 +127,6 @@ namespace ThesesSystem.Web.Controllers
         [Authorize(Roles = GlobalConstants.NOT_COMPLETE_USER)]
         public async Task<ActionResult> CompleteTeacherRegistration(string id, TeacherInfoViewModel model)
         {
-            //TODO: Implement view
             if (ModelState.IsValid)
             {
                 var user = this.Data.Users.GetById(id);
