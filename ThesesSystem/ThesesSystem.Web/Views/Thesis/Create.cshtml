@@ -1,0 +1,83 @@
+﻿@model ThesesSystem.Web.ViewModels.Theses.CreateThesisViewModel
+@{
+    ViewBag.Title = "Създаване на нова дипломна работа";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm("Create", "Thesis", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <hr />
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(m => m.Title, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.Title, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Description, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.Description, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.SupervisorId, "FacultyId", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("SupervisorId", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.SupervisorId, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <hr />
+
+    <div>
+        <button id="btn-add-part" class="btn btn-success">Добави част</button>
+    </div>
+    <div id="parts"></div>
+
+
+    <input type="submit" name="name" value="Създай" />
+}
+
+@section scripts
+{
+    <script>
+        $("#btn-add-part").on("click", addRow);
+
+        function addRow() {
+
+            @{
+                Model.ThesisParts.Add(new ThesesSystem.Web.ViewModels.ThesisPart.CreateThesisPartViewModel());
+            }
+
+            var index = $("#parts").children("div").length;
+
+            var row = $("<div/>")
+                        .addClass("form-group");
+            var label = $("<label/>")
+                        .text("Част " + (index + 1))
+                        .attr("for", 'ThesisParts_' + index + '__Title')
+                        .addClass("col-md-2 control-label");
+
+            var div = $("<div/>")
+                        .addClass("col-md-10");
+
+            var input = $("<input/>")
+                            .attr("type", "text")
+                            .attr("id", "ThesisParts_" + index + "__Title")
+                            .attr("name", "ThesisParts[" + index + "].Title")
+                            .attr("required", "required")
+                            .addClass("form-control");
+            div.append(input);
+
+            row.append(label)
+                .append(div);
+
+            $("#parts").append(row);
+        }
+    </script>
+}

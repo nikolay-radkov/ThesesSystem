@@ -94,7 +94,6 @@ namespace ThesesSystem.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-
                 var user = this.Data.Users.GetById(id);
 
                 if (user == null)

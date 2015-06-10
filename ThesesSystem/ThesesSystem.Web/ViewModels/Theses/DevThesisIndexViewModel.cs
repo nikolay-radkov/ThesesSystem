@@ -38,7 +38,7 @@ namespace ThesesSystem.Web.ViewModels.Theses
               .ForMember(u => u.SupervisorName, opt => opt.MapFrom(u => u.Supervisor.User.FirstName + " " + u.Supervisor.User.LastName))
               .ForMember(u => u.DaysDeveloping, opt => opt.MapFrom(u => DbFunctions.DiffDays(u.CreatedOn, DateTime.Now)))
               .ForMember(u => u.CompletedPercent, opt => opt.MapFrom(u => 
-                  u.ThesisParts.Count == 0 ? 0 : (u.ThesisParts.Where(p => p.Flag == ThesisFlag.Complete).Count() / (u.ThesisParts.Count)) * 100));
+                  u.ThesisParts.Count() == 0 ? 0 : (int)(u.ThesisParts.Where(p => p.Flag == ThesisFlag.Complete).Count() / (double)u.ThesisParts.Count() * 100)));
         }
     }
 }

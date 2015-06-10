@@ -6,9 +6,12 @@
 <div class="container">
     <div class="row">
         <div class="col-md-9"><h2>@ViewBag.Title</h2></div>
-        <div class="col-md-2">
-            @Html.ActionLink("Нова дипломна работа", "Create", "Thesis", new { area = string.Empty }, new { @class = "btn btn-lg btn-primary shadowed" })
-        </div>
+        @if (this.User.IsInRole(ThesesSystem.Web.Infrastructure.Constants.GlobalConstants.STUDENT))
+        {
+            <div class="col-md-2">
+                @Html.ActionLink("Нова дипломна работа", "Create", "Thesis", new { area = string.Empty }, new { @class = "btn btn-lg btn-primary shadowed" })
+            </div>
+        }
         <br />
     </div>
     <div class="row">
@@ -18,7 +21,7 @@
                 <li class="col-md-3">
                     <div class="thumbnail shadowed" style="padding: 0">
                         <div class="caption">
-                            <h2>@Html.ActionLink(@item.Title, "Profile", "Thesis", new { area = string.Empty, id = item.Id }, new { @class = string.Empty })</h2>
+                            <h2>@Html.ActionLink(@item.Title, "ThesisProfile", "Thesis", new { area = string.Empty, id = item.Id }, new { @class = string.Empty })</h2>
                             <p>@item.Description</p>
                             <p><i class="fa fa-user fa-2x"></i> Студент: @Html.ActionLink(item.StudentName, "Account", "User", new { area = string.Empty, id = item.StudentId }, new { @class = string.Empty })</p>
                             <p><i class="fa fa-user fa-2x"></i> Студент: @Html.ActionLink(item.SupervisorName, "Account", "User", new { area = string.Empty, id = item.SupervisorId }, new { @class = string.Empty })</p>

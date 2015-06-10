@@ -264,10 +264,13 @@
     <Compile Include="ViewModels\Partial\TeacherInfoViewModel.cs" />
     <Compile Include="ViewModels\Specialties\SpecialtyDropDownListItemViewModel.cs" />
     <Compile Include="ViewModels\Students\OksViewModel.cs" />
-    <Compile Include="ViewModels\Students\StudentProfileViewModel.cs" />
+    <Compile Include="ViewModels\Teacher\SupervisorDropDownListITemViewModel.cs" />
+    <Compile Include="ViewModels\Theses\CreateThesisViewModel.cs" />
     <Compile Include="ViewModels\Theses\DevThesisIndexViewModel.cs" />
+    <Compile Include="ViewModels\Theses\DevThesisProfileViewModel.cs" />
     <Compile Include="ViewModels\Theses\ThesisProfileViewModel.cs" />
     <Compile Include="ViewModels\Theses\ThesisViewModel.cs" />
+    <Compile Include="ViewModels\ThesisPart\CreateThesisPartViewModel.cs" />
     <Compile Include="ViewModels\Users\UserProfileViewModel.cs" />
     <Compile Include="ViewModels\Users\VerificationType.cs" />
     <Compile Include="ViewModels\Users\VerificationViewModel.cs" />
@@ -394,6 +397,8 @@
     <Content Include="Views\Friend\Index.cshtml" />
     <Content Include="Views\Shared\_ProcessStep.cshtml" />
     <Content Include="Views\Thesis\Index.cshtml" />
+    <Content Include="Views\Thesis\Create.cshtml" />
+    <Content Include="Views\Thesis\Profile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Administration\ViewModels\" />
