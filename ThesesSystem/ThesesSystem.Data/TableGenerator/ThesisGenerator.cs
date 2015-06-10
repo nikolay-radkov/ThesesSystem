@@ -1,11 +1,9 @@
 ﻿namespace ThesesSystem.Data.TableGenerator
 {
-    using Microsoft.AspNet.Identity;
     using System;
-    using System.Collections.Generic;
+    using System.Linq;
     using ThesesSystem.Common.DataGenerators;
     using ThesesSystem.Models;
-    using System.Linq;
 
     public class ThesisGenerator : TableGenerator, ITableGenerator
     {
@@ -18,7 +16,7 @@
         public override void Generate()
         {
             var userIds = this.Context.Users
-                .Where(u => u.Student != null)            
+                .Where(u => u.Student != null)
                 .Select(u => u.Id).ToArray();
 
             var supervisorIds = this.Context.Users
@@ -30,7 +28,8 @@
                 var thesis = new Thesis()
                 {
                     FinalEvaluation = (float)this.Generator.GenerateRealNumber(2, 6),
-                    FinishedAt = DateTime.Now.AddDays(this.Generator.GenerateNumber(2,400)),
+                    FinishedAt = DateTime.Now.AddDays(this.Generator.GenerateNumber(2, 400)),
+                    Description = this.Generator.GenerateString(3, 30),
                     StudentId = userIds[index],
                     Title = this.Generator.GenerateString(3, 30),
                     SupervisorId = supervisorIds[index],
@@ -43,7 +42,7 @@
 
             this.Context.SaveChanges();
 
-           for (int index = 0; index < this.Count / 2; index++)
+            for (int index = 0; index < this.Count / 2; index++)
             {
                 var thesis = new Thesis()
                 {

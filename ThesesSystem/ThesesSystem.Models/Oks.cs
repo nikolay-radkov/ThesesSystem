@@ -1,9 +1,16 @@
 ﻿namespace ThesesSystem.Models
 {
+    using System.ComponentModel.DataAnnotations;
+
     public enum Oks
     {
+        [Display(Name="Бакалавър")]
         Bachelor,
 
-        Master
+        [Display(Name="Магистър")]
+        Master,
+
+        [Display(Name="Доктор")]
+        Doctor
     }
 }

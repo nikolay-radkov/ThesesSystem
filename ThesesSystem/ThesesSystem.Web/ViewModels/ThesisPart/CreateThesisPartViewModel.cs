@@ -7,6 +7,7 @@
     public class CreateThesisPartViewModel : IMapFrom<ThesisPart>, IHaveCustomMappings
     {
         [Display(Name="Част")]
+        [Required]
         public string Title { get; set; }
 
         public void CreateMappings(AutoMapper.IConfiguration configuration)

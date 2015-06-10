@@ -37,10 +37,17 @@
     <div>
         <button id="btn-add-part" class="btn btn-success">Добави част</button>
     </div>
-    <div id="parts"></div>
+    <div id="parts">
+        <div class="form-group">
+            <label for="ThesisParts_0__Title" class="col-md-2 control-label">Част 1</label>
+            <div class="col-md-10">
+                <input type="text" id="ThesisParts_0__Title" name="ThesisParts[0].Title" required="required" class="form-control">
+            </div>
+        </div>
+    </div>
 
 
-    <input type="submit" name="name" value="Създай" />
+    <input type="submit" name="name" value="Създай" class="btn btn-danger"/>
 }
 
 @section scripts

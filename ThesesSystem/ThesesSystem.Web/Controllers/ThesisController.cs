@@ -42,13 +42,14 @@ namespace ThesesSystem.Web.Controllers
             // TODO: Add more new parts
             // TODO: delete the thesis
             // TODO: Add reviewer and admin
+           
             var userId = this.User.Identity.GetUserId();
 
             var thesis = this.Data.Theses.GetById(id);
 
             if (thesis.SupervisorId == userId || thesis.StudentId == userId)
             {
-             
+             // TODO: implement logic
                 return View();
             }
             else

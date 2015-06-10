@@ -1,5 +1,6 @@
 ﻿namespace ThesesSystem.Models
 {
+    using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
@@ -21,8 +22,10 @@
 
         public virtual Oks Oks { get; set; }
 
+
         public int SpecialtyId { get; set; }
 
+        [Range(1, 100)]
         public int SpecialtyGroup { get; set; }
 
         public virtual Specialty Specialty { get; set; }

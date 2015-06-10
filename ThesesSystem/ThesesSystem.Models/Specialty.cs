@@ -1,5 +1,6 @@
 ﻿namespace ThesesSystem.Models
 {
+    using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
@@ -21,6 +22,7 @@
         [StringLength(20)]
         [MinLength(1)]
         public string Title { get; set; }
+
 
         public int FacultyId { get; set; }
 

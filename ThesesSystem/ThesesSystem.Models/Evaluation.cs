@@ -10,8 +10,10 @@
         [ForeignKey("Thesis")]
         public int Id { get; set; }
 
+        [Range(2,6)]
         public float Mark { get; set; }
 
+        [Required]
         public string FilePath { get; set; }
 
         [ForeignKey("Reviewer")]

@@ -13,11 +13,14 @@
             this.ThesisParts = new HashSet<CreateThesisPartViewModel>();
         }
 
+        [Required]
         public string SupervisorId { get; set; }
 
+        [Required]
         [Display(Name = "Заглавие")]
         public string Title { get; set; }
 
+        [Required]
         [Display(Name = "Кратко описание")]
         public string Description { get; set; }
 

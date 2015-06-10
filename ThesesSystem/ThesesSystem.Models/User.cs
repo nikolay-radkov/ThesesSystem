@@ -6,6 +6,7 @@
 
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.EntityFramework;
+    using System.ComponentModel.DataAnnotations;
 
     public class User : IdentityUser
     {
@@ -22,19 +23,18 @@
             this.toUserMessages = new HashSet<Message>();
         }
 
-        // TODO: Add user's fields
-        //[Required]
-        //[StringLength(20)]
-        //[MinLength(2)]
+        [Required]
+        [StringLength(20)]
+        [MinLength(2)]
         public string FirstName { get; set; }
 
-        //[StringLength(20)]
-        //[MinLength(2)]
+        [StringLength(20)]
+        [MinLength(2)]
         public string MiddleName { get; set; }
 
-        //[Required]
-        //[StringLength(20)]
-        //[MinLength(2)] 
+        [Required]
+        [StringLength(20)]
+        [MinLength(2)] 
         public string LastName { get; set; }
 
         public long EGN { get; set; }

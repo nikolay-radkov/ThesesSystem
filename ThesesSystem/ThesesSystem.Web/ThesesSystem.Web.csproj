@@ -398,7 +398,7 @@
     <Content Include="Views\Shared\_ProcessStep.cshtml" />
     <Content Include="Views\Thesis\Index.cshtml" />
     <Content Include="Views\Thesis\Create.cshtml" />
-    <Content Include="Views\Thesis\Profile.cshtml" />
+    <Content Include="Views\Thesis\ThesisProfile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Administration\ViewModels\" />
