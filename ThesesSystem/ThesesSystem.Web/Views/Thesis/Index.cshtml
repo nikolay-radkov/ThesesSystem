@@ -1,0 +1,43 @@
+﻿@model ICollection<ThesesSystem.Web.ViewModels.Theses.DevThesisIndexViewModel>
+@{
+    ViewBag.Title = "Разработка";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-9"><h2>@ViewBag.Title</h2></div>
+        <div class="col-md-2">
+            @Html.ActionLink("Нова дипломна работа", "Create", "Thesis", new { area = string.Empty }, new { @class = "btn btn-lg btn-primary shadowed" })
+        </div>
+        <br />
+    </div>
+    <div class="row">
+        <ul class="thumbnails list-unstyled">
+            @foreach (var item in Model)
+            {
+                <li class="col-md-3">
+                    <div class="thumbnail shadowed" style="padding: 0">
+                        <div class="caption">
+                            <h2>@Html.ActionLink(@item.Title, "Profile", "Thesis", new { area = string.Empty, id = item.Id }, new { @class = string.Empty })</h2>
+                            <p>@item.Description</p>
+                            <p><i class="fa fa-user fa-2x"></i> Студент: @Html.ActionLink(item.StudentName, "Account", "User", new { area = string.Empty, id = item.StudentId }, new { @class = string.Empty })</p>
+                            <p><i class="fa fa-user fa-2x"></i> Студент: @Html.ActionLink(item.SupervisorName, "Account", "User", new { area = string.Empty, id = item.SupervisorId }, new { @class = string.Empty })</p>
+                        </div>
+                        <div class="modal-footer" style="text-align: left">
+                            <div class="progress">
+                                <div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="@item.CompletedPercent" aria-valuemin="0" aria-valuemax="100" style="width: @item.CompletedPercent%;">
+                                    @item.CompletedPercent%
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4"><b>ОКС</b><br /><small>@item.Oks</small></div>
+                                <div class="col-md-4"><b>Дни на разработка</b><br /><small>@item.DaysDeveloping</small></div>
+                            </div>
+                        </div>
+                    </div>
+
+                </li>
+            }
+        </ul>
+    </div>
+</div>

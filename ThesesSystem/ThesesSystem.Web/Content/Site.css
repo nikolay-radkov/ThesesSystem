@@ -1,11 +1,14 @@
-﻿body, .body-content {
+﻿body {
+    background: url("../Images/background 1.png") repeat;
+}
+
+body, .body-content {
     padding: 0;
     margin: 0;
 }
 
 .body-content {
     margin-top: 50px;
-
     width: 100%;
 }
 
@@ -52,84 +55,81 @@ section.module.third {
     color: #ffffff;
 }
 
-    section.module:last-child {
-        margin-bottom: 0;
-    }
+section.module:last-child {
+    margin-bottom: 0;
+}
 
-    section.module h2 {
-        margin-bottom: 20px;
-        font-family: "Roboto Slab", serif;
-        font-size: 30px;
-    }
+section.module h2 {
+    margin-bottom: 20px;
+    font-family: "Roboto Slab", serif;
+    font-size: 30px;
+}
 
-    section.module p {
-        margin-bottom: 40px;
-        font-size: 16px;
-        font-weight: 300;
-    }
+section.module p {
+    margin-bottom: 40px;
+    font-size: 16px;
+    font-weight: 300;
+}
 
-    section.module .glyphicon {
-        border: 2px solid #FFFFFF;
-        border-radius: 50%;
-        display: inline-block;
-        font-size: 60px;
-        height: 140px;
-        line-height: 140px;
+section.module .glyphicon {
+    border: 2px solid #FFFFFF;
+    border-radius: 50%;
+    display: inline-block;
+    font-size: 60px;
+    height: 140px;
+    line-height: 140px;
+    text-align: center;
+    vertical-align: middle;
+    width: 140px;
+}
+
+section.module p:last-child {
+    margin-bottom: 0;
+}
+
+section.module.content {
+    padding: 40px 0;
+}
+
+section.module.parallax {
+    height: 600px;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+    section.module.parallax h1 {
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 48px;
+        line-height: 600px;
+        font-weight: 700;
         text-align: center;
-        vertical-align: middle;
-        width: 140px;
+        text-transform: uppercase;
+        text-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     }
 
-    section.module p:last-child {
-        margin-bottom: 0;
+    section.module.parallax h2 {
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 48px;
+        line-height: 150px;
+        font-weight: 250;
+        text-align: center;
+        text-transform: uppercase;
+        text-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     }
 
-    section.module.content {
-        padding: 40px 0;
-    }
+section.module.parallax-1 {
+    background-image: linear-gradient( rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6) ),url("../Images/first.jpg");
+}
 
-    section.module.parallax {
-        height: 600px;
-        background-position: 50% 50%;
-        background-repeat: no-repeat;
-        background-attachment: fixed;
-        background-size: cover;
-    }
+section.module.parallax-2 {
+    background-image: url("../Images/tu-sofia.jpg");
+}
 
-        section.module.parallax h1 {
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 48px;
-            line-height: 600px;
-            font-weight: 700;
-            text-align: center;
-            text-transform: uppercase;
-            text-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-        }
-
-         section.module.parallax h2 {
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 48px;
-            line-height: 150px;
-            font-weight: 250;
-            text-align: center;
-            text-transform: uppercase;
-            text-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-        }
-
-    section.module.parallax-1 {
-        background-image:  linear-gradient(
-                                          rgba(0, 0, 0, 0.6), 
-                                          rgba(0, 0, 0, 0.6)
-                            ),url("../Images/first.jpg");
-    }
-
-    section.module.parallax-2 {
-        background-image: url("../Images/tu-sofia.jpg");
-    }
-
-    section.module.parallax-3 {
-        background-image: url("../Images/tusofia.jpg");
-    }
+section.module.parallax-3 {
+    background-image: url("../Images/tusofia.jpg");
+}
 
 @media all and (min-width: 600px) {
     section.module h2 {
@@ -160,50 +160,43 @@ section.module.third {
     border-radius: 10px;
 }
 
-.navbar-brand img{
+.navbar-brand img {
     height: 100%;
 }
 
 
 /* CHAT */
-#chat-window .chat
-{
+#chat-window .chat {
     list-style: none;
     margin: 0;
     padding: 0;
 }
 
-#chat-window .chat li
-{
-    margin-bottom: 10px;
-    padding-bottom: 5px;
-    border-bottom: 1px dotted #B3A9A9;
-}
+    #chat-window .chat li {
+        margin-bottom: 10px;
+        padding-bottom: 5px;
+        border-bottom: 1px dotted #B3A9A9;
+    }
 
-#chat-window .chat li.left .chat-body
-{
-    margin-left: 60px;
-}
+        #chat-window .chat li.left .chat-body {
+            margin-left: 60px;
+        }
 
-#chat-window .chat li.right .chat-body
-{
-    margin-right: 60px;
-}
+        #chat-window .chat li.right .chat-body {
+            margin-right: 60px;
+        }
 
 
-#chat-window .chat li .chat-body p
-{
-    margin: 0;
-    color: #777777;
-}
+        #chat-window .chat li .chat-body p {
+            margin: 0;
+            color: #777777;
+        }
 
-#chat-window .panel .slidedown .glyphicon, .chat .glyphicon
-{
+#chat-window .panel .slidedown .glyphicon, .chat .glyphicon {
     margin-right: 5px;
 }
 
-#chat-window .panel-body, #history-window .panel-body
-{
+#chat-window .panel-body, #history-window .panel-body {
     overflow-y: scroll;
     max-height: 350px;
 }
@@ -225,11 +218,9 @@ section.module.third {
     background-color: #555;
 }
 
-::-webkit-scrollbar
-{
+::-webkit-scrollbar {
     width: 12px;
     background-color: #555;
-    
 }
 
 ::-webkit-scrollbar-thumb {
@@ -264,7 +255,7 @@ section.module.third {
 
 /*---Process steps---*/
 .stepwizard-step p {
-    margin-top: 10px;    
+    margin-top: 10px;
 }
 
 .process-row {
@@ -272,7 +263,7 @@ section.module.third {
 }
 
 .process {
-    display: table;     
+    display: table;
     width: 100%;
     position: relative;
 }
@@ -291,19 +282,17 @@ section.module.third {
     height: 1px;
     background-color: #ccc;
     z-order: 0;
-    
 }
 
-.process-step {    
+.process-step {
     display: table-cell;
     text-align: center;
     position: relative;
 }
 
-.process-step p {
-    margin-top:10px;
-    
-}
+    .process-step p {
+        margin-top: 10px;
+    }
 
 .btn-circle {
     width: 100px;
@@ -318,50 +307,66 @@ section.module.third {
 }
 
 /*---Friends--*/
- .form_hover {
-        padding: 0px;
-        position: relative;
-        overflow: hidden;
-        height: 240px;
+.form_hover {
+    padding: 0px;
+    position: relative;
+    overflow: hidden;
+    height: 240px;
+}
+
+    .form_hover:hover .header {
+        opacity: 1;
+        transform: translateY(-172px);
+        -webkit-transform: translateY(-172px);
+        -moz-transform: translateY(-172px);
+        -ms-transform: translateY(-172px);
+        -o-transform: translateY(-172px);
     }
 
-        .form_hover:hover .header {
-            opacity: 1;
-            transform: translateY(-172px);
-            -webkit-transform: translateY(-172px);
-            -moz-transform: translateY(-172px);
-            -ms-transform: translateY(-172px);
-            -o-transform: translateY(-172px);
-        }
+    .form_hover img {
+        z-index: 4;
+    }
 
-        .form_hover img {
-            z-index: 4;
-        }
+    .form_hover .header {
+        position: absolute;
+        top: 170px;
+        -webkit-transition: all 0.3s ease;
+        -moz-transition: all 0.3s ease;
+        -o-transition: all 0.3s ease;
+        -ms-transition: all 0.3s ease;
+        transition: all 0.3s ease;
+        width: 100%;
+    }
 
-        .form_hover .header {
-            position: absolute;
-            top: 170px;
-            -webkit-transition: all 0.3s ease;
-            -moz-transition: all 0.3s ease;
-            -o-transition: all 0.3s ease;
-            -ms-transition: all 0.3s ease;
-            transition: all 0.3s ease;
-            width: 100%;
-        }
+    .form_hover .blur {
+        height: 240px;
+        z-index: 5;
+        position: absolute;
+        width: 100%;
+    }
 
-        .form_hover .blur {
-            height: 240px;
-            z-index: 5;
-            position: absolute;
-            width: 100%;
-        }
+    .form_hover .caption-text {
+        z-index: 10;
+        color: #fff;
+        position: absolute;
+        height: 240px;
+        text-align: center;
+        top: -20px;
+        width: 100%;
+    }
+    
+/*---Progress bar---*/
+.progress {
+    height: 20px
+}
 
-        .form_hover .caption-text {
-            z-index: 10;
-            color: #fff;
-            position: absolute;
-            height: 240px;
-            text-align: center;
-            top: -20px;
-            width: 100%;
-        }
+.progress .progress-bar {
+    font-size: 20px;
+    line-height: 20px;
+}
+
+.shadowed {
+    -moz-box-shadow: 0 0 5px black;
+    -webkit-box-shadow: 0 0 5px black;
+    box-shadow: 0 0 5px black;
+}

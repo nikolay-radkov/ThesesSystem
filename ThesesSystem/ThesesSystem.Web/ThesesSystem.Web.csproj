@@ -232,6 +232,7 @@
     <Compile Include="Controllers\MessageController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\StorageController.cs" />
+    <Compile Include="Controllers\ThesisController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\ValidationController.cs" />
     <Compile Include="GlimpseSecurityPolicy.cs" />
@@ -264,6 +265,7 @@
     <Compile Include="ViewModels\Specialties\SpecialtyDropDownListItemViewModel.cs" />
     <Compile Include="ViewModels\Students\OksViewModel.cs" />
     <Compile Include="ViewModels\Students\StudentProfileViewModel.cs" />
+    <Compile Include="ViewModels\Theses\DevThesisIndexViewModel.cs" />
     <Compile Include="ViewModels\Theses\ThesisProfileViewModel.cs" />
     <Compile Include="ViewModels\Theses\ThesisViewModel.cs" />
     <Compile Include="ViewModels\Users\UserProfileViewModel.cs" />
@@ -308,6 +310,10 @@
     <None Include="Scripts\jquery-2.1.4.intellisense.js" />
     <Content Include="Icon.png" />
     <Content Include="Images\about.png" />
+    <Content Include="Images\background 1.png" />
+    <Content Include="Images\background 19 %282%29.png" />
+    <Content Include="Images\background 2.png" />
+    <Content Include="Images\background.png" />
     <Content Include="Images\first.jpg" />
     <Content Include="Images\logo-tu.png" />
     <Content Include="Images\question1.png" />
@@ -387,6 +393,7 @@
     <Content Include="Views\Message\Index.cshtml" />
     <Content Include="Views\Friend\Index.cshtml" />
     <Content Include="Views\Shared\_ProcessStep.cshtml" />
+    <Content Include="Views\Thesis\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Administration\ViewModels\" />
