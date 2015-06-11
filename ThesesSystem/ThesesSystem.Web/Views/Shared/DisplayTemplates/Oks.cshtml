@@ -1,0 +1,15 @@
+﻿@using ThesesSystem.Models
+@model Oks
+
+@switch (Model)
+{
+    case Oks.Bachelor:
+        @("Бакалавър")
+        break;
+    case Oks.Master:
+        @("Магистър")
+        break;
+    case Oks.Doctor:
+        @("Доктрор")
+        break;
+}

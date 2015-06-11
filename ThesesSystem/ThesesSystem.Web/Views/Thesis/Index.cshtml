@@ -18,10 +18,10 @@
         <ul class="thumbnails list-unstyled">
             @foreach (var item in Model)
             {
-                <li class="col-md-3">
+                <li class="col-md-3 col-sm-6">
                     <div class="thumbnail shadowed" style="padding: 0">
                         <div class="caption">
-                            <h2>@Html.ActionLink(@item.Title, "ThesisProfile", "Thesis", new { area = string.Empty, id = item.Id }, new { @class = string.Empty })</h2>
+                            <h2 class="text-center">@Html.ActionLink(@item.Title, "ThesisProfile", "Thesis", new { area = string.Empty, id = item.Id }, new { @class = string.Empty })</h2>
                             <p>@item.Description</p>
                             <p><i class="fa fa-user fa-2x"></i> Студент: @Html.ActionLink(item.StudentName, "Account", "User", new { area = string.Empty, id = item.StudentId }, new { @class = string.Empty })</p>
                             <p><i class="fa fa-user fa-2x"></i> Студент: @Html.ActionLink(item.SupervisorName, "Account", "User", new { area = string.Empty, id = item.SupervisorId }, new { @class = string.Empty })</p>
@@ -32,9 +32,9 @@
                                     @item.CompletedPercent%
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-md-4"><b>ОКС</b><br /><small>@item.Oks</small></div>
-                                <div class="col-md-4"><b>Дни на разработка</b><br /><small>@item.DaysDeveloping</small></div>
+                            <div class="row text-center">
+                                <div class="col-md-6"><b>ОКС</b><br /><small>@Html.DisplayFor(x => item.Oks)</small></div>
+                                <div class="col-md-6"><b>Дни на разработка</b><br /><small>@item.DaysDeveloping</small></div>
                             </div>
                         </div>
                     </div>

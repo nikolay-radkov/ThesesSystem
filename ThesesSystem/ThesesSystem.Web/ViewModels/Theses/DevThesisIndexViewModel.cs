@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
 using System.Linq;
 using System.Web;
@@ -17,7 +18,8 @@ namespace ThesesSystem.Web.ViewModels.Theses
 
         public string Description { get; set; }
 
-        public ThesesSystem.Web.ViewModels.Students.Oks Oks { get; set; }
+        [Display(Name="ОКС")]
+        public ThesesSystem.Models.Oks Oks { get; set; }
 
         public int CompletedPercent { get; set; }
 
@@ -36,6 +38,7 @@ namespace ThesesSystem.Web.ViewModels.Theses
             configuration.CreateMap<Thesis, DevThesisIndexViewModel>()
               .ForMember(u => u.StudentName, opt => opt.MapFrom(u => u.Student.User.FirstName + " " + u.Student.User.LastName))
               .ForMember(u => u.SupervisorName, opt => opt.MapFrom(u => u.Supervisor.User.FirstName + " " + u.Supervisor.User.LastName))
+              .ForMember(u => u.Oks, opt => opt.MapFrom(u => u.Student.Oks))
               .ForMember(u => u.DaysDeveloping, opt => opt.MapFrom(u => DbFunctions.DiffDays(u.CreatedOn, DateTime.Now)))
               .ForMember(u => u.CompletedPercent, opt => opt.MapFrom(u => 
                   u.ThesisParts.Count() == 0 ? 0 : (int)(u.ThesisParts.Where(p => p.Flag == ThesisFlag.Complete).Count() / (double)u.ThesisParts.Count() * 100)));
