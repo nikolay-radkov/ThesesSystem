@@ -23,7 +23,6 @@
         [HttpGet]
         public ActionResult Index(int? page)
         {
-            //TODO: create profile for Thesis, Student, Teacher 
             //TODO: implement searching and filtering
            
             int currentPage = page ?? 0;

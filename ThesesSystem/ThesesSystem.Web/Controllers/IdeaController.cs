@@ -7,6 +7,11 @@ using System.Web.Mvc;
 using ThesesSystem.Data;
 using ThesesSystem.Models;
 using ThesesSystem.Web.Controllers.BaseControllers;
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using ThesesSystem.Web.ViewModels.ThesisTheme;
+using ThesesSystem.Web.Infrastructure.Constants;
+using ThesesSystem.Web.Infrastructure.Helper;
 
 namespace ThesesSystem.Web.Controllers
 {
@@ -19,10 +24,21 @@ namespace ThesesSystem.Web.Controllers
 
         // GET: Idea
         [HttpGet]
-        public ActionResult Themes()
+        public ActionResult Themes(int? page)
         {
-            //TODO: get supervisors' theme ideas
-            return View();
+            int currentPage = page ?? 0;
+
+            var themes = this.Data.ThesisThemes.All()
+                            .OrderBy(t => t.CreatedOn)
+                            .Skip(GlobalConstants.ELEMENTS_PER_PAGE * currentPage)
+                            .Take(GlobalConstants.ELEMENTS_PER_PAGE)
+                          .Project()
+                          .To<ThesisThemeViewModel>()
+                          .ToList();
+
+            ViewData["Pagination"] = PaginationHelper.CreatePagination("Themes", "Idea", this.Data, currentPage);
+
+            return View(themes);
         }
 
         [HttpGet]

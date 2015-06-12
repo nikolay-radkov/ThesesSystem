@@ -40,6 +40,9 @@
                 case "UserVerification" :
                     pageNumber = (int)Math.Ceiling((double)data.Users.All().Where(u => !u.IsVerified).Count() / GlobalConstants.ELEMENTS_PER_PAGE);
                     break;
+                case "IdeaThemes":
+                    pageNumber = (int)Math.Ceiling((double)data.ThesisThemes.All().Count() / GlobalConstants.ELEMENTS_PER_PAGE);
+                    break;
                 //TODO: Other paging
                 default:
                     pageNumber = 0;

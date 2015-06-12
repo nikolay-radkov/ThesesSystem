@@ -1,0 +1,92 @@
+﻿@model ICollection<ThesesSystem.Web.ViewModels.ThesisTheme.ThesisThemeViewModel>
+@{
+    ViewBag.Title = "Теми";
+    var index = 0;
+}
+
+<h2>@ViewBag.Title</h2>
+@Scripts.Render("~/bundles/sweetalert")
+<div class="container">
+    <div class="row">
+
+        @foreach (var item in Model)
+        {
+            index++;
+            <div class="col-md-8">
+                <div class="row shadowed">
+                    <div class="col-md-9 col-sm-9">
+                        <h2>@item.Title</h2>
+                        <h3>@item.TeacherName</h3>
+                    </div>
+                    <div class="col-md-3 col-sm-3">
+                        @if (item.IsTaken)
+                        {
+                            <div class="alert alert-danger" role="alert">
+                                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                <span class="sr-only">Error:</span>
+                                Enter a valid email address
+                            </div>
+                        }
+                        else
+                        {
+                            using (Html.BeginForm("Take", "Idea", new { id = item.Id }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                            {
+                                <span class="btn bnt-lg btn-success sweet-@index" data-id="@item.Id" onclick="_gaq.push(['_trackEvent', 'example', 'try', 'sweet-@index']);">Използвай</span>
+                                <input id="submit-button-@item.Id" class="hidden" type="submit" value="Използвай" />
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    <div class="row">
+        <div class="col-lg-offset-3 text-center">
+            @Html.Partial("_PaginationPartial", (ThesesSystem.Web.ViewModels.Partial.PaginationViewModel)ViewData["Pagination"])
+        </div>
+    </div>
+</div>
+
+@section styles {
+    @Styles.Render("~/Content/sweetalert.css")
+}
+
+@section scripts
+{
+   
+    <script>
+        function sendForm(id) {
+            $('#submit-button-' + id).click();
+        }
+
+        function onClick() {
+            var id = $(this).attr('data-id');
+
+            swal({
+                title: "Сигурни ли сте, че искате да изберете точно тази тема за дипломна работа?",
+                text: "Няма да можете да промените темата за година напред!",
+                type: "success",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: 'Избирам!',
+                cancelButtonText: "Премахни",
+            },
+            function (isConfirm) {
+                if (isConfirm) {
+                    sendForm(id);
+                }
+            });
+        };
+
+        document.querySelector('.sweet-1').onclick = onClick;
+        document.querySelector('.sweet-2').onclick = onClick;
+        document.querySelector('.sweet-3').onclick = onClick;
+        document.querySelector('.sweet-4').onclick = onClick;
+        document.querySelector('.sweet-5').onclick = onClick;
+        document.querySelector('.sweet-6').onclick = onClick;
+        document.querySelector('.sweet-7').onclick = onClick;
+        document.querySelector('.sweet-8').onclick = onClick;
+        document.querySelector('.sweet-9').onclick = onClick;
+        document.querySelector('.sweet-10').onclick = onClick;
+    </script>
+}
