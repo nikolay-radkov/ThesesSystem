@@ -1,0 +1,41 @@
+﻿@using ThesesSystem.Web.Infrastructure.Constants;
+@{
+    ViewBag.Title = "Генератор";
+}
+
+<h2>@ViewBag.Title</h2>
+<div id="ideas-container">
+    <img src="@GlobalConstants.RANDOM_IMAGE_SOURCE" />
+</div>
+<button id="btn-add-image" class="btn btn-success">Добави картинка</button>
+<button id="btn-add-word" class="btn btn-success">Добави дума</button>
+
+@section scripts
+{
+    <script>
+        $('#btn-add-image').on('click', addImage);
+
+        function addImage() {
+
+            var requestStr = '@GlobalConstants.RANDOM_IMAGE_SOURCE';
+
+            // create an ajax request for getting another image
+            $.ajax({
+                type: "GET",
+                url: requestStr,
+                dataType: "image/jpeg",
+                success: createNewRequest,
+                error: createNewRequest
+            });
+
+            // get the image
+            function createNewRequest(data) {
+                var newImage = $('<img/>')
+                        .attr('src', requestStr);
+                $('#ideas-container').append(newImage);
+            }
+        }
+
+
+    </script>
+}

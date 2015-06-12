@@ -29,7 +29,18 @@
                     <ul class="nav navbar-nav">
                         <li>@Html.ActionLink("Архив", "Index", "Storage", new { area = string.Empty }, new { @class = string.Empty })</li>
                         <li>@Html.ActionLink("Разработка", "Index", "Thesis", new { area = string.Empty }, new { @class = string.Empty })</li>
-                        <li>@Html.ActionLink("Идеи", "Index", "Idea", new { area = string.Empty }, new { @class = string.Empty })</li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Идеи<span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li>
+                                    @Html.ActionLink("Теми", "Themes", "Idea", routeValues: new { area = string.Empty }, htmlAttributes: new { title = "Теми" })
+                                </li>
+                                <li>
+                                    @Html.ActionLink("Генератор", "Generator", "Idea", routeValues: new { area = string.Empty }, htmlAttributes: new { title = "Генератор" })
+                                </li>
+                            </ul>
+                        </li>
+
                         <li>@Html.ActionLink("Критерии", "Index", "Criteria", new { area = string.Empty }, new { @class = string.Empty })</li>
                         @Html.Partial("_AdministrationDropdownPartial")
                     </ul>

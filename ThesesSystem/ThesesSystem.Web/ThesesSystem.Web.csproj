@@ -228,6 +228,7 @@
     <Compile Include="Controllers\BaseControllers\BaseController.cs" />
     <Compile Include="Controllers\FriendController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\IdeaController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MessageController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
@@ -400,6 +401,7 @@
     <Content Include="Views\Thesis\Create.cshtml" />
     <Content Include="Views\Thesis\ThesisProfile.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\Oks.cshtml" />
+    <Content Include="Views\Idea\Generator.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Administration\ViewModels\" />
