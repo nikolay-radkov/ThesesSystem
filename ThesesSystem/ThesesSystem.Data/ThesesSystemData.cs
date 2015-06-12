@@ -86,6 +86,11 @@
             get { return this.GetDeletableEntityRepository<Evaluation>(); }
         }
 
+        public IDeletableEntityRepository<Notification> Notifications
+        {
+            get { return this.GetDeletableEntityRepository<Notification>(); }
+        }
+
         public IDeletableEntityRepository<Message> Messages
         {
             get { return this.GetDeletableEntityRepository<Message>(); }

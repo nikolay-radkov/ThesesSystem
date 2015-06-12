@@ -62,6 +62,7 @@
     <Compile Include="Evaluation.cs" />
     <Compile Include="Faculty.cs" />
     <Compile Include="Message.cs" />
+    <Compile Include="Notification.cs" />
     <Compile Include="Oks.cs" />
     <Compile Include="Specialty.cs" />
     <Compile Include="Student.cs" />

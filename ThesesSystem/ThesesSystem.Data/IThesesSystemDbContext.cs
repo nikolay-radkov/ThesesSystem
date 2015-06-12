@@ -32,6 +32,8 @@
 
         IDbSet<Message> Messages { get; set; }
 
+        IDbSet<Notification> Notifications { get; set; }
+
         DbContext DbContext { get; }
 
         int SaveChanges();

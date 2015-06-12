@@ -33,8 +33,10 @@
         public bool IsComplete { get; set; }
 
         [ForeignKey("Supervisor")]
+        [Required]
         public string SupervisorId { get; set; }
 
+        [Required]
         public string StudentId { get; set; }
 
         public virtual Student Student { get; set; }

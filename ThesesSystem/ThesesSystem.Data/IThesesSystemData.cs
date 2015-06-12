@@ -31,6 +31,8 @@
 
         IDeletableEntityRepository<Version> Versions { get; }
 
+        IDeletableEntityRepository<Notification> Notifications { get; }
+
         IRepository<User> Users { get; }
 
         int SaveChanges();

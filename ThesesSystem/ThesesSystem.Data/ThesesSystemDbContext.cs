@@ -56,6 +56,8 @@
 
         public virtual IDbSet<Message> Messages { get; set; }
 
+        public virtual IDbSet<Notification> Notifications { get; set; }
+
         public static ThesesSystemDbContext Create()
         {
             return new ThesesSystemDbContext();
