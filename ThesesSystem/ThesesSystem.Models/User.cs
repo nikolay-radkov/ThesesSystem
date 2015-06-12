@@ -14,13 +14,14 @@
         private ICollection<User> friends;
         private ICollection<Message> userMessages;
         private ICollection<Message> toUserMessages;
-
+        private ICollection<Notification> notifications;
         public User()
         {
             this.comments = new HashSet<Comment>();
             this.friends = new HashSet<User>();
             this.userMessages = new HashSet<Message>();
             this.toUserMessages = new HashSet<Message>();
+            this.notifications = new HashSet<Notification>();
         }
 
         [Required]
@@ -96,6 +97,19 @@
             set
             {
                 this.toUserMessages = value;
+            }
+        }
+
+        public virtual ICollection<Notification> Notifications
+        {
+            get
+            {
+                return this.notifications;
+            }
+
+            set
+            {
+                this.notifications = value;
             }
         }
 

@@ -4,16 +4,63 @@
 }
 
 <h2>@ViewBag.Title</h2>
-<div id="ideas-container">
-    <img src="@GlobalConstants.RANDOM_IMAGE_SOURCE" />
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-6 col-sm-6 col-xs-6">
+            <button id="btn-add-image" class="btn btn-success shadowed">Добави картинка</button>
+            <button id="btn-add-word" class="btn btn-success shadowed">Добави дума</button>
+        </div>
+        <div class="col-md-3 col-sm-3 col-xs-3 text-right">
+            <button id="btn-remove" class="btn btn-danger shadowed">Изчисти полето</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-9 col-sm-9">
+            <div id="ideas-container" class="ui-widget-content shadowed">
+                <div id="content-loading" style="display: none">Моля изчакайте...</div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-3">
+
+            <div class="btn-group-vertical" role="group" aria-label="Генератори">
+               <h2>Външни генератори</h2>
+                <a href="http://ideagenerator.creativitygames.net/" target="_blank" type="button" class="btn btn-info">Creativity Games</a>
+                <a href="http://www.portent.com/tools/title-maker" target="_blank" type="button" class="btn btn-info">Portent</a>
+                <a href="https://play.google.com/store/apps/details?id=com.designtop.generator" target="_blank" type="button" class="btn btn-info">Idea Generator (приложение)</a>
+
+            </div>
+        </div>
+    </div>
 </div>
-<button id="btn-add-image" class="btn btn-success">Добави картинка</button>
-<button id="btn-add-word" class="btn btn-success">Добави дума</button>
+
+
+@section styles
+{
+    <style>
+        #ideas-container {
+            -moz-box-sizing: content-box;
+            -webkit-box-sizing: content-box;
+            box-sizing: content-box;
+            width: 100%;
+            min-height: 400px;
+            border: 5px solid black;
+            -webkit-border-bottom-left-radius: 10px;
+            border-bottom-left-radius: 10px;
+            -webkit-border-bottom-right-radius: 10px;
+            border-bottom-right-radius: 10px;
+            background-color: aliceblue;
+        }
+    </style>
+}
 
 @section scripts
 {
+    @Scripts.Render("~/bundles/jquery-ui")
     <script>
+
         $('#btn-add-image').on('click', addImage);
+        $('#btn-add-word').on('click', addWord);
+        $('#btn-remove').on('click', remove);
 
         function addImage() {
 
@@ -24,18 +71,45 @@
                 type: "GET",
                 url: requestStr,
                 dataType: "image/jpeg",
-                success: createNewRequest,
-                error: createNewRequest
+                success: createNewImage,
+                error: createNewImage
             });
 
             // get the image
-            function createNewRequest(data) {
+            function createNewImage(data) {
                 var newImage = $('<img/>')
                         .attr('src', requestStr);
+                newImage.draggable({ containment: "#ideas-container", scroll: false, cursor: "move", cursorAt: { top: 100, left: 100 } });
                 $('#ideas-container').append(newImage);
             }
         }
 
+        function addWord() {
 
+            var requestStr = '/Idea/GetWord';
+
+            $.ajax({
+                type: "GET",
+                url: requestStr,
+                dataType: "json",
+                success: createNewWord,
+                error: errorMessage
+            });
+
+            function createNewWord(data) {
+                var newWord = $('<span/>')
+                        .text(data.Word);
+                newWord.draggable({ containment: "#ideas-container", scroll: false, cursor: "move", cursorAt: { top: 10, left: 20 } });
+                $('#ideas-container').append(newWord);
+            }
+
+            function errorMessage(err) {
+                console.log(err);
+            }
+        }
+
+        function remove() {
+            $('#ideas-container').html('');
+        }
     </script>
 }
