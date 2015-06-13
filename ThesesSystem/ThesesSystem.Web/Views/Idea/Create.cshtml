@@ -1,0 +1,22 @@
+﻿@model ThesesSystem.Web.ViewModels.ThesisTheme.CreateThesisThemeViewModel
+@{
+    ViewBag.Title = "Създаване на нова тема";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using(Html.BeginForm("Create", "Idea", FormMethod.Post,  new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <hr />
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(m => m.Title, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.Title, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <input type="submit" name="name" value="Създай" class="btn btn-danger" />
+}

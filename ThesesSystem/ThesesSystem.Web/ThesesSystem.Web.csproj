@@ -272,6 +272,7 @@
     <Compile Include="ViewModels\Theses\ThesisProfileViewModel.cs" />
     <Compile Include="ViewModels\Theses\ThesisViewModel.cs" />
     <Compile Include="ViewModels\ThesisPart\CreateThesisPartViewModel.cs" />
+    <Compile Include="ViewModels\ThesisTheme\CreateThesisThemeViewModel.cs" />
     <Compile Include="ViewModels\ThesisTheme\ThesisThemeViewModel.cs" />
     <Compile Include="ViewModels\Users\UserProfileViewModel.cs" />
     <Compile Include="ViewModels\Users\VerificationType.cs" />
@@ -442,6 +443,7 @@
     <Content Include="Views\Idea\Generator.cshtml" />
     <Content Include="Views\Idea\Themes.cshtml" />
     <Content Include="Views\Idea\Take.cshtml" />
+    <Content Include="Views\Idea\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Administration\ViewModels\" />

@@ -12,13 +12,13 @@
     using ThesesSystem.Web.Infrastructure.Helper;
     using ThesesSystem.Web.ViewModels.ThesisTheme;
     using Microsoft.AspNet.Identity;
-using ThesesSystem.Web.ViewModels.Theses;
+    using ThesesSystem.Web.ViewModels.Theses;
     using AutoMapper;
 
     public class IdeaController : AuthorizeController
     {
         public IdeaController(IThesesSystemData data)
-            : base (data)
+            : base(data)
         {
         }
 
@@ -85,16 +85,36 @@ using ThesesSystem.Web.ViewModels.Theses;
         [HttpGet]
         public ActionResult Create()
         {
-            //TODO: implement creating a them only for teachers
-            return View();
+            if (this.User.IsInRole(GlobalConstants.TEACHER))
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Themes");
+            }
         }
 
+        [ValidateAntiForgeryToken]
         [HttpPost]
-        public ActionResult Create(ThesisTheme model)
+        public ActionResult Create(CreateThesisThemeViewModel model)
         {
-            //TODO: add the nwe theme and return to the themes
-            //TODO: Change theme model
-            return View();
+            if (ModelState.IsValid)
+            {
+                if (this.User.IsInRole(GlobalConstants.TEACHER))
+                {
+                    var theme = Mapper.Map<ThesisTheme>(model);
+                    theme.TeacherId = this.User.Identity.GetUserId();
+
+                    this.Data.ThesisThemes.Add(theme);
+
+                    this.Data.SaveChanges();
+                }
+
+                return RedirectToAction("Themes");
+            }
+
+            return View(model);
         }
 
         [HttpGet]
@@ -126,18 +146,18 @@ using ThesesSystem.Web.ViewModels.Theses;
             if (ModelState.IsValid)
             {
                 var userId = this.User.Identity.GetUserId();
-                 var thesis = Mapper.Map<Thesis>(model);
-                 thesis.StudentId = userId;
+                var thesis = Mapper.Map<Thesis>(model);
+                thesis.StudentId = userId;
 
-                 this.Data.Theses.Add(thesis);
+                this.Data.Theses.Add(thesis);
 
-                 var theme = this.Data.ThesisThemes.All()
-                       .FirstOrDefault(t => t.Id == id);
-                 theme.IsTaken = true;
-                
+                var theme = this.Data.ThesisThemes.All()
+                      .FirstOrDefault(t => t.Id == id);
+                theme.IsTaken = true;
+
                 this.Data.SaveChanges();
 
-                 return RedirectToAction("ThesisProfile", "Thesis", new { id = thesis.Id });
+                return RedirectToAction("ThesisProfile", "Thesis", new { id = thesis.Id });
             }
 
             return View(model);

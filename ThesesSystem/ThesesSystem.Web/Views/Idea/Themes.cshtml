@@ -3,12 +3,18 @@
     ViewBag.Title = "Теми";
     var index = 0;
 }
-
-<h2>@ViewBag.Title</h2>
-@Scripts.Render("~/bundles/sweetalert")
 <div class="container">
     <div class="row">
-
+        <div class="row">
+            <div class="col-md-9"><h2>@ViewBag.Title</h2></div>
+            @if (this.User.IsInRole(ThesesSystem.Web.Infrastructure.Constants.GlobalConstants.TEACHER))
+            {
+                <div class="col-md-2">
+                    @Html.ActionLink("Нова тема", "Create", "Idea", new { area = string.Empty }, new { @class = "btn btn-lg btn-primary shadowed" })
+                </div>
+            }
+            <br />
+        </div>
         @foreach (var item in Model)
         {
             index++;
@@ -55,6 +61,7 @@
 
 @section scripts
 {
+    @Scripts.Render("~/bundles/sweetalert")
 
     <script>
         function sendForm(id) {
