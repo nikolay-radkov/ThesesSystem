@@ -34,6 +34,8 @@
 
         IDbSet<Notification> Notifications { get; set; }
 
+        IDbSet<ThesisLog> ThesisLogs { get; set; }
+
         DbContext DbContext { get; }
 
         int SaveChanges();

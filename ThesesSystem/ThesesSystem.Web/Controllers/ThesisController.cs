@@ -50,7 +50,14 @@ namespace ThesesSystem.Web.Controllers
             if (thesis.SupervisorId == userId || thesis.StudentId == userId)
             {
              // TODO: implement logic
-                return View();
+
+                var logs = this.Data.ThesisLogs.All()
+                                .Where(t => t.ThesisId == id)
+                                .Project()
+                                .To<ThesisLogViewModel>()
+                                .ToList();
+
+                return View(logs);
             }
             else
             {

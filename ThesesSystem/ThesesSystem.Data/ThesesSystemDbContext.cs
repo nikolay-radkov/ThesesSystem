@@ -58,6 +58,8 @@
 
         public virtual IDbSet<Notification> Notifications { get; set; }
 
+        public virtual IDbSet<ThesisLog> ThesisLogs { get; set; }
+
         public static ThesesSystemDbContext Create()
         {
             return new ThesesSystemDbContext();

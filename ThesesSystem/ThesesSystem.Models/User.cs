@@ -15,6 +15,8 @@
         private ICollection<Message> userMessages;
         private ICollection<Message> toUserMessages;
         private ICollection<Notification> notifications;
+        private ICollection<ThesisLog> thesisLogs;
+
         public User()
         {
             this.comments = new HashSet<Comment>();
@@ -22,6 +24,7 @@
             this.userMessages = new HashSet<Message>();
             this.toUserMessages = new HashSet<Message>();
             this.notifications = new HashSet<Notification>();
+            this.thesisLogs = new HashSet<ThesisLog>();
         }
 
         [Required]
@@ -112,6 +115,20 @@
                 this.notifications = value;
             }
         }
+
+        public virtual ICollection<ThesisLog> ThesisLogs
+        {
+            get
+            {
+                return this.thesisLogs;
+            }
+
+            set
+            {
+                this.thesisLogs = value;
+            }
+        }
+
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<User> manager)
         {

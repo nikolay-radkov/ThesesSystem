@@ -91,6 +91,11 @@
             get { return this.GetDeletableEntityRepository<Notification>(); }
         }
 
+        public IDeletableEntityRepository<ThesisLog> ThesisLogs
+        {
+            get { return this.GetDeletableEntityRepository<ThesisLog>(); }
+        }
+
         public IDeletableEntityRepository<Message> Messages
         {
             get { return this.GetDeletableEntityRepository<Message>(); }

@@ -61,6 +61,7 @@
     <Compile Include="Comment.cs" />
     <Compile Include="Evaluation.cs" />
     <Compile Include="Faculty.cs" />
+    <Compile Include="LogType.cs" />
     <Compile Include="Message.cs" />
     <Compile Include="Notification.cs" />
     <Compile Include="Oks.cs" />
@@ -69,6 +70,7 @@
     <Compile Include="Teacher.cs" />
     <Compile Include="Thesis.cs" />
     <Compile Include="ThesisFlag.cs" />
+    <Compile Include="ThesisLog.cs" />
     <Compile Include="ThesisPart.cs" />
     <Compile Include="ThesisTheme.cs" />
     <Compile Include="ThesisTutorial.cs" />

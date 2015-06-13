@@ -243,6 +243,7 @@
     <Compile Include="Hubs\Chat.cs" />
     <Compile Include="Infrastructure\Constants\GlobalConstants.cs" />
     <Compile Include="App_Start\ViewEnginesConfig.cs" />
+    <Compile Include="Infrastructure\Constants\GlobalPatternConstants.cs" />
     <Compile Include="Infrastructure\Filters\CompleteUserAttribute.cs" />
     <Compile Include="Infrastructure\Helper\PaginationHelper.cs" />
     <Compile Include="Infrastructure\Mapping\AutoMapperConfig.cs" />
@@ -269,6 +270,7 @@
     <Compile Include="ViewModels\Theses\CreateThesisViewModel.cs" />
     <Compile Include="ViewModels\Theses\DevThesisIndexViewModel.cs" />
     <Compile Include="ViewModels\Theses\DevThesisProfileViewModel.cs" />
+    <Compile Include="ViewModels\Theses\ThesisLogViewModel.cs" />
     <Compile Include="ViewModels\Theses\ThesisProfileViewModel.cs" />
     <Compile Include="ViewModels\Theses\ThesisViewModel.cs" />
     <Compile Include="ViewModels\ThesisPart\CreateThesisPartViewModel.cs" />

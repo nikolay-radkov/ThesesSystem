@@ -1,7 +1,179 @@
-﻿
+﻿@using ThesesSystem.Web.Infrastructure.Constants
+@model ICollection<ThesesSystem.Web.ViewModels.Theses.ThesisLogViewModel>
 @{
     ViewBag.Title = "Профил на дипломна работа";
 }
 
 <h2>@ViewBag.Title</h2>
 
+<div class="container">
+    <div class="timeline">
+        <!-- Line component -->
+        <div class="line text-muted"></div>
+
+        @foreach (var item in Model)
+        {
+            <div class="separator text-muted">
+                <time>@item.CreatedOn</time>
+            </div>
+
+            switch (item.LogType)
+            {
+                case ThesesSystem.Models.LogType.CreatedThesis:
+                    <article class="panel panel-success">
+                        <div class="panel-heading icon">
+                            <i class="glyphicon glyphicon-plus"></i>
+                        </div>
+                        <div class="panel-heading">
+                            <h2 class="panel-title">@string.Format(GlobalPatternConstants.CREATE_THESIS, item.UserFullName)</h2>
+                        </div>
+                    </article>
+                    break;
+                case ThesesSystem.Models.LogType.AddedVersion:
+                <article class="panel panel-info">
+                    <div class="panel-heading icon">
+                        <i class="glyphicon glyphicon-plus"></i>
+                    </div>
+                    <div class="panel-heading">
+                        <h2 class="panel-title">@string.Format(GlobalPatternConstants.USER_ADDED_VERSION, item.UserFullName)</h2>
+                    </div>
+                </article>
+                    break;
+                case ThesesSystem.Models.LogType.AddedPart:
+                <article class="panel panel-info">
+                    <div class="panel-heading icon">
+                        <i class="glyphicon glyphicon-plus"></i>
+                    </div>
+                    <div class="panel-heading">
+                        <h2 class="panel-title">@string.Format(GlobalPatternConstants.USER_ADDED_PART, item.UserFullName)</h2>
+                    </div>
+                </article>
+                    break;
+                case ThesesSystem.Models.LogType.AddedComment:
+                <article class="panel panel-primary">
+                    <div class="panel-heading icon">
+                        <i class="glyphicon glyphicon-plus"></i>
+                    </div>
+                    <div class="panel-heading">
+                        <h2 class="panel-title">@string.Format(GlobalPatternConstants.USER_COMMENTED, item.UserFullName)</h2>
+                    </div>
+                </article>
+                    break;
+                case ThesesSystem.Models.LogType.AddedReview:
+                <article class="panel panel-primary">
+                    <div class="panel-heading icon">
+                        <i class="glyphicon glyphicon-plus"></i>
+                    </div>
+                    <div class="panel-heading">
+                        <h2 class="panel-title">@string.Format(GlobalPatternConstants.USER_ADDED_REVIEW, item.UserFullName)</h2>
+                    </div>
+                </article>
+                    break;
+                case ThesesSystem.Models.LogType.AddedFinalEvaluation:
+                <article class="panel panel-primary">
+                    <div class="panel-heading icon">
+                        <i class="glyphicon glyphicon-plus"></i>
+                    </div>
+                    <div class="panel-heading">
+                        <h2 class="panel-title">@string.Format(GlobalPatternConstants.USER_ADDED_FINAL_EVALUATION, item.UserFullName)</h2>
+                    </div>
+                </article>
+                    break;
+                case ThesesSystem.Models.LogType.CompletedThesis:
+                <article class="panel panel-primary">
+                    <div class="panel-heading icon">
+                        <i class="glyphicon glyphicon-plus"></i>
+                    </div>
+                    <div class="panel-heading">
+                        <h2 class="panel-title">@string.Format(GlobalPatternConstants.USER_COMPLEDED_THESIS, item.UserFullName)</h2>
+                    </div>
+                </article>
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        <!-- Panel -->
+        @*<article class="panel panel-danger panel-outline">
+
+                <!-- Icon -->
+                <div class="panel-heading icon">
+                    <i class="glyphicon glyphicon-heart"></i>
+                </div>
+                <!-- /Icon -->
+                <!-- Body -->
+                <div class="panel-body">
+                    <strong>Someone</strong> favourited your photo.
+                </div>
+                <!-- /Body -->
+
+            </article>
+            <!-- /Panel -->
+            <!-- Panel -->
+            <article class="panel panel-default panel-outline">
+
+                <!-- Icon -->
+                <div class="panel-heading icon">
+                    <i class="glyphicon glyphicon-picture"></i>
+                </div>
+                <!-- /Icon -->
+                <!-- Body -->
+                <div class="panel-body">
+                    <img class="img-responsive img-rounded" src="//placehold.it/350x150" />
+                </div>
+                <!-- /Body -->
+
+            </article>*@
+
+
+        @*<article class="panel panel-success">
+
+                <!-- Icon -->
+                <div class="panel-heading icon">
+                    <i class="glyphicon glyphicon-plus"></i>
+                </div>
+                <!-- /Icon -->
+                <!-- Heading -->
+                <div class="panel-heading">
+                    <h2 class="panel-title">New content added</h2>
+                </div>
+                <!-- /Heading -->
+                <!-- Body -->
+                <div class="panel-body">
+                    Anything you can do with <code>.panel</code>, can be done in timeline too!
+                </div>
+                <!-- /Body -->
+                <!-- List group -->
+                <ul class="list-group">
+                    <li class="list-group-item">Like</li>
+                    <li class="list-group-item">list</li>
+                    <li class="list-group-item">groups</li>
+                    <li class="list-group-item">and</li>
+                    <li class="list-group-item">tables</li>
+                </ul>
+
+            </article>*@
+
+
+
+        @*<article class="panel panel-info panel-outline">
+
+                <!-- Icon -->
+                <div class="panel-heading icon">
+                    <i class="glyphicon glyphicon-info-sign"></i>
+                </div>
+                <!-- /Icon -->
+                <!-- Body -->
+                <div class="panel-body">
+                    That is all.
+                </div>
+                <!-- /Body -->
+
+            </article>*@
+
+
+    </div>
+    <!-- /Timeline -->
+
+</div>

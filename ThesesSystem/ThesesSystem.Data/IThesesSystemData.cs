@@ -33,6 +33,8 @@
 
         IDeletableEntityRepository<Notification> Notifications { get; }
 
+        IDeletableEntityRepository<ThesisLog> ThesisLogs { get; }
+
         IRepository<User> Users { get; }
 
         int SaveChanges();

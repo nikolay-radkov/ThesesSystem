@@ -9,10 +9,12 @@
     public class Thesis : DeletableEntity
     {
         private ICollection<ThesisPart> thesisParts;
+        private ICollection<ThesisLog> thesisLogs;
 
         public Thesis()
         {
             this.thesisParts = new HashSet<ThesisPart>();
+            this.thesisLogs = new HashSet<ThesisLog>();
         }
 
         [Key]
@@ -56,6 +58,19 @@
             }
         }
 
-       public virtual Evaluation Evaluation { get; set; }
+        public virtual ICollection<ThesisLog> ThesisLogs
+        {
+            get
+            {
+                return this.thesisLogs;
+            }
+
+            set
+            {
+                this.thesisLogs = value;
+            }
+        }
+
+        public virtual Evaluation Evaluation { get; set; }
     }
 }
