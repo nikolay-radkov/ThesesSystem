@@ -2,8 +2,8 @@
 {
     public static class GlobalPatternConstants
     {
-        public const string FORWARD_URL = "{0}/{1}";
-        public const string FORWARD_URL_WITH_ID = "{0}/{1}/{2}";
+        public const string FORWARD_URL = "/{0}/{1}";
+        public const string FORWARD_URL_WITH_ID = "/{0}/{1}/{2}";
         public const string CREATE_THESIS = "{0} създаде дипломната работа";
         public const string USER_COMMENTED = "{0} коментира дипломната работа";
         public const string USER_ADDED_VERSION = "{0} добави нова версия";

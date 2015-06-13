@@ -244,6 +244,10 @@
     <Compile Include="Infrastructure\Constants\GlobalConstants.cs" />
     <Compile Include="App_Start\ViewEnginesConfig.cs" />
     <Compile Include="Infrastructure\Constants\GlobalPatternConstants.cs" />
+    <Compile Include="Infrastructure\Factories\Logger\Logger.cs" />
+    <Compile Include="Infrastructure\Factories\Logger\LoggerCreator.cs" />
+    <Compile Include="Infrastructure\Factories\Logger\ThesisLogger.cs" />
+    <Compile Include="Infrastructure\Factories\Logger\ThesisLoggerCreator.cs" />
     <Compile Include="Infrastructure\Filters\CompleteUserAttribute.cs" />
     <Compile Include="Infrastructure\Helper\PaginationHelper.cs" />
     <Compile Include="Infrastructure\Mapping\AutoMapperConfig.cs" />

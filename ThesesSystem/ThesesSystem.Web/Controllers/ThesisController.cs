@@ -11,14 +11,19 @@ using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using ThesesSystem.Web.ViewModels.Teacher;
 using ThesesSystem.Models;
+using ThesesSystem.Web.Infrastructure.Factories.Logger;
+using ThesesSystem.Web.Infrastructure.Constants;
 
 namespace ThesesSystem.Web.Controllers
 {
     public class ThesisController : AuthorizeController
     {
-        public ThesisController(IThesesSystemData data)
+        private LoggerCreator loggerCreator;
+
+        public ThesisController(IThesesSystemData data, LoggerCreator loggerCreater)
             : base(data)
         {
+            this.loggerCreator = loggerCreater;
         }
 
         // GET: Thesis
@@ -75,7 +80,6 @@ namespace ThesesSystem.Web.Controllers
                                   .To<SupervisorDropDownListITemViewModel>()
                                   .ToList();
 
-
             ViewBag.SupervisorId = new SelectList(superviosors, "Id", "FullName");
 
             return View(newThesis);
@@ -88,12 +92,23 @@ namespace ThesesSystem.Web.Controllers
         {
             if (ModelState.IsValid)
             {
+                var userId = this.User.Identity.GetUserId();
                 var thesis = Mapper.Map<Thesis>(model);
-                thesis.StudentId = this.User.Identity.GetUserId();
+                thesis.StudentId = userId;
 
                 this.Data.Theses.Add(thesis);
 
                 this.Data.SaveChanges();
+
+                var logger = this.loggerCreator.Create(this.Data);
+               
+                logger.Log(new ThesisLog
+                {
+                    ThesisId = thesis.Id,
+                    UserId = userId,
+                    LogType = LogType.CreatedThesis,
+                    ForwardUrl = string.Format(GlobalPatternConstants.FORWARD_URL_WITH_ID, "Thesis", "ThesisProfile", thesis.Id)
+                });
 
                 return RedirectToAction("ThesisProfile", "Thesis", new { id = thesis.Id });
             }

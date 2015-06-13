@@ -2,7 +2,7 @@
 {
     public enum LogType
     {
-       CreatedThesis,
+        CreatedThesis,
         AddedVersion,
         AddedPart,
         AddedComment,

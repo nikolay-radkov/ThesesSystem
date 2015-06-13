@@ -14,12 +14,16 @@
     using Microsoft.AspNet.Identity;
     using ThesesSystem.Web.ViewModels.Theses;
     using AutoMapper;
+using ThesesSystem.Web.Infrastructure.Factories.Logger;
 
     public class IdeaController : AuthorizeController
     {
-        public IdeaController(IThesesSystemData data)
+        private LoggerCreator loggerCreator;
+
+        public IdeaController(IThesesSystemData data, LoggerCreator loggerCreator)
             : base(data)
         {
+            this.loggerCreator = loggerCreator;
         }
 
         // GET: Idea
@@ -154,6 +158,18 @@
                 var theme = this.Data.ThesisThemes.All()
                       .FirstOrDefault(t => t.Id == id);
                 theme.IsTaken = true;
+
+                this.Data.SaveChanges();
+
+                var logger = this.loggerCreator.Create(this.Data);
+
+                logger.Log(new ThesisLog
+                {
+                    ThesisId = thesis.Id,
+                    UserId = userId,
+                    LogType = LogType.CreatedThesis,
+                    ForwardUrl = string.Format(GlobalPatternConstants.FORWARD_URL_WITH_ID, "Thesis", "ThesisProfile", thesis.Id)
+                });
 
                 this.Data.SaveChanges();
 
