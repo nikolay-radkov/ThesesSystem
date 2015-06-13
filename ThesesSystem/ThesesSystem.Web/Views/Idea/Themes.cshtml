@@ -18,24 +18,26 @@
                         <h2>@item.Title</h2>
                         <h3>@item.TeacherName</h3>
                     </div>
-                    <div class="col-md-3 col-sm-3">
-                        @if (item.IsTaken)
-                        {
-                            <div class="alert alert-danger" role="alert">
-                                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-                                <span class="sr-only">Error:</span>
-                                Enter a valid email address
-                            </div>
-                        }
-                        else
-                        {
-                            using (Html.BeginForm("Take", "Idea", new { id = item.Id }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                    @if (User.IsInRole(ThesesSystem.Web.Infrastructure.Constants.GlobalConstants.STUDENT))
+                    {
+                        <div class="col-md-3 col-sm-3">
+                            @if (item.IsTaken)
                             {
-                                <span class="btn bnt-lg btn-success sweet-@index" data-id="@item.Id" onclick="_gaq.push(['_trackEvent', 'example', 'try', 'sweet-@index']);">Използвай</span>
-                                <input id="submit-button-@item.Id" class="hidden" type="submit" value="Използвай" />
+                                <div class="alert alert-danger" role="alert">
+                                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                    <span>Заета</span>
+                                </div>
                             }
-                        }
-                    </div>
+                            else
+                            {
+                                using (Html.BeginForm("Take", "Idea", new { id = item.Id }, FormMethod.Get, new { @class = "form-horizontal", role = "form" }))
+                                {
+                                    <span class="btn bnt-lg btn-success sweet-@index" data-id="@item.Id" onclick="_gaq.push(['_trackEvent', 'example', 'try', 'sweet-@index']);">Използвай</span>
+                                    <input id="submit-button-@item.Id" class="hidden" type="submit" value="Използвай" />
+                                }
+                            }
+                        </div>
+                    }
                 </div>
             </div>
         }
@@ -53,7 +55,7 @@
 
 @section scripts
 {
-   
+
     <script>
         function sendForm(id) {
             $('#submit-button-' + id).click();
@@ -78,15 +80,10 @@
             });
         };
 
-        document.querySelector('.sweet-1').onclick = onClick;
-        document.querySelector('.sweet-2').onclick = onClick;
-        document.querySelector('.sweet-3').onclick = onClick;
-        document.querySelector('.sweet-4').onclick = onClick;
-        document.querySelector('.sweet-5').onclick = onClick;
-        document.querySelector('.sweet-6').onclick = onClick;
-        document.querySelector('.sweet-7').onclick = onClick;
-        document.querySelector('.sweet-8').onclick = onClick;
-        document.querySelector('.sweet-9').onclick = onClick;
-        document.querySelector('.sweet-10').onclick = onClick;
+        var sweets = $('form > span');
+
+        for (var i = 0; i < sweets.length; i++) {
+            sweets[i].onclick = onClick;
+        }
     </script>
 }

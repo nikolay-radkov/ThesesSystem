@@ -5,7 +5,7 @@
 
 <h2>@ViewBag.Title</h2>
 
-@using (Html.BeginForm("Create", "Thesis", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+@using (Html.BeginForm("Take", "Idea", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()
     <hr />
@@ -13,7 +13,7 @@
     <div class="form-group">
         @Html.LabelFor(m => m.Title, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
-            @Html.TextBoxFor(m => m.Title, new { @class = "form-control" })
+            @Html.TextBoxFor(m => m.Title, new { @class = "form-control", @readonly = "readonly" })
             @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -27,7 +27,8 @@
     <div class="form-group">
         @Html.LabelFor(model => model.SupervisorId, "SupervisorId", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.DropDownList("SupervisorId", null, htmlAttributes: new { @class = "form-control" })
+            @Html.TextBoxFor(m => ViewData["SupervisorName"], new { @class = "form-control", @readonly = "readonly"})
+            @Html.TextBoxFor(m => m.SupervisorId, new { @class = "form-control hidden", @readonly = "readonly"})
             @Html.ValidationMessageFor(model => model.SupervisorId, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -47,7 +48,7 @@
     </div>
 
 
-    <input type="submit" name="name" value="Създай" class="btn btn-danger"/>
+    <input type="submit" name="name" value="Създай" class="btn btn-danger" />
 }
 
 @section scripts

@@ -1,20 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text.RegularExpressions;
-using System.Web;
-using System.Web.Mvc;
-using ThesesSystem.Data;
-using ThesesSystem.Models;
-using ThesesSystem.Web.Controllers.BaseControllers;
-using AutoMapper;
-using AutoMapper.QueryableExtensions;
-using ThesesSystem.Web.ViewModels.ThesisTheme;
-using ThesesSystem.Web.Infrastructure.Constants;
-using ThesesSystem.Web.Infrastructure.Helper;
-
-namespace ThesesSystem.Web.Controllers
+﻿namespace ThesesSystem.Web.Controllers
 {
+    using AutoMapper.QueryableExtensions;
+    using System;
+    using System.Linq;
+    using System.Text.RegularExpressions;
+    using System.Web.Mvc;
+    using ThesesSystem.Data;
+    using ThesesSystem.Models;
+    using ThesesSystem.Web.Controllers.BaseControllers;
+    using ThesesSystem.Web.Infrastructure.Constants;
+    using ThesesSystem.Web.Infrastructure.Helper;
+    using ThesesSystem.Web.ViewModels.ThesisTheme;
+    using Microsoft.AspNet.Identity;
+using ThesesSystem.Web.ViewModels.Theses;
+    using AutoMapper;
+
     public class IdeaController : AuthorizeController
     {
         public IdeaController(IThesesSystemData data)
@@ -95,6 +95,52 @@ namespace ThesesSystem.Web.Controllers
             //TODO: add the nwe theme and return to the themes
             //TODO: Change theme model
             return View();
+        }
+
+        [HttpGet]
+        public ActionResult Take(int id)
+        {
+            var theme = this.Data.ThesisThemes.All()
+                     .FirstOrDefault(t => t.Id == id);
+
+            if (theme == null || theme.IsTaken)
+            {
+                return new HttpStatusCodeResult(400, "Bad Request");
+            }
+
+            ViewData["SupervisorName"] = string.Format("{0} {1}", theme.Teacher.User.FirstName, theme.Teacher.User.LastName);
+
+            var thesis = new CreateThesisViewModel
+            {
+                SupervisorId = theme.TeacherId,
+                Title = theme.Title
+            };
+
+            return View(thesis);
+        }
+
+        [ValidateAntiForgeryToken]
+        [HttpPost]
+        public ActionResult Take(int id, CreateThesisViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var userId = this.User.Identity.GetUserId();
+                 var thesis = Mapper.Map<Thesis>(model);
+                 thesis.StudentId = userId;
+
+                 this.Data.Theses.Add(thesis);
+
+                 var theme = this.Data.ThesisThemes.All()
+                       .FirstOrDefault(t => t.Id == id);
+                 theme.IsTaken = true;
+                
+                this.Data.SaveChanges();
+
+                 return RedirectToAction("ThesisProfile", "Thesis", new { id = thesis.Id });
+            }
+
+            return View(model);
         }
     }
 }

@@ -441,6 +441,7 @@
     <Content Include="Views\Shared\DisplayTemplates\Oks.cshtml" />
     <Content Include="Views\Idea\Generator.cshtml" />
     <Content Include="Views\Idea\Themes.cshtml" />
+    <Content Include="Views\Idea\Take.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Administration\ViewModels\" />
