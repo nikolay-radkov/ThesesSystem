@@ -20,9 +20,6 @@
 
         public static void Main(string[] args)
         {
-           
-
-
             //var generator = DefaultRandomGenerator.Instance;
             //var context = new ThesesSystem.Data.ThesesSystemDbContext();
 

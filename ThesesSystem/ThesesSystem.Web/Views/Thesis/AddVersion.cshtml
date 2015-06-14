@@ -28,7 +28,7 @@
         @for (i = 0; i < Model.ThesisParts.Count; i++)
         {
             <div class="form-group">
-                <label for="ThesisParts_@(i)__Title" class="col-md-2 control-label">Част @(i+1)</label>
+                <label for="ThesisParts_@(i)__Title" class="col-md-2 control-label">Част @(i + 1)</label>
                 <div class="col-md-7">
                     <input type="text" id="ThesisParts_@(i)__Title" class="form-control" name="ThesisParts[@(i)].Title" required="required" readonly="readonly" value="@Model.ThesisParts[i].Title" />
                 </div>
@@ -45,11 +45,56 @@
 @section scripts
 {
     <script>
+        var selects = $("select").on('change', onChange);
         $("#btn-add-part").on("click", addRow);
+
+        for (var i = 0; i < selects.length; i++) {
+            changeClass(selects[i]);
+        }
+
+        function onChange()
+        {
+            changeClass(this);
+        }
+
+        function changeClass(item) {
+            var $this = $(item);
+
+            switch($this.val()) {
+                case '0':
+                    $this.removeClass('in-progress');
+                    $this.removeClass('for-evaluation');
+                    $this.removeClass('complete');
+
+                    $this.addClass('not-started');
+                    break;
+                case '1':
+                    $this.removeClass('not-started');
+                    $this.removeClass('for-evaluation');
+                    $this.removeClass('complete');
+
+                    $this.addClass('in-progress');
+                    break;
+                case '2':
+                    $this.removeClass('in-progress');
+                    $this.removeClass('not-started');
+                    $this.removeClass('complete');
+
+                    $this.addClass('for-evaluation');
+                    break;
+                case '3':
+                    $this.removeClass('in-progress');
+                    $this.removeClass('for-evaluation');
+                    $this.removeClass('not-started');
+
+                    $this.addClass('complete');
+                    break;
+            }
+        }
 
         function addRow() {
 
-        @{
+            @{
             Model.ThesisParts.Add(new ThesesSystem.Web.ViewModels.ThesisPart.CreateOrUpdateThesisPartViewModel());
         }
 
@@ -79,6 +124,7 @@
                     .addClass("form-control")
                     .attr("id", "ThesisParts_" + index + "__Flag")
                     .attr("name", "ThesisParts[" + index + "].Flag")
+                    .on('change', onChange);
 
             var notStarted = $("<option/>")
                     .text("Незапочната")

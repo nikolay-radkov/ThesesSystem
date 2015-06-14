@@ -467,13 +467,13 @@ section.module.parallax-3 {
         }
 
 
-            .timeline .panel:hover .panel-heading.icon {
-                -ms-transform: rotate(180deg);
-                -webkit-transform: rotate(180deg);
-                -moz-transform: rotate(180deg);
-                -o-transform: rotate(180deg);
-                transform: rotate(180deg);
-            }
+        .timeline .panel:hover .panel-heading.icon {
+            -ms-transform: rotate(180deg);
+            -webkit-transform: rotate(180deg);
+            -moz-transform: rotate(180deg);
+            -o-transform: rotate(180deg);
+            transform: rotate(180deg);
+        }
 
     .timeline .panel-outline {
         border-color: transparent;
@@ -491,3 +491,20 @@ section.module.parallax-3 {
         .timeline .panel-outline .panel-footer {
             display: none;
         }
+
+/*---Selects---*/
+.not-started {
+    background-color: aquamarine;
+}
+
+.in-progress {
+    background-color: rgb(255, 234, 0);
+}
+
+.for-evaluation {
+      background-color: rgb(243, 33, 33);
+}
+
+.complete {
+      background-color: rgb(156, 244, 10);
+}
