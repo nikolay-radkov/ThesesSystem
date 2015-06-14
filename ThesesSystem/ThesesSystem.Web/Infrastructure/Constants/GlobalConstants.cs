@@ -21,5 +21,7 @@
         public const string NOT_COMPLETE_USER = "NotCompleteUser";
 
         public const string RANDOM_IMAGE_SOURCE = @"http://lorempixel.com/200/200/";
+
+        public const string STORAGE_FOLDER = "uploads";
     }
 }

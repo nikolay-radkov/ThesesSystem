@@ -14,8 +14,9 @@ using ThesesSystem.Models;
 using ThesesSystem.Web.Infrastructure.Factories.Logger;
 using ThesesSystem.Web.Infrastructure.Constants;
 using ThesesSystem.Web.ViewModels.Version;
-using ThesesSystem.Web.Infrastructure.StorageFiles;
 using System.IO;
+using ThesesSystem.Web.Infrastructure.Storage;
+using DropNet;
 
 namespace ThesesSystem.Web.Controllers
 {
@@ -48,11 +49,11 @@ namespace ThesesSystem.Web.Controllers
 
         [HttpGet]
         public ActionResult ThesisProfile(int id)
-        {   
+        {
             // TODO: Add more new parts
             // TODO: delete the thesis
             // TODO: Add reviewer and admin
-           
+
             var userId = this.User.Identity.GetUserId();
 
             var thesis = this.Data.Theses.GetById(id);
@@ -101,7 +102,7 @@ namespace ThesesSystem.Web.Controllers
                 this.Data.SaveChanges();
 
                 var logger = this.loggerCreator.Create(this.Data);
-               
+
                 logger.Log(new ThesisLog
                 {
                     ThesisId = thesis.Id,
@@ -148,38 +149,21 @@ namespace ThesesSystem.Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult AddVersion(int id, CreateVersionViewModel model)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && model.Archive != null && model.Archive.ContentLength > 0)
             {
-                // TODO: add storage service
                 var userId = this.User.Identity.GetUserId();
-                var directory = string.Format(@".\{0}\{1}\{2}\", userId, model.Id, DateTime.Now);
-                directory = AppDomain.CurrentDomain.BaseDirectory + "uploads/";
-                directory = directory.Replace(':', '-');
-                
-                //var path = storage.Save(model.Archive, directory);
-                //if (path == null)
-                //{
-                //    return View(model);
-                //}
-                string fullpath = null;
-                if (model.Archive != null && model.Archive.ContentLength > 0)
+                var versionId = 0;
+
+                try
                 {
-                    var fileName = Path.GetFileName(model.Archive.FileName);
-                    fullpath = Path.Combine(directory, fileName);
-
-                    model.Archive.SaveAs(Server.MapPath(fullpath));
-
+                    versionId = SaveNewVersion(model);
+                }
+                catch (Exception)
+                {
+                    return View(model);
                 }
 
-                var version = new ThesesSystem.Models.Version()
-                {
-                    ThesisId = model.Id,
-                    StoragePath = fullpath
-                };
-
-                this.Data.Versions.Add(version);
-
-                this.Data.SaveChanges();
+                UpdateParts(model);
 
                 var logger = this.loggerCreator.Create(this.Data);
 
@@ -188,13 +172,71 @@ namespace ThesesSystem.Web.Controllers
                     ThesisId = model.Id,
                     UserId = userId,
                     LogType = LogType.AddedVersion,
-                    ForwardUrl = string.Format(GlobalPatternConstants.FORWARD_URL_WITH_ID, "Thesis", "Version", model.Id)
+                    ForwardUrl = string.Format(GlobalPatternConstants.FORWARD_URL_WITH_ID, "Thesis", "Version", versionId)
                 });
 
-                return RedirectToAction("Version", "Thesis", new { id = id });
+                return RedirectToAction("Version", "Thesis", new { id = versionId });
             }
 
             return View(model);
+        }
+
+        [NonAction]
+        private void UpdateParts(CreateVersionViewModel model)
+        {
+            var parts = this.Data.ThesisParts.All().Where(p => p.ThesisId == model.Id).ToList();
+
+            int index = 0;
+            for (index = 0; index < parts.Count; index++)
+            {
+                parts[index].Flag = model.ThesisParts[index].Flag;
+            }
+
+            for (int i = index; i < model.ThesisParts.Count; i++)
+            {
+                var part = Mapper.Map<ThesisPart>(model.ThesisParts[index]);
+                part.ThesisId = model.Id;
+
+                this.Data.ThesisParts.Add(part);
+            }
+
+            this.Data.SaveChanges();
+        }
+
+        [NonAction]
+        private int SaveNewVersion(CreateVersionViewModel model)
+        {
+            byte[] byteArray = null;
+
+            using (var memory = new MemoryStream())
+            {
+                model.Archive.InputStream.CopyTo(memory);
+                byteArray = memory.GetBuffer();
+            }
+
+            var fileName = string.Format(GlobalPatternConstants.VERSION_NAME, DateTime.Now.ToUniversalTime(), model.Archive.FileName);
+            var fullPath = storage.UploadFile(byteArray, fileName, GlobalConstants.STORAGE_FOLDER);
+
+            var version = new ThesesSystem.Models.Version()
+            {
+                ThesisId = model.Id,
+                StoragePath = fullPath
+            };
+
+            this.Data.Versions.Add(version);
+            this.Data.SaveChanges();
+
+            return version.Id;
+        }
+
+
+        [HttpGet]
+        public ActionResult Version(int id)
+        {
+            var version = this.Data.Versions.GetById(id);
+            var versionViewModel = Mapper.Map<VersionProfileViewModel>(version);
+
+            return View(versionViewModel);
         }
 
         [HttpGet]

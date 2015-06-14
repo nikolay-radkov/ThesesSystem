@@ -33,19 +33,10 @@
                     <input type="text" id="ThesisParts_@(i)__Title" class="form-control" name="ThesisParts[@(i)].Title" required="required" readonly="readonly" value="@Model.ThesisParts[i].Title" />
                 </div>
                 <div class="col-md-3">
-                    @Html.DropDownList("ThesisParts[" + i + "].Flag", EnumHelper.GetSelectList(typeof(ThesesSystem.Models.ThesisFlag)), new { @class = "form-control" })
+                    @Html.EnumDropDownListFor(m => m.ThesisParts[i].Flag, new { @class = "form-control" })
                 </div>
             </div>
         }
-        @*<div class="form-group">
-                <label for="ThesisParts_@(i)__Title" class="col-md-2 control-label">Част 1</label>
-                <div class="col-md-7">
-                    <input type="text" id="ThesisParts_@(i)__Title" name="ThesisParts[@(i)].Title" required="required" class="form-control">
-                </div>
-                <div class="col-md-3">
-                    @Html.DropDownList("ThesisParts[" + i + "].Flag", EnumHelper.GetSelectList(typeof(ThesesSystem.Models.ThesisFlag)), new { @class = "form-control" })
-                </div>
-            </div>*@
     </div>
 
     <input type="submit" name="name" value="Създай" class="btn btn-danger" />
@@ -86,8 +77,8 @@
                     .addClass("col-md-3");
             var select = $("<select/>")
                     .addClass("form-control")
-                    .attr("id", "ThesisParts_" + index + "__Title")
-                    .attr("name", "ThesisParts[" + index + "].Title")
+                    .attr("id", "ThesisParts_" + index + "__Flag")
+                    .attr("name", "ThesisParts[" + index + "].Flag")
 
             var notStarted = $("<option/>")
                     .text("Незапочната")
