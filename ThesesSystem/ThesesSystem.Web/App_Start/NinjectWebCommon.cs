@@ -12,6 +12,7 @@ namespace ThesesSystem.Web.App_Start
     using Ninject.Web.Common;
     using ThesesSystem.Data;
     using ThesesSystem.Web.Infrastructure.Factories.Logger;
+    using ThesesSystem.Web.Infrastructure.StorageFiles;
 
     public static class NinjectWebCommon 
     {
@@ -66,6 +67,7 @@ namespace ThesesSystem.Web.App_Start
             kernel.Bind<IThesesSystemDbContext>().To<ThesesSystemDbContext>();
             kernel.Bind<IThesesSystemData>().To<ThesesSystemData>();
             kernel.Bind<LoggerCreator>().To<ThesisLoggerCreator>();
+            kernel.Bind<IStorage>().To<DefaultStorage>();
         }        
     }
 }

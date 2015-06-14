@@ -31,5 +31,13 @@ namespace ThesesSystem.Web.Controllers
                 return View(home);
             }
         }
+
+        [HttpGet]
+        public ActionResult Error()
+        {
+            // TODO: add custom errors
+            // <customErrors mode="On" defaultRedirect="/Home/Error"/></customErrors>
+            return View();
+        }
     }
 }

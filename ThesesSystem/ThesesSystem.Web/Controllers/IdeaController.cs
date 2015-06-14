@@ -1,6 +1,8 @@
 ﻿namespace ThesesSystem.Web.Controllers
 {
+    using AutoMapper;
     using AutoMapper.QueryableExtensions;
+    using Microsoft.AspNet.Identity;
     using System;
     using System.Linq;
     using System.Text.RegularExpressions;
@@ -9,12 +11,10 @@
     using ThesesSystem.Models;
     using ThesesSystem.Web.Controllers.BaseControllers;
     using ThesesSystem.Web.Infrastructure.Constants;
+    using ThesesSystem.Web.Infrastructure.Factories.Logger;
     using ThesesSystem.Web.Infrastructure.Helper;
-    using ThesesSystem.Web.ViewModels.ThesisTheme;
-    using Microsoft.AspNet.Identity;
     using ThesesSystem.Web.ViewModels.Theses;
-    using AutoMapper;
-using ThesesSystem.Web.Infrastructure.Factories.Logger;
+    using ThesesSystem.Web.ViewModels.ThesisTheme;
 
     public class IdeaController : AuthorizeController
     {

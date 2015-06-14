@@ -19,7 +19,6 @@
         [Required]
         public string StoragePath { get; set; }
 
-
         public int ThesisId { get; set; }
 
         public virtual Thesis Thesis { get; set; }

@@ -13,7 +13,6 @@
 
         public ThesisFlag Flag { get; set; }
 
-
         public int ThesisId { get; set; }
 
         public virtual Thesis Thesis { get; set; }

@@ -1,0 +1,123 @@
+﻿@model ThesesSystem.Web.ViewModels.Version.CreateVersionViewModel
+@{
+    ViewBag.Title = "Добавяне на нова версия";
+    int i = 0;
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm("AddVersion", "Thesis", new { id = Model.Id, area = string.Empty }, FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <hr />
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(m => m.Archive, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            <input type="file" name="Archive" id="Archive" />
+            @Html.ValidationMessageFor(model => model.Archive, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <hr />
+
+    <div>
+        <button id="btn-add-part" class="btn btn-success">Добави част</button>
+    </div>
+    <div id="parts">
+        @for (i = 0; i < Model.ThesisParts.Count; i++)
+        {
+            <div class="form-group">
+                <label for="ThesisParts_@(i)__Title" class="col-md-2 control-label">Част @(i+1)</label>
+                <div class="col-md-7">
+                    <input type="text" id="ThesisParts_@(i)__Title" class="form-control" name="ThesisParts[@(i)].Title" required="required" readonly="readonly" value="@Model.ThesisParts[i].Title" />
+                </div>
+                <div class="col-md-3">
+                    @Html.DropDownList("ThesisParts[" + i + "].Flag", EnumHelper.GetSelectList(typeof(ThesesSystem.Models.ThesisFlag)), new { @class = "form-control" })
+                </div>
+            </div>
+        }
+        @*<div class="form-group">
+                <label for="ThesisParts_@(i)__Title" class="col-md-2 control-label">Част 1</label>
+                <div class="col-md-7">
+                    <input type="text" id="ThesisParts_@(i)__Title" name="ThesisParts[@(i)].Title" required="required" class="form-control">
+                </div>
+                <div class="col-md-3">
+                    @Html.DropDownList("ThesisParts[" + i + "].Flag", EnumHelper.GetSelectList(typeof(ThesesSystem.Models.ThesisFlag)), new { @class = "form-control" })
+                </div>
+            </div>*@
+    </div>
+
+    <input type="submit" name="name" value="Създай" class="btn btn-danger" />
+}
+
+@section scripts
+{
+    <script>
+        $("#btn-add-part").on("click", addRow);
+
+        function addRow() {
+
+        @{
+            Model.ThesisParts.Add(new ThesesSystem.Web.ViewModels.ThesisPart.CreateOrUpdateThesisPartViewModel());
+        }
+
+            var index = $("#parts").children("div").length;
+
+            var row = $("<div/>")
+                        .addClass("form-group");
+            var label = $("<label/>")
+                        .text("Част " + (index + 1))
+                        .attr("for", 'ThesisParts_' + index + '__Title')
+                        .addClass("col-md-2 control-label");
+
+            var div = $("<div/>")
+                        .addClass("col-md-7");
+
+            var input = $("<input/>")
+                            .attr("type", "text")
+                            .attr("id", "ThesisParts_" + index + "__Title")
+                            .attr("name", "ThesisParts[" + index + "].Title")
+                            .attr("required", "required")
+                            .addClass("form-control");
+            div.append(input);
+
+            var secondDiv = $("<div/>")
+                    .addClass("col-md-3");
+            var select = $("<select/>")
+                    .addClass("form-control")
+                    .attr("id", "ThesisParts_" + index + "__Title")
+                    .attr("name", "ThesisParts[" + index + "].Title")
+
+            var notStarted = $("<option/>")
+                    .text("Незапочната")
+                    .val(0);
+
+            var inProgress = $("<option/>")
+                    .text("В прогрес")
+                    .val(1);
+
+            var forEvaluation = $("<option/>")
+                    .text("За проверка")
+                    .val(2);
+
+            var completed = $("<option/>")
+                    .text("Завършена")
+                    .val(3);
+
+            select.append(notStarted)
+                  .append(inProgress)
+                  .append(forEvaluation)
+                  .append(completed);
+
+            secondDiv.append(select);
+
+
+            row.append(label)
+                .append(div)
+                .append(secondDiv);
+
+            $("#parts").append(row);
+        }
+    </script>
+}

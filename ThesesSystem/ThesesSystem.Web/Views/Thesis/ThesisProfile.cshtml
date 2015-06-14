@@ -1,17 +1,46 @@
 ﻿@using ThesesSystem.Web.Infrastructure.Constants
-@model ICollection<ThesesSystem.Web.ViewModels.Theses.ThesisLogViewModel>
+@model ThesesSystem.Web.ViewModels.Theses.DevThesisTimelineViewModel
 @{
     ViewBag.Title = "Профил на дипломна работа";
 }
 
-<h2>@ViewBag.Title</h2>
+<h2>@Model.Title</h2>
 
 <div class="container">
+    <div class="row">
+        @if (!Model.IsComplete)
+        {
+            if (User.IsInRole(GlobalConstants.STUDENT))
+            {
+                @Html.ActionLink("Нова версия", "AddVersion", "Thesis", new { area = string.Empty, id = Model.Id }, new { @class = "btn btn-success" })
+                @Html.ActionLink("Нова част", "AddPart", "Thesis", new { area = string.Empty, id = Model.Id }, new { @class = "btn btn-success" })
+            }
+        }
+        else
+        {
+            if (!Model.HasEvaluation)
+            {
+                if (User.IsInRole(GlobalConstants.TEACHER))
+                {
+                    @Html.ActionLink("Добави рецензия", "AddReview", "Thesis", new { area = string.Empty, id = Model.Id }, new { @class = "btn btn-success" })
+                }
+            }
+            else
+            {
+                @Html.ActionLink("Преглед на рецензията", "ViewReview", "Thesis", new { area = string.Empty, id = Model.Id }, new { @class = "btn btn-success" })
+
+                if (User.IsInRole(GlobalConstants.ADMIN))
+                {
+                    @Html.ActionLink("Добави крайна оценка", "AddFinalEvaluation", "Thesis", new { area = string.Empty, id = Model.Id }, new { @class = "btn btn-success" })
+                }
+            }
+        }
+    </div>
     <div class="timeline">
         <!-- Line component -->
         <div class="line text-muted"></div>
 
-        @foreach (var item in Model)
+        @foreach (var item in Model.ThesisLogs)
         {
             <div class="separator text-muted">
                 <time>@item.CreatedOn</time>
@@ -93,87 +122,5 @@
                     break;
             }
         }
-
-        <!-- Panel -->
-        @*<article class="panel panel-danger panel-outline">
-
-                <!-- Icon -->
-                <div class="panel-heading icon">
-                    <i class="glyphicon glyphicon-heart"></i>
-                </div>
-                <!-- /Icon -->
-                <!-- Body -->
-                <div class="panel-body">
-                    <strong>Someone</strong> favourited your photo.
-                </div>
-                <!-- /Body -->
-
-            </article>
-            <!-- /Panel -->
-            <!-- Panel -->
-            <article class="panel panel-default panel-outline">
-
-                <!-- Icon -->
-                <div class="panel-heading icon">
-                    <i class="glyphicon glyphicon-picture"></i>
-                </div>
-                <!-- /Icon -->
-                <!-- Body -->
-                <div class="panel-body">
-                    <img class="img-responsive img-rounded" src="//placehold.it/350x150" />
-                </div>
-                <!-- /Body -->
-
-            </article>*@
-
-
-        @*<article class="panel panel-success">
-
-                <!-- Icon -->
-                <div class="panel-heading icon">
-                    <i class="glyphicon glyphicon-plus"></i>
-                </div>
-                <!-- /Icon -->
-                <!-- Heading -->
-                <div class="panel-heading">
-                    <h2 class="panel-title">New content added</h2>
-                </div>
-                <!-- /Heading -->
-                <!-- Body -->
-                <div class="panel-body">
-                    Anything you can do with <code>.panel</code>, can be done in timeline too!
-                </div>
-                <!-- /Body -->
-                <!-- List group -->
-                <ul class="list-group">
-                    <li class="list-group-item">Like</li>
-                    <li class="list-group-item">list</li>
-                    <li class="list-group-item">groups</li>
-                    <li class="list-group-item">and</li>
-                    <li class="list-group-item">tables</li>
-                </ul>
-
-            </article>*@
-
-
-
-        @*<article class="panel panel-info panel-outline">
-
-                <!-- Icon -->
-                <div class="panel-heading icon">
-                    <i class="glyphicon glyphicon-info-sign"></i>
-                </div>
-                <!-- /Icon -->
-                <!-- Body -->
-                <div class="panel-body">
-                    That is all.
-                </div>
-                <!-- /Body -->
-
-            </article>*@
-
-
     </div>
-    <!-- /Timeline -->
-
 </div>
