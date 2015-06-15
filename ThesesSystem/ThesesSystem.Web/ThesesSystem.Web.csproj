@@ -256,6 +256,7 @@
     <Compile Include="Infrastructure\Constants\GlobalConstants.cs" />
     <Compile Include="App_Start\ViewEnginesConfig.cs" />
     <Compile Include="Infrastructure\Constants\GlobalPatternConstants.cs" />
+    <Compile Include="Infrastructure\Constants\MimeTypeCreator.cs" />
     <Compile Include="Infrastructure\Factories\Logger\Logger.cs" />
     <Compile Include="Infrastructure\Factories\Logger\LoggerCreator.cs" />
     <Compile Include="Infrastructure\Factories\Logger\ThesisLogger.cs" />
@@ -270,6 +271,8 @@
     <Compile Include="ViewModels\AccountViewModels.cs" />
     <Compile Include="ViewModels\Comments\CommentProfileViewModel.cs" />
     <Compile Include="ViewModels\Comments\CreateCommentViewModel.cs" />
+    <Compile Include="ViewModels\Evaluation\CreateReviewViewModel.cs" />
+    <Compile Include="ViewModels\Evaluation\ReviewViewModel.cs" />
     <Compile Include="ViewModels\Faculties\FacultyDropDownListItemViewModel.cs" />
     <Compile Include="ViewModels\Friends\FriendViewModel.cs" />
     <Compile Include="ViewModels\Home\HomeViewModel.cs" />
@@ -285,7 +288,6 @@
     <Compile Include="ViewModels\Partial\StudentRegistrationViewModel.cs" />
     <Compile Include="ViewModels\Partial\TeacherInfoViewModel.cs" />
     <Compile Include="ViewModels\Specialties\SpecialtyDropDownListItemViewModel.cs" />
-    <Compile Include="ViewModels\Students\OksViewModel.cs" />
     <Compile Include="ViewModels\Teacher\SupervisorDropDownListITemViewModel.cs" />
     <Compile Include="ViewModels\Theses\CreateThesisViewModel.cs" />
     <Compile Include="ViewModels\Theses\DevThesisIndexViewModel.cs" />
@@ -474,6 +476,8 @@
     <Content Include="Views\Thesis\Version.cshtml" />
     <Content Include="Views\Thesis\_CreateCommentPartial.cshtml" />
     <Content Include="Views\Thesis\AddPart.cshtml" />
+    <Content Include="Views\Thesis\AddReview.cshtml" />
+    <Content Include="Views\Thesis\_ViewReviewPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Administration\ViewModels\" />

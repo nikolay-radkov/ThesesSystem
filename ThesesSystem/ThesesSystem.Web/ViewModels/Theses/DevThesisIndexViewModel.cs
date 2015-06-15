@@ -6,7 +6,6 @@ using System.Linq;
 using System.Web;
 using ThesesSystem.Models;
 using ThesesSystem.Web.Infrastructure.Mapping;
-using ThesesSystem.Web.ViewModels.Students;
 
 namespace ThesesSystem.Web.ViewModels.Theses
 {

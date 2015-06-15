@@ -16,6 +16,13 @@
         [Required]
         public string FilePath { get; set; }
 
+        [Required]
+        public string FileName { get; set; }
+
+        [Required]
+        [MaxLength(10)]
+        public string FileExtension { get; set; }
+
         [ForeignKey("Reviewer")]
         public string ReviewerId { get; set; }
 

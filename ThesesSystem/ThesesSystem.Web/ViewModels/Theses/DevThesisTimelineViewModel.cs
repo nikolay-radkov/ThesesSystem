@@ -15,6 +15,8 @@
 
         public bool HasEvaluation { get; set; }
 
+        public float? FinalEvaluation { get; set; }
+
         public ICollection<ThesisLogViewModel> ThesisLogs { get; set; }
 
         public void CreateMappings(AutoMapper.IConfiguration configuration)

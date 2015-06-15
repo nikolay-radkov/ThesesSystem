@@ -23,17 +23,5 @@
         public const string RANDOM_IMAGE_SOURCE = @"http://lorempixel.com/200/200/";
 
         public const string STORAGE_FOLDER = "uploads";
-
-        public const string RAR_MIME_TYPE = "application/x-rar-compressed";
-
-        public const string ZIP_MIME_TYPE = "application/zip";
-
-        public const string SEVENZ_MIME_TYPE = "application/x-7z-compressed";
-
-        public const string BZIP_MIME_TYPE = "application/x-bzip";
-
-        public const string BZIP2_MIME_TYPE = "application/x-bzip2";
-
-        public const string TAR_MIME_TYPE = "application/x-tar";
     }
 }

@@ -1,6 +1,7 @@
 ﻿namespace ThesesSystem.Web.ViewModels.Version
 {
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     using System.Web;
     using ThesesSystem.Models;
     using ThesesSystem.Web.Infrastructure.Mapping;
@@ -10,6 +11,7 @@
     {
         public int Id { get; set; }
 
+        [Required]
         public HttpPostedFileBase Archive { get; set; }
 
         public IList<CreateOrUpdateThesisPartViewModel> ThesisParts { get; set; }

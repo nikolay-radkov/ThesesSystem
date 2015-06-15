@@ -15,6 +15,7 @@
     using ThesesSystem.Web.Infrastructure.Factories.Logger;
     using ThesesSystem.Web.Infrastructure.Storage;
     using ThesesSystem.Web.ViewModels.Comments;
+    using ThesesSystem.Web.ViewModels.Evaluation;
     using ThesesSystem.Web.ViewModels.Teacher;
     using ThesesSystem.Web.ViewModels.Theses;
     using ThesesSystem.Web.ViewModels.ThesisPart;
@@ -32,154 +33,31 @@
             this.storage = storage;
         }
 
-        // GET: Thesis
-        [HttpGet]
-        public ActionResult Index()
+        [NonAction]
+        private bool IsThesisStudentOrTeacher(int thesisId)
         {
             var userId = this.User.Identity.GetUserId();
+            var thesis = this.Data.Theses.GetById(thesisId);
 
-            var thesesViewModel = this.Data.Theses.All()
-                                    .Where(t => t.StudentId == userId || t.SupervisorId == userId)
-                                    .Project()
-                                    .To<DevThesisIndexViewModel>()
-                                    .ToList();
+            var result = this.IsThesisTeacher(userId, thesis) || this.IsThesisStudent(userId, thesis);
 
-            return View(thesesViewModel);
+            return result;
         }
 
-        [HttpGet]
-        public ActionResult ThesisProfile(int id)
+        [NonAction]
+        private bool IsThesisStudent(string userId, Thesis thesis)
         {
-            // TODO: Add more new parts
-            // TODO: delete the thesis
-            // TODO: Add reviewer and admin
+            var result = thesis.StudentId == userId;
 
-            var userId = this.User.Identity.GetUserId();
-
-            var thesis = this.Data.Theses.GetById(id);
-
-            // TODO: Add this check for every action !!!
-            if (thesis.SupervisorId == userId || thesis.StudentId == userId)
-            {
-                var thesisViewModel = Mapper.Map<DevThesisTimelineViewModel>(thesis);
-                thesisViewModel.ThesisLogs = thesisViewModel.ThesisLogs.OrderByDescending(l => l.CreatedOn).ToList();
-
-                return View(thesisViewModel);
-            }
-            else
-            {
-                return RedirectToAction("Index", "Storage");
-            }
+            return result;
         }
 
-        [HttpGet]
-        public ActionResult Create()
+        [NonAction]
+        private bool IsThesisTeacher(string userId, Thesis thesis)
         {
-            var newThesis = new CreateThesisViewModel();
-            var superviosors = this.Data.Teachers.All()
-                                  .AsQueryable()
-                                  .Project()
-                                  .To<SupervisorDropDownListITemViewModel>()
-                                  .ToList();
+            var result = thesis.SupervisorId == userId || this.User.IsInRole(GlobalConstants.ADMIN);
 
-            ViewBag.SupervisorId = new SelectList(superviosors, "Id", "FullName");
-
-            return View(newThesis);
-        }
-
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(CreateThesisViewModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                var userId = this.User.Identity.GetUserId();
-                var thesis = Mapper.Map<Thesis>(model);
-                thesis.StudentId = userId;
-
-                this.Data.Theses.Add(thesis);
-
-                this.Data.SaveChanges();
-
-                var logger = this.loggerCreator.Create(this.Data);
-
-                logger.Log(new ThesisLog
-                {
-                    ThesisId = thesis.Id,
-                    UserId = userId,
-                    LogType = LogType.CreatedThesis,
-                    ForwardUrl = string.Format(GlobalPatternConstants.FORWARD_URL_WITH_ID, "Thesis", "ThesisProfile", thesis.Id)
-                });
-
-                return RedirectToAction("ThesisProfile", "Thesis", new { id = thesis.Id });
-            }
-
-            var superviosors = this.Data.Teachers.All()
-                               .AsQueryable()
-                               .Project()
-                               .To<SupervisorDropDownListITemViewModel>()
-                               .ToList();
-
-
-            ViewBag.SupervisorId = new SelectList(superviosors, "Id", "FullName");
-
-            return View(model);
-        }
-
-        [HttpGet]
-        public ActionResult AddVersion(int id)
-        {
-            var userId = this.User.Identity.GetUserId();
-
-            var thesis = this.Data.Theses.GetById(id);
-
-            if (thesis.SupervisorId == userId || thesis.StudentId == userId)
-            {
-                var versionViewModel = Mapper.Map<CreateVersionViewModel>(thesis);
-
-                return View(versionViewModel);
-            }
-            else
-            {
-                return RedirectToAction("Index", "Storage");
-            }
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult AddVersion(int id, CreateVersionViewModel model)
-        {
-            if (ModelState.IsValid && model.Archive != null && model.Archive.ContentLength > 0)
-            {
-                var userId = this.User.Identity.GetUserId();
-                var versionId = 0;
-
-                try
-                {
-                    versionId = SaveNewVersion(model);
-                }
-                catch (Exception)
-                {
-                    return View(model);
-                }
-
-                UpdateParts(model.Id, model.ThesisParts);
-
-                var logger = this.loggerCreator.Create(this.Data);
-
-                logger.Log(new ThesisLog
-                {
-                    ThesisId = model.Id,
-                    UserId = userId,
-                    LogType = LogType.AddedVersion,
-                    ForwardUrl = string.Format(GlobalPatternConstants.FORWARD_URL_WITH_ID, "Thesis", "Version", versionId)
-                });
-
-                return RedirectToAction("Version", "Thesis", new { id = versionId });
-            }
-
-            return View(model);
+            return result;
         }
 
         [NonAction]
@@ -234,119 +112,444 @@
             return version.Id;
         }
 
-        [NonAction]
-        private string GetFileMimeType(string fileExtension)
+        private int SaveNewReview(CreateReviewViewModel model)
         {
-            switch (fileExtension)
+            byte[] byteArray = null;
+
+            using (var memory = new MemoryStream())
             {
-                case "rar":
-                    return GlobalConstants.RAR_MIME_TYPE;
-                case "7z":
-                    return GlobalConstants.SEVENZ_MIME_TYPE;
-                case "zip":
-                    return GlobalConstants.ZIP_MIME_TYPE;
-                case "bz":
-                    return GlobalConstants.BZIP_MIME_TYPE;
-                case "bz2":
-                    return GlobalConstants.BZIP2_MIME_TYPE;
-                case "tar":
-                    return GlobalConstants.TAR_MIME_TYPE;
-                default:
-                    return System.Net.Mime.MediaTypeNames.Application.Octet;
+                model.Archive.InputStream.CopyTo(memory);
+                byteArray = memory.GetBuffer();
             }
+
+            var fileName = string.Format(GlobalPatternConstants.VERSION_NAME, DateTime.Now.ToUniversalTime(), model.Archive.FileName);
+            var fullPath = storage.UploadFile(byteArray, fileName, GlobalConstants.STORAGE_FOLDER);
+            var extensionStartIndex = model.Archive.FileName.LastIndexOf('.');
+            var fileExtension = model.Archive.FileName.Substring(extensionStartIndex + 1, model.Archive.FileName.Length - extensionStartIndex - 1).ToLower();
+
+            var review = new Evaluation()
+            {
+                Id = model.Id,
+                FilePath = fullPath,
+                FileName = model.Archive.FileName,
+                FileExtension = fileExtension,
+                ReviewerId = model.ReviewerId,
+                Mark = model.Mark
+            };
+
+            this.Data.Evaluations.Add(review);
+            this.Data.SaveChanges();
+
+            return review.Id;
         }
 
+        // GET: Thesis
+        [HttpGet]
+        public ActionResult Index()
+        {
+            var userId = this.User.Identity.GetUserId();
+
+            var thesesViewModel = this.Data.Theses.All()
+                                    .Where(t => t.StudentId == userId || t.SupervisorId == userId)
+                                    .Project()
+                                    .To<DevThesisIndexViewModel>()
+                                    .ToList();
+
+            return View(thesesViewModel);
+        }
+
+        [HttpGet]
+        public ActionResult ThesisProfile(int id)
+        {
+            // TODO: delete the thesis
+            // TODO: Add reviewer and admin            
+            // TODO: Add this check for every action !!!
+            if (IsThesisStudentOrTeacher(id))
+            {
+                var thesis = this.Data.Theses.GetById(id);
+                var thesisViewModel = Mapper.Map<DevThesisTimelineViewModel>(thesis);
+
+                thesisViewModel.ThesisLogs = thesisViewModel.ThesisLogs.OrderByDescending(l => l.CreatedOn).ToList();
+
+                return View(thesisViewModel);
+            }
+
+            return RedirectToAction("Index", "Storage");
+        }
+
+        [HttpGet]
+        public ActionResult Create()
+        {
+            if (this.User.IsInRole(GlobalConstants.STUDENT))
+            {
+                var newThesis = new CreateThesisViewModel();
+                var superviosors = this.Data.Teachers.All()
+                                      .AsQueryable()
+                                      .Project()
+                                      .To<SupervisorDropDownListITemViewModel>()
+                                      .ToList();
+
+                ViewBag.SupervisorId = new SelectList(superviosors, "Id", "FullName");
+
+                return View(newThesis);
+            }
+
+            return RedirectToAction("Index", "Storage");
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(CreateThesisViewModel model)
+        {
+            if (this.User.IsInRole(GlobalConstants.STUDENT))
+            {
+                if (ModelState.IsValid)
+                {
+                    var userId = this.User.Identity.GetUserId();
+                    var thesis = Mapper.Map<Thesis>(model);
+                    thesis.StudentId = userId;
+
+                    this.Data.Theses.Add(thesis);
+
+                    this.Data.SaveChanges();
+
+                    var logger = this.loggerCreator.Create(this.Data);
+
+                    logger.Log(new ThesisLog
+                    {
+                        ThesisId = thesis.Id,
+                        UserId = userId,
+                        LogType = LogType.CreatedThesis,
+                        ForwardUrl = string.Format(GlobalPatternConstants.FORWARD_URL_WITH_ID, "Thesis", "ThesisProfile", thesis.Id)
+                    });
+
+                    return RedirectToAction("ThesisProfile", "Thesis", new { id = thesis.Id });
+                }
+
+                var superviosors = this.Data.Teachers.All()
+                                   .AsQueryable()
+                                   .Project()
+                                   .To<SupervisorDropDownListITemViewModel>()
+                                   .ToList();
+
+                ViewBag.SupervisorId = new SelectList(superviosors, "Id", "FullName");
+
+                return View(model);
+            }
+
+            return RedirectToAction("Index", "Storage");
+        }
+
+        [HttpGet]
+        public ActionResult AddVersion(int id)
+        {
+            if (this.IsThesisStudentOrTeacher(id))
+            {
+                var thesis = this.Data.Theses.GetById(id);
+                var versionViewModel = Mapper.Map<CreateVersionViewModel>(thesis);
+
+                return View(versionViewModel);
+            }
+
+            return RedirectToAction("Index", "Storage");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddVersion(int id, CreateVersionViewModel model)
+        {
+            if (this.IsThesisStudentOrTeacher(id))
+            {
+                if (ModelState.IsValid && model.Archive != null && model.Archive.ContentLength > 0)
+                {
+                    var userId = this.User.Identity.GetUserId();
+
+                    var versionId = 0;
+
+                    try
+                    {
+                        versionId = SaveNewVersion(model);
+                    }
+                    catch (Exception)
+                    {
+                        return View(model);
+                    }
+
+                    UpdateParts(model.Id, model.ThesisParts);
+
+                    var logger = this.loggerCreator.Create(this.Data);
+
+                    logger.Log(new ThesisLog
+                    {
+                        ThesisId = model.Id,
+                        UserId = userId,
+                        LogType = LogType.AddedVersion,
+                        ForwardUrl = string.Format(GlobalPatternConstants.FORWARD_URL_WITH_ID, "Thesis", "Version", versionId)
+                    });
+
+                    return RedirectToAction("Version", "Thesis", new { id = versionId });
+                }
+
+                return View(model);
+            }
+
+            return RedirectToAction("Index", "Storage");
+        }
 
         [HttpGet]
         public ActionResult Version(int id)
         {
             var version = this.Data.Versions.GetById(id);
-            var versionViewModel = Mapper.Map<VersionProfileViewModel>(version);
-            versionViewModel.Comments = versionViewModel.Comments.OrderByDescending(c => c.CreatedOn).ToList();
 
-            return View(versionViewModel);
+            if (this.IsThesisStudentOrTeacher(version.ThesisId))
+            {
+                var versionViewModel = Mapper.Map<VersionProfileViewModel>(version);
+                versionViewModel.Comments = versionViewModel.Comments.OrderByDescending(c => c.CreatedOn).ToList();
+
+                return View(versionViewModel);
+            }
+
+            return RedirectToAction("Index", "Storage");
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Version(int id, CreateCommentViewModel comment)
         {
-            if (ModelState.IsValid)
+            var version = this.Data.Versions.GetById(id);
+            if (this.IsThesisStudentOrTeacher(version.ThesisId))
             {
-                var userId = this.User.Identity.GetUserId();
-
-                var newComment = Mapper.Map<Comment>(comment);
-                newComment.UserId = userId;
-                newComment.VersionId = id;
-
-                this.Data.Comments.Add(newComment);
-                this.Data.SaveChanges();
-
-                var logger = this.loggerCreator.Create(this.Data);
-
-                var version = this.Data.Versions.GetById(id);
-
-                logger.Log(new ThesisLog
+                if (ModelState.IsValid)
                 {
-                    ThesisId = version.ThesisId,
-                    UserId = userId,
-                    LogType = LogType.AddedComment,
-                    ForwardUrl = string.Format(GlobalPatternConstants.FORWARD_URL_WITH_ID, "Thesis", "Version", id)
-                });
+                    var userId = this.User.Identity.GetUserId();
 
-                return RedirectToAction("Version", "Thesis", new { id = id });
+                    var newComment = Mapper.Map<Comment>(comment);
+                    newComment.UserId = userId;
+                    newComment.VersionId = id;
+
+                    this.Data.Comments.Add(newComment);
+                    this.Data.SaveChanges();
+
+                    var logger = this.loggerCreator.Create(this.Data);
+
+                    logger.Log(new ThesisLog
+                    {
+                        ThesisId = version.ThesisId,
+                        UserId = userId,
+                        LogType = LogType.AddedComment,
+                        ForwardUrl = string.Format(GlobalPatternConstants.FORWARD_URL_WITH_ID, "Thesis", "Version", id)
+                    });
+
+                    return RedirectToAction("Version", "Thesis", new { id = id });
+                }
+
+                return View(comment);
             }
 
-            return View(comment);
+            return RedirectToAction("Index", "Storage");
         }
-
 
         [HttpGet]
         public ActionResult DownloadFile(int id)
         {
             var version = this.Data.Versions.GetById(id);
-            var mimeType = GetFileMimeType(version.FileExtension);
-            var fileBytes = storage.DownloadFile(version.StoragePath);
 
-            var ms = new MemoryStream(fileBytes);
+            if (this.IsThesisStudentOrTeacher(version.ThesisId))
+            {
+                var mimeType = MimeTypeCreator.GetFileMimeType(version.FileExtension);
+                var fileBytes = storage.DownloadFile(version.StoragePath);
 
-            return File(fileBytes, mimeType, version.FileName);
+                var ms = new MemoryStream(fileBytes);
+
+                return File(fileBytes, mimeType, version.FileName);
+            }
+
+            return RedirectToAction("Index", "Storage");
+        }
+
+        [HttpGet]
+        public ActionResult DownloadReviewFile(int id)
+        {
+            var review = this.Data.Evaluations.GetById(id);
+
+            if (this.IsThesisStudentOrTeacher(id))
+            {
+                var mimeType = MimeTypeCreator.GetFileMimeType(review.FileExtension);
+                var fileBytes = storage.DownloadFile(review.FilePath);
+
+                var ms = new MemoryStream(fileBytes);
+
+                return File(fileBytes, mimeType, review.FileName);
+            }
+
+            return RedirectToAction("Index", "Storage");
         }
 
         [HttpGet]
         public ActionResult AddPart(int id)
         {
-            var partViewModel = this.Data.ThesisParts.All()
-                                .Where(p => p.ThesisId == id)
-                                .Project()
-                                .To<CreateOrUpdateThesisPartViewModel>()
-                                .ToList();
+            if (this.IsThesisStudentOrTeacher(id))
+            {
+                var partViewModel = this.Data.ThesisParts.All()
+                                    .Where(p => p.ThesisId == id)
+                                    .Project()
+                                    .To<CreateOrUpdateThesisPartViewModel>()
+                                    .ToList();
 
-            return View(partViewModel);
+                return View(partViewModel);
+            }
+
+            return RedirectToAction("Index", "Storage");
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult AddPart(int id, IList<CreateOrUpdateThesisPartViewModel> parts)
         {
-            if (ModelState.IsValid)
+            if (this.IsThesisStudentOrTeacher(id))
             {
-                UpdateParts(id, parts);
-                var userId = this.User.Identity.GetUserId();
-                var logger = this.loggerCreator.Create(this.Data);
-
-                logger.Log(new ThesisLog
+                if (ModelState.IsValid)
                 {
-                    ThesisId = id,
-                    UserId = userId,
-                    LogType = LogType.AddedPart,
-                    ForwardUrl = string.Format(GlobalPatternConstants.FORWARD_URL_WITH_ID, "Thesis", "ThesisProfile", id)
-                });
+                    UpdateParts(id, parts);
+                    var userId = this.User.Identity.GetUserId();
+                    var logger = this.loggerCreator.Create(this.Data);
 
-                return RedirectToAction("ThesisProfile", "Thesis", new { id = id });
+                    logger.Log(new ThesisLog
+                    {
+                        ThesisId = id,
+                        UserId = userId,
+                        LogType = LogType.AddedPart,
+                        ForwardUrl = string.Format(GlobalPatternConstants.FORWARD_URL_WITH_ID, "Thesis", "ThesisProfile", id)
+                    });
+
+                    return RedirectToAction("ThesisProfile", "Thesis", new { id = id });
+                }
+
+                return View(parts);
             }
 
-            return View(parts);
+            return RedirectToAction("Index", "Storage");
         }
+
+        [HttpGet]
+        public ActionResult AddReview(int id)
+        {
+            var thesis = this.Data.Theses.GetById(id);
+            var userId = this.User.Identity.GetUserId();
+
+            if (this.IsThesisTeacher(userId, thesis))
+            {
+                var newReview = new CreateReviewViewModel { Id = id };
+                var reviewers = this.Data.Teachers.All()
+                                  .OrderBy( t=> t.User.FirstName)
+                                  .ThenBy(t => t.User.LastName)
+                                  .AsQueryable()
+                                  .Project()
+                                  .To<SupervisorDropDownListITemViewModel>()
+                                  .ToList();
+
+                ViewBag.ReviewerId = new SelectList(reviewers, "Id", "FullName");
+
+                return View(newReview);
+            }
+
+            return RedirectToAction("Index", "Storage");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddReview(int id, CreateReviewViewModel model)
+        {
+            var thesis = this.Data.Theses.GetById(id);
+            var userId = this.User.Identity.GetUserId();
+
+            if (this.IsThesisTeacher(userId, thesis))
+            {
+                if (ModelState.IsValid)
+                {
+                    var reviewId = 0;
+
+                    try
+                    {
+                        reviewId = SaveNewReview(model);
+                    }
+                    catch (Exception)
+                    {
+                        return RedirectToAction("ThesisProfile", "Thesis", new { id = id });
+                    }
+
+                    var logger = this.loggerCreator.Create(this.Data);
+
+                    logger.Log(new ThesisLog
+                    {
+                        ThesisId = id,
+                        UserId = userId,
+                        LogType = LogType.AddedReview,
+                        ForwardUrl = string.Format(GlobalPatternConstants.FORWARD_URL_WITH_ID, "Thesis", "ViewReview", reviewId)
+                    });
+
+                    return RedirectToAction("ThesisProfile", "Thesis", new { id = id });
+                }
+                var reviewers = this.Data.Teachers.All()
+                                 .OrderBy(t => t.User.FirstName)
+                                 .ThenBy(t => t.User.LastName)
+                                 .AsQueryable()
+                                 .Project()
+                                 .To<SupervisorDropDownListITemViewModel>()
+                                 .ToList();
+
+                ViewBag.ReviewerId = new SelectList(reviewers, "Id", "FullName");
+
+                return View(model);
+            }
+
+            return RedirectToAction("Index", "Storage");
+        }
+
+        [HttpGet]
+        public ActionResult ViewReview(int id)
+        {
+            if (this.IsThesisStudentOrTeacher(id))
+            {
+                var review = this.Data.Evaluations.GetById(id);
+                var reviewViewModel = Mapper.Map<ReviewViewModel>(review);
+
+                return PartialView("_ViewReviewPartial", reviewViewModel);
+            }
+
+            return RedirectToAction("Index", "Storage");
+        }
+
+        [HttpGet]
+        public ActionResult AddFinalEvaluation(int id)
+        {
+            var thesis = this.Data.Theses.GetById(id);
+            var userId = this.User.Identity.GetUserId();
+
+            if (this.IsThesisTeacher(userId, thesis))
+            {
+                //TODO: Implement view
+                return View();
+            }
+
+            return RedirectToAction("Index", "Storage");
+        }
+
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult AddFinalEvaluation(int id, CreateFinalEvaluationViewModel model)
+        //{
+        //    var thesis = this.Data.Theses.GetById(id);
+        //    var userId = this.User.Identity.GetUserId();
+
+        //    if (this.IsThesisTeacher(userId, thesis))
+        //    {
+        //        //TODO: Implement view
+        //        return View();
+        //    }
+
+        //    return RedirectToAction("Index", "Storage");
+        //}
     }
 }

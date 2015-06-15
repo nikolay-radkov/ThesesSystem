@@ -4,17 +4,39 @@
     ViewBag.Title = "Профил на дипломна работа";
 }
 
-<h2>@Model.Title</h2>
+<h2>
+    @Model.Title
+    @if (Model.IsComplete)
+    {
 
+        if (Model.HasEvaluation)
+        {
+            if (Model.FinalEvaluation == null)
+            {
+                <span class="badge-danger">очакване на крайна оценка</span>
+            }
+            else
+            {
+                <span class="badge-success">завършена</span>
+            }
+        }
+        else
+        {
+            <span class="badge-info">очакване на рецензия</span>
+        }
+    }
+    else
+    {
+        <span class="badge-primary">в процес на разработка</span>
+    }
+
+</h2>
 <div class="container">
     <div class="row">
         @if (!Model.IsComplete)
         {
-            if (User.IsInRole(GlobalConstants.STUDENT))
-            {
-                @Html.ActionLink("Нова версия", "AddVersion", "Thesis", new { area = string.Empty, id = Model.Id }, new { @class = "btn btn-success" })
-                @Html.ActionLink("Нова част", "AddPart", "Thesis", new { area = string.Empty, id = Model.Id }, new { @class = "btn btn-success" })
-            }
+            @Html.ActionLink("Нова версия", "AddVersion", "Thesis", new { area = string.Empty, id = Model.Id }, new { @class = "btn btn-success" })
+            @Html.ActionLink("Нова част", "AddPart", "Thesis", new { area = string.Empty, id = Model.Id }, new { @class = "btn btn-success" })
         }
         else
         {
@@ -24,18 +46,30 @@
                 {
                     @Html.ActionLink("Добави рецензия", "AddReview", "Thesis", new { area = string.Empty, id = Model.Id }, new { @class = "btn btn-success" })
                 }
+                else
+                {
+                    <span class="label label-danger">Все още нямате рецензия</span>
+                }
             }
             else
             {
-                @Html.ActionLink("Преглед на рецензията", "ViewReview", "Thesis", new { area = string.Empty, id = Model.Id }, new { @class = "btn btn-success" })
+                @Ajax.ActionLink("Преглед на рецензията ", "ViewReview", "Thesis", new { area = string.Empty, id = Model.Id }, new AjaxOptions
+                    {
+                        HttpMethod = "GET",
+                        UpdateTargetId = "result",
+                        InsertionMode = InsertionMode.Replace,
+                        OnSuccess = "openPopup"
+                    },
+                    new { @class = "btn btn-success" })
 
-                if (User.IsInRole(GlobalConstants.ADMIN))
+                if (User.IsInRole(GlobalConstants.ADMIN) && Model.FinalEvaluation == null)
                 {
                     @Html.ActionLink("Добави крайна оценка", "AddFinalEvaluation", "Thesis", new { area = string.Empty, id = Model.Id }, new { @class = "btn btn-success" })
                 }
             }
         }
     </div>
+    <div id="result" class="popup-dialog" style="display:none;"></div>
     <div class="timeline">
         <!-- Line component -->
         <div class="line text-muted"></div>
@@ -124,3 +158,54 @@
         }
     </div>
 </div>
+
+@section styles
+{
+    @Styles.Render("~/Content/ui-dialog")
+    <style>
+        .validateTips {
+            border: 1px solid transparent;
+            padding: 0.3em;
+        }
+
+        #result label, input {
+            display: block;
+        }
+
+        #result input.text {
+            margin-bottom: 12px;
+            width: 100%;
+            padding: .4em;
+        }
+
+        #result fieldset {
+            padding: 0;
+            border: 0;
+            margin-top: 25px;
+        }
+
+        #text-small {
+            font-size: 10px;
+        }
+    </style>
+}
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/jquery-ui")
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#result").dialog({
+                autoOpen: false,
+                title: 'Преглед на рецензия',
+                width: 300,
+                height: 'auto',
+                modal: true
+            });
+        });
+        function openPopup() {
+            $("#result").dialog("open");
+        }
+    </script>
+
+}

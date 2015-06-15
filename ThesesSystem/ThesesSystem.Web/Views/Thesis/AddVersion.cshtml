@@ -14,7 +14,7 @@
     <div class="form-group">
         @Html.LabelFor(m => m.Archive, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
-            <input type="file" name="Archive" id="Archive" />
+            @Html.TextBoxFor(m => m.Archive, new { type = "file", accept = ".rar,.tar,.zip,.7z,.bz,.bz2" })
             @Html.ValidationMessageFor(model => model.Archive, "", new { @class = "text-danger" })
         </div>
     </div>

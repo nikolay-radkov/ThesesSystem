@@ -17,7 +17,7 @@ namespace ThesesSystem.Web
         private static void RegisterScriptBundels(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery")
-                .Include("~/Scripts/jquery-{version}.js"));
+                .Include("~/Scripts/jquery-2.1.4.min.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
@@ -58,6 +58,9 @@ namespace ThesesSystem.Web
 
             bundles.Add(new StyleBundle("~/Content/sweetalert")
                .Include("~/Content/sweetalert.css"));
+
+            bundles.Add(new StyleBundle("~/Content/ui-dialog")
+            .Include("~/Content/themes/base/all.css"));
         }
     }
 }

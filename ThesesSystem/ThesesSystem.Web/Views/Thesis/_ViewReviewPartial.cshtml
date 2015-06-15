@@ -1,0 +1,20 @@
+﻿@model ThesesSystem.Web.ViewModels.Evaluation.ReviewViewModel
+
+<fieldset>
+    <div class="text-center">
+        @Html.LabelFor(m => m.ReviewerName)
+        @Html.DisplayFor(m => m.ReviewerName, new { @class = "text ui-widget-content ui-corner-all" })
+        <hr />
+        @Html.LabelFor(m => m.Mark)
+        @Html.DisplayFor(m => m.Mark, new { @class = "text ui-widget-content ui-corner-all" })
+        <hr />
+        @Html.LabelFor(m => m.CreatedOn)
+        @Html.DisplayFor(m => m.CreatedOn, new { @class = "text ui-widget-content ui-corner-all" })
+        <hr />
+        <div id="text-small">
+            @Html.DisplayFor(m => m.FileName)
+        </div>
+        <br />
+        @Html.ActionLink("Свали", "DownloadReviewFile", "Thesis", new { id = Model.Id }, new { target = "_blank", @class = "btn btn-danger" })
+    </div>
+</fieldset>

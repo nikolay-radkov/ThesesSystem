@@ -531,8 +531,8 @@ section.module.parallax-3 {
     border-bottom: none;
 }
 
-#comments-container .btn, 
-#comments-container .form-control, 
+#comments-container .btn,
+#comments-container .form-control,
 #comments-container .well {
     -moz-border-radius: 1px;
     -webkit-border-radius: 1px;
@@ -547,7 +547,7 @@ section.module.parallax-3 {
     border-color: transparent;
 }
 
-#comments-container .btn-primary, 
+#comments-container .btn-primary,
 #comments-container .list-group-item.active:focus {
     background-color: #4285f4;
 }
@@ -566,7 +566,7 @@ section.module.parallax-3 {
     text-shadow: 0 0 1px #bbbbbb;
 }
 
-#comments-container .well, 
+#comments-container .well,
 #comments-container .panel {
     border-color: #d2d2d2;
     -moz-box-shadow: 0 1px 0 #cfcfcf;
@@ -589,7 +589,7 @@ section.module.parallax-3 {
     color: #666666;
 }
 
-#comments-container .list-group-item:first-child, 
+#comments-container .list-group-item:first-child,
 #comments-container .list-group-item:last-child {
     -moz-border-radius: 0;
     -webkit-border-radius: 0;
@@ -600,4 +600,36 @@ section.module.parallax-3 {
     border: 0 solid #efefef;
     border-bottom-width: 1px;
     padding-bottom: 10px;
+}
+
+.badge-primary, .badge-info, .badge-success, .badge-danger  {
+    display: inline-block;
+    min-width: 10px;
+    padding: 3px 7px;
+    font-size: 13px;
+    font-weight: bold;
+    line-height: 1;
+    color: #ffffff;
+    vertical-align: baseline;
+    white-space: nowrap;
+    text-align: center;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+}
+
+.badge-info{
+    background-color: #5bc0de;
+}
+
+.badge-primary {
+    background-color: #2780e3;
+}
+
+.badge-success {
+      background-color: #5cb85c;
+}
+
+.badge-danger {
+    background-color: #ff0039;
 }
