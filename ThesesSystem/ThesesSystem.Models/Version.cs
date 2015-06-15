@@ -19,6 +19,13 @@
         [Required]
         public string StoragePath { get; set; }
 
+        [Required]
+        public string FileName { get; set; }
+
+        [Required]
+        [MaxLength(10)]
+        public string FileExtension { get; set; }
+
         public int ThesisId { get; set; }
 
         public virtual Thesis Thesis { get; set; }

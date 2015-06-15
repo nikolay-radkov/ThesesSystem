@@ -1,0 +1,10 @@
+﻿@model ThesesSystem.Web.ViewModels.Comments.CreateCommentViewModel
+
+@using (Html.BeginForm("Version", "Thesis", new { id = Model.VersionId, area = string.Empty }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <textarea rows="3" id="userComment" class="form-control" name="Text"  placeholder="Напишете вашият коментар тук..."></textarea>
+    <div class="row">
+        <input type="submit" class="btn btn-primary" value="Добави коментар"/>
+    </div>
+}

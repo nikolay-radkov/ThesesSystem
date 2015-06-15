@@ -5,4 +5,30 @@
 
 <h2>@ViewBag.Title</h2>
 
-<span>@Model.StoragePath</span>
+@Html.ActionLink(Model.FileName, "DownloadFile", "Thesis", new { id = Model.Id }, new { target = "_blank", @class = "btn btn-danger" })
+
+<div id="comments-container" class="container">
+    <div class="col-lg-offset-3 col-md-offset-3 col-lg-6 col-sm-6 text-center">
+        <div class="well shadowed">
+            <h4>Можете да коментирате версията</h4>
+            <div>
+               @Html.Partial("_CreateCommentPartial", new ThesesSystem.Web.ViewModels.Comments.CreateCommentViewModel { VersionId = Model.Id})
+            </div>
+            <hr data-brackets-id="12673">
+            <ul data-brackets-id="12674" id="sortable" class="list-unstyled ui-sortable">
+                @foreach (var item in Model.Comments)
+                {
+                    <li>
+                        <strong class="pull-left primary-font">@item.FullName</strong>
+                        <small class="pull-right text-muted">
+                            <span class="glyphicon glyphicon-time"></span>@item.CreatedOn
+                        </small>
+                        <br />
+                        <p class="ui-state-default">@item.Text</p>
+                        <br />
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+</div>

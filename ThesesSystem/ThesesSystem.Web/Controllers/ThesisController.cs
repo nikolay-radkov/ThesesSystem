@@ -17,6 +17,7 @@ using ThesesSystem.Web.ViewModels.Version;
 using System.IO;
 using ThesesSystem.Web.Infrastructure.Storage;
 using DropNet;
+using ThesesSystem.Web.ViewModels.Comments;
 
 namespace ThesesSystem.Web.Controllers
 {
@@ -216,11 +217,15 @@ namespace ThesesSystem.Web.Controllers
 
             var fileName = string.Format(GlobalPatternConstants.VERSION_NAME, DateTime.Now.ToUniversalTime(), model.Archive.FileName);
             var fullPath = storage.UploadFile(byteArray, fileName, GlobalConstants.STORAGE_FOLDER);
+            var extensionStartIndex = model.Archive.FileName.LastIndexOf('.');
+            var fileExtension = model.Archive.FileName.Substring(extensionStartIndex + 1, model.Archive.FileName.Length - extensionStartIndex - 1).ToLower();
 
             var version = new ThesesSystem.Models.Version()
             {
                 ThesisId = model.Id,
-                StoragePath = fullPath
+                StoragePath = fullPath,
+                FileName = model.Archive.FileName,
+                FileExtension = fileExtension
             };
 
             this.Data.Versions.Add(version);
@@ -229,21 +234,83 @@ namespace ThesesSystem.Web.Controllers
             return version.Id;
         }
 
+        [NonAction]
+        private string GetFileMimeType(string fileExtension)
+        {
+            switch (fileExtension)
+            {
+                case "rar":
+                    return GlobalConstants.RAR_MIME_TYPE;
+                case "7z":
+                    return GlobalConstants.SEVENZ_MIME_TYPE;
+                case "zip":
+                    return GlobalConstants.ZIP_MIME_TYPE;
+                case "bz":
+                    return GlobalConstants.BZIP_MIME_TYPE;
+                case "bz2":
+                    return GlobalConstants.BZIP2_MIME_TYPE;
+                case "tar":
+                    return GlobalConstants.TAR_MIME_TYPE;
+                default:
+                    return System.Net.Mime.MediaTypeNames.Application.Octet;
+            }
+        }
+
 
         [HttpGet]
         public ActionResult Version(int id)
         {
             var version = this.Data.Versions.GetById(id);
             var versionViewModel = Mapper.Map<VersionProfileViewModel>(version);
+            versionViewModel.Comments = versionViewModel.Comments.OrderByDescending(c => c.CreatedOn).ToList();
 
             return View(versionViewModel);
         }
 
-        [HttpGet]
-        public ActionResult DownloadFile(int? id)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Version(int id, CreateCommentViewModel comment)
         {
-            //TODO: Get thesis path
-            return File(Server.MapPath("~/Files/") + id, "image/jpeg");
+            if (ModelState.IsValid)
+            {
+                var userId = this.User.Identity.GetUserId();
+
+                var newComment = Mapper.Map<Comment>(comment);
+                newComment.UserId = userId;
+                newComment.VersionId = id;
+
+                this.Data.Comments.Add(newComment);
+                this.Data.SaveChanges();
+
+                var logger = this.loggerCreator.Create(this.Data);
+
+                var version = this.Data.Versions.GetById(id);
+
+                logger.Log(new ThesisLog
+                {
+                    ThesisId = version.ThesisId,
+                    UserId = userId,
+                    LogType = LogType.AddedComment,
+                    ForwardUrl = string.Format(GlobalPatternConstants.FORWARD_URL_WITH_ID, "Thesis", "Version", id)
+                });
+
+                return RedirectToAction("Version", "Thesis", new { id = id });
+            }
+
+            return View(comment);
+        }
+
+
+        [HttpGet]
+        public ActionResult DownloadFile(int id)
+        {
+            var version = this.Data.Versions.GetById(id);
+            var mimeType = GetFileMimeType(version.FileExtension);
+            var fileBytes = storage.DownloadFile(version.StoragePath);
+
+            var ms = new MemoryStream(fileBytes);
+
+            return File(fileBytes, mimeType, version.FileName);
         }
     }
 }

@@ -12,7 +12,6 @@
         [Required]
         public string Text { get; set; }
 
-
         public int VersionId { get; set; }
 
         public virtual Version Version { get; set; }

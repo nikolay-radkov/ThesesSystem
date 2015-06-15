@@ -18,6 +18,7 @@
         public DropboxStorage()
         {
             client = new DropNetClient(App_key, App_secret, OauthAccessTokenValue, OauthAccessTokenSecret);
+            client.UseSandbox = true;
         }
 
         public byte[] DownloadFile(string path)
@@ -32,6 +33,11 @@
             var uploaded = client.UploadFile(target, filename, content);
 
             return uploaded.Path;
+        }
+
+        public void DeleteFile(string path)
+        {
+            client.Delete(path);
         }
     }
 }

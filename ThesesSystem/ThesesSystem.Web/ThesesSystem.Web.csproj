@@ -268,6 +268,8 @@
     <Compile Include="Infrastructure\Storage\DropboxStorage.cs" />
     <Compile Include="Infrastructure\Storage\IStorage.cs" />
     <Compile Include="ViewModels\AccountViewModels.cs" />
+    <Compile Include="ViewModels\Comments\CommentProfileViewModel.cs" />
+    <Compile Include="ViewModels\Comments\CreateCommentViewModel.cs" />
     <Compile Include="ViewModels\Faculties\FacultyDropDownListItemViewModel.cs" />
     <Compile Include="ViewModels\Friends\FriendViewModel.cs" />
     <Compile Include="ViewModels\Home\HomeViewModel.cs" />
@@ -470,6 +472,7 @@
     <Content Include="Views\Idea\Create.cshtml" />
     <Content Include="Views\Thesis\AddVersion.cshtml" />
     <Content Include="Views\Thesis\Version.cshtml" />
+    <Content Include="Views\Thesis\_CreateCommentPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Administration\ViewModels\" />

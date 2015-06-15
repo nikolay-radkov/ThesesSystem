@@ -502,9 +502,102 @@ section.module.parallax-3 {
 }
 
 .for-evaluation {
-      background-color: rgb(243, 33, 33);
+    background-color: rgb(243, 33, 33);
 }
 
 .complete {
-      background-color: rgb(156, 244, 10);
+    background-color: rgb(156, 244, 10);
+}
+
+/*---Comments---*/
+#comments-container.container {
+    padding: 25px;
+}
+
+#comments-container p.ui-state-default {
+    background: #fff0;
+    border: none;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+    padding-bottom: 10px;
+}
+
+#comments-container textarea {
+    resize: none;
+    width: 100%;
+}
+
+#comments-container p.ui-state-default:last-child {
+    border-bottom: none;
+}
+
+#comments-container .btn, 
+#comments-container .form-control, 
+#comments-container .well {
+    -moz-border-radius: 1px;
+    -webkit-border-radius: 1px;
+    border-radius: 1px;
+}
+
+#comments-container .form-control {
+    border-color: #d7d7d7;
+}
+
+#comments-container .btn-primary {
+    border-color: transparent;
+}
+
+#comments-container .btn-primary, 
+#comments-container .list-group-item.active:focus {
+    background-color: #4285f4;
+}
+
+#comments-container .btn-plus {
+    background-color: #ffffff;
+    border-width: 1px;
+    border-color: #dddddd;
+    -moz-box-shadow: 1px 1px 0 #999999;
+    -webkit-box-shadow: 1px 1px 0 #999999;
+    box-shadow: 1px 1px 0 #999999;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    color: #666666;
+    text-shadow: 0 0 1px #bbbbbb;
+}
+
+#comments-container .well, 
+#comments-container .panel {
+    border-color: #d2d2d2;
+    -moz-box-shadow: 0 1px 0 #cfcfcf;
+    -webkit-box-shadow: 0 1px 0 #cfcfcf;
+    box-shadow: 0 1px 0 #cfcfcf;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+}
+
+#comments-container hr {
+    border-color: #ececec;
+}
+
+#comments-container button {
+    outline: 0;
+}
+
+#comments-container .btn span {
+    color: #666666;
+}
+
+#comments-container .list-group-item:first-child, 
+#comments-container .list-group-item:last-child {
+    -moz-border-radius: 0;
+    -webkit-border-radius: 0;
+    border-radius: 0;
+}
+
+#comments-container h3 {
+    border: 0 solid #efefef;
+    border-bottom-width: 1px;
+    padding-bottom: 10px;
 }
