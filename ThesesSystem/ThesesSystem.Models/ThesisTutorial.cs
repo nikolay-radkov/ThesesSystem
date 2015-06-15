@@ -11,6 +11,9 @@
         public string FilePath { get; set; }
 
         [Required]
+        public string FileName { get; set; }
+
+        [Required]
         public string TeacherId { get; set; }
 
         public virtual Teacher Teacher { get; set; }

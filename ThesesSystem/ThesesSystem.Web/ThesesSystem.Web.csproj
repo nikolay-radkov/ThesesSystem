@@ -246,6 +246,7 @@
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\StorageController.cs" />
     <Compile Include="Controllers\ThesisController.cs" />
+    <Compile Include="Controllers\TutorialController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\ValidationController.cs" />
     <Compile Include="GlimpseSecurityPolicy.cs" />
@@ -302,6 +303,8 @@
     <Compile Include="ViewModels\ThesisPart\CreateThesisPartViewModel.cs" />
     <Compile Include="ViewModels\ThesisTheme\CreateThesisThemeViewModel.cs" />
     <Compile Include="ViewModels\ThesisTheme\ThesisThemeViewModel.cs" />
+    <Compile Include="ViewModels\ThesisTutorial\CreateTutorialViewModel.cs" />
+    <Compile Include="ViewModels\ThesisTutorial\TutorialViewModel.cs" />
     <Compile Include="ViewModels\Users\UserProfileViewModel.cs" />
     <Compile Include="ViewModels\Users\VerificationType.cs" />
     <Compile Include="ViewModels\Users\VerificationViewModel.cs" />
@@ -482,6 +485,8 @@
     <Content Include="Views\Thesis\_ViewReviewPartial.cshtml" />
     <Content Include="Views\Thesis\AddFinalEvaluation.cshtml" />
     <Content Include="Views\Thesis\_ViewFinalEvaluationPartial.cshtml" />
+    <Content Include="Views\Tutorial\Index.cshtml" />
+    <Content Include="Views\Tutorial\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Administration\ViewModels\" />

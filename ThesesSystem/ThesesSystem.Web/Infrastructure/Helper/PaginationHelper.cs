@@ -43,6 +43,9 @@
                 case "IdeaThemes":
                     pageNumber = (int)Math.Ceiling((double)data.ThesisThemes.All().Count() / GlobalConstants.ELEMENTS_PER_PAGE);
                     break;
+                case "TutorialIndex":
+                    pageNumber = (int)Math.Ceiling((double)data.ThesisTutorials.All().Count() / GlobalConstants.ELEMENTS_PER_PAGE);
+                    break;
                 //TODO: Other paging
                 default:
                     pageNumber = 0;
