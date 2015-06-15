@@ -1,26 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using Microsoft.AspNet.Identity;
-using ThesesSystem.Web.Controllers.BaseControllers;
-using ThesesSystem.Data;
-using ThesesSystem.Web.ViewModels.Theses;
-using AutoMapper;
-using AutoMapper.QueryableExtensions;
-using ThesesSystem.Web.ViewModels.Teacher;
-using ThesesSystem.Models;
-using ThesesSystem.Web.Infrastructure.Factories.Logger;
-using ThesesSystem.Web.Infrastructure.Constants;
-using ThesesSystem.Web.ViewModels.Version;
-using System.IO;
-using ThesesSystem.Web.Infrastructure.Storage;
-using DropNet;
-using ThesesSystem.Web.ViewModels.Comments;
-
-namespace ThesesSystem.Web.Controllers
+﻿namespace ThesesSystem.Web.Controllers
 {
+    using AutoMapper;
+    using AutoMapper.QueryableExtensions;
+    using Microsoft.AspNet.Identity;
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+    using System.Web.Mvc;
+    using ThesesSystem.Data;
+    using ThesesSystem.Models;
+    using ThesesSystem.Web.Controllers.BaseControllers;
+    using ThesesSystem.Web.Infrastructure.Constants;
+    using ThesesSystem.Web.Infrastructure.Factories.Logger;
+    using ThesesSystem.Web.Infrastructure.Storage;
+    using ThesesSystem.Web.ViewModels.Comments;
+    using ThesesSystem.Web.ViewModels.Teacher;
+    using ThesesSystem.Web.ViewModels.Theses;
+    using ThesesSystem.Web.ViewModels.ThesisPart;
+    using ThesesSystem.Web.ViewModels.Version;
+
     public class ThesisController : AuthorizeController
     {
         private LoggerCreator loggerCreator;
@@ -59,6 +58,7 @@ namespace ThesesSystem.Web.Controllers
 
             var thesis = this.Data.Theses.GetById(id);
 
+            // TODO: Add this check for every action !!!
             if (thesis.SupervisorId == userId || thesis.StudentId == userId)
             {
                 var thesisViewModel = Mapper.Map<DevThesisTimelineViewModel>(thesis);
@@ -164,7 +164,7 @@ namespace ThesesSystem.Web.Controllers
                     return View(model);
                 }
 
-                UpdateParts(model);
+                UpdateParts(model.Id, model.ThesisParts);
 
                 var logger = this.loggerCreator.Create(this.Data);
 
@@ -183,20 +183,20 @@ namespace ThesesSystem.Web.Controllers
         }
 
         [NonAction]
-        private void UpdateParts(CreateVersionViewModel model)
+        private void UpdateParts(int id, IList<CreateOrUpdateThesisPartViewModel> thesisParts)
         {
-            var parts = this.Data.ThesisParts.All().Where(p => p.ThesisId == model.Id).ToList();
+            var parts = this.Data.ThesisParts.All().Where(p => p.ThesisId == id).ToList();
 
             int index = 0;
             for (index = 0; index < parts.Count; index++)
             {
-                parts[index].Flag = model.ThesisParts[index].Flag;
+                parts[index].Flag = thesisParts[index].Flag;
             }
 
-            for (int i = index; i < model.ThesisParts.Count; i++)
+            for (int i = index; i < thesisParts.Count; i++)
             {
-                var part = Mapper.Map<ThesisPart>(model.ThesisParts[index]);
-                part.ThesisId = model.Id;
+                var part = Mapper.Map<ThesisPart>(thesisParts[index]);
+                part.ThesisId = id;
 
                 this.Data.ThesisParts.Add(part);
             }
@@ -311,6 +311,42 @@ namespace ThesesSystem.Web.Controllers
             var ms = new MemoryStream(fileBytes);
 
             return File(fileBytes, mimeType, version.FileName);
+        }
+
+        [HttpGet]
+        public ActionResult AddPart(int id)
+        {
+            var partViewModel = this.Data.ThesisParts.All()
+                                .Where(p => p.ThesisId == id)
+                                .Project()
+                                .To<CreateOrUpdateThesisPartViewModel>()
+                                .ToList();
+
+            return View(partViewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddPart(int id, IList<CreateOrUpdateThesisPartViewModel> parts)
+        {
+            if (ModelState.IsValid)
+            {
+                UpdateParts(id, parts);
+                var userId = this.User.Identity.GetUserId();
+                var logger = this.loggerCreator.Create(this.Data);
+
+                logger.Log(new ThesisLog
+                {
+                    ThesisId = id,
+                    UserId = userId,
+                    LogType = LogType.AddedPart,
+                    ForwardUrl = string.Format(GlobalPatternConstants.FORWARD_URL_WITH_ID, "Thesis", "ThesisProfile", id)
+                });
+
+                return RedirectToAction("ThesisProfile", "Thesis", new { id = id });
+            }
+
+            return View(parts);
         }
     }
 }

@@ -473,6 +473,7 @@
     <Content Include="Views\Thesis\AddVersion.cshtml" />
     <Content Include="Views\Thesis\Version.cshtml" />
     <Content Include="Views\Thesis\_CreateCommentPartial.cshtml" />
+    <Content Include="Views\Thesis\AddPart.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Administration\ViewModels\" />

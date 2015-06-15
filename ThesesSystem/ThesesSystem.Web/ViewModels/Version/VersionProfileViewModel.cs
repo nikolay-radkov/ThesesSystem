@@ -8,6 +8,8 @@
     {
         public int Id { get; set; }
 
+        public int ThesisId { get; set; }
+
         public string FileName { get; set; }
 
         public string StoragePath { get; set; }

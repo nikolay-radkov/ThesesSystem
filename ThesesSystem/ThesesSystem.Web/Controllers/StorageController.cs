@@ -1,16 +1,14 @@
 ﻿namespace ThesesSystem.Web.Controllers
 {
-    using System.Web.Mvc;
-    using System.Linq;
     using AutoMapper;
     using AutoMapper.QueryableExtensions;
-    using System.Collections.Generic;
+    using System.Linq;
+    using System.Web.Mvc;
     using ThesesSystem.Data;
     using ThesesSystem.Web.Controllers.BaseControllers;
     using ThesesSystem.Web.Infrastructure.Constants;
-    using ThesesSystem.Web.ViewModels.Theses;
     using ThesesSystem.Web.Infrastructure.Helper;
-    using ThesesSystem.Models;
+    using ThesesSystem.Web.ViewModels.Theses;
 
     public class StorageController : AuthorizeController
     {

@@ -5,7 +5,8 @@
 
 <h2>@ViewBag.Title</h2>
 
-@Html.ActionLink(Model.FileName, "DownloadFile", "Thesis", new { id = Model.Id }, new { target = "_blank", @class = "btn btn-danger" })
+@Html.ActionLink("Свали " + Model.FileName, "DownloadFile", "Thesis", new { id = Model.Id }, new { target = "_blank", @class = "btn btn-danger" })
+@Html.ActionLink("Обратно към дипломната работа", "ThesisProfile", "Thesis", new { id = Model.ThesisId }, new {  @class = "btn btn-success" })
 
 <div id="comments-container" class="container">
     <div class="col-lg-offset-3 col-md-offset-3 col-lg-6 col-sm-6 text-center">

@@ -1,0 +1,150 @@
+﻿@model IList<ThesesSystem.Web.ViewModels.ThesisPart.CreateOrUpdateThesisPartViewModel>
+@{
+    ViewBag.Title = "Добавяне на нова версия";
+    int i = 0;
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm("AddPart", "Thesis", new { id = Html.ViewContext.RouteData.Values["id"].ToString(), area = string.Empty }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <hr />
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+
+    <div>
+        <button id="btn-add-part" class="btn btn-success">Добави част</button>
+    </div>
+    <div id="parts">
+        @for (i = 0; i < Model.Count; i++)
+        {
+            <div class="form-group">
+                <label for="@(i)__Title" class="col-md-2 control-label">Част @(i + 1)</label>
+                <div class="col-md-7">
+                    <input type="text" id="@(i)__Title" class="form-control" name="[@(i)].Title" required="required" readonly="readonly" value="@Model[i].Title" />
+                </div>
+                <div class="col-md-3">
+                    @Html.EnumDropDownListFor(m => m[i].Flag, new { @class = "form-control" })
+                </div>
+            </div>
+        }
+    </div>
+
+    <input type="submit" name="name" value="Създай" class="btn btn-danger" />
+}
+
+@section scripts
+{
+    <script>
+        var selects = $("select").on('change', onChange);
+        $("#btn-add-part").on("click", addRow);
+
+        for (var i = 0; i < selects.length; i++) {
+            changeClass(selects[i]);
+        }
+
+        function onChange() {
+            changeClass(this);
+        }
+
+        function changeClass(item) {
+            var $this = $(item);
+
+            switch ($this.val()) {
+                case '0':
+                    $this.removeClass('in-progress');
+                    $this.removeClass('for-evaluation');
+                    $this.removeClass('complete');
+
+                    $this.addClass('not-started');
+                    break;
+                case '1':
+                    $this.removeClass('not-started');
+                    $this.removeClass('for-evaluation');
+                    $this.removeClass('complete');
+
+                    $this.addClass('in-progress');
+                    break;
+                case '2':
+                    $this.removeClass('in-progress');
+                    $this.removeClass('not-started');
+                    $this.removeClass('complete');
+
+                    $this.addClass('for-evaluation');
+                    break;
+                case '3':
+                    $this.removeClass('in-progress');
+                    $this.removeClass('for-evaluation');
+                    $this.removeClass('not-started');
+
+                    $this.addClass('complete');
+                    break;
+            }
+        }
+
+        function addRow() {
+
+            @{
+                Model.Add(new ThesesSystem.Web.ViewModels.ThesisPart.CreateOrUpdateThesisPartViewModel());
+            }
+
+            var index = $("#parts").children("div").length;
+
+            var row = $("<div/>")
+                        .addClass("form-group");
+            var label = $("<label/>")
+                        .text("Част " + (index + 1))
+                        .attr("for", index + '__Title')
+                        .addClass("col-md-2 control-label");
+
+            var div = $("<div/>")
+                        .addClass("col-md-7");
+
+            var input = $("<input/>")
+                            .attr("type", "text")
+                            .attr("id", index + "__Title")
+                            .attr("name", "[" + index + "].Title")
+                            .attr("required", "required")
+                            .addClass("form-control");
+            div.append(input);
+
+            var secondDiv = $("<div/>")
+                    .addClass("col-md-3");
+            var select = $("<select/>")
+                    .addClass("form-control")
+                    .attr("id", index + "__Flag")
+                    .attr("name", "[" + index + "].Flag")
+                    .on('change', onChange);
+
+            var notStarted = $("<option/>")
+                    .text("Незапочната")
+                    .val(0);
+
+            var inProgress = $("<option/>")
+                    .text("В прогрес")
+                    .val(1);
+
+            var forEvaluation = $("<option/>")
+                    .text("За проверка")
+                    .val(2);
+
+            var completed = $("<option/>")
+                    .text("Завършена")
+                    .val(3);
+
+            select.append(notStarted)
+                  .append(inProgress)
+                  .append(forEvaluation)
+                  .append(completed);
+
+            secondDiv.append(select);
+
+
+            row.append(label)
+                .append(div)
+                .append(secondDiv);
+
+            $("#parts").append(row);
+        }
+    </script>
+}
