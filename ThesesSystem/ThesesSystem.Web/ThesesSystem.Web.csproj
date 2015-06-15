@@ -315,6 +315,7 @@
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\sweetalert.css" />
+    <Content Include="Images\background.gif" />
     <Content Include="Scripts\sweetalert.min.js" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
@@ -381,8 +382,7 @@
     <Content Include="Images\about.png" />
     <Content Include="Images\background 1.png" />
     <Content Include="Images\background 19 %282%29.png" />
-    <Content Include="Images\background 2.png" />
-    <Content Include="Images\background.png" />
+    <Content Include="Images\background 3.png" />
     <Content Include="Images\first.jpg" />
     <Content Include="Images\logo-tu.png" />
     <Content Include="Images\question1.png" />

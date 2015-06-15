@@ -521,6 +521,35 @@
             return RedirectToAction("Index", "Storage");
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult MarkAsComplete(int id)
+        {
+            if (this.IsThesisStudentOrTeacher(id))
+            {
+                var thesis = this.Data.Theses.GetById(id);
+               
+                thesis.FinishedAt = DateTime.Now;
+                thesis.IsComplete = true;
+                this.Data.SaveChanges();
+
+                var logger = this.loggerCreator.Create(this.Data);
+                var userId = this.User.Identity.GetUserId();
+
+                logger.Log(new ThesisLog
+                {
+                    ThesisId = id,
+                    UserId = userId,
+                    LogType = LogType.CompletedThesis,
+                    ForwardUrl = string.Format(GlobalPatternConstants.FORWARD_URL_WITH_ID, "Thesis", "ThesisProfile", id)
+                });
+
+                return RedirectToAction("ThesisProfile", "Thesis", new { id = id });
+            }
+
+            return RedirectToAction("Index", "Storage");
+        }
+
         [HttpGet]
         public ActionResult AddFinalEvaluation(int id)
         {

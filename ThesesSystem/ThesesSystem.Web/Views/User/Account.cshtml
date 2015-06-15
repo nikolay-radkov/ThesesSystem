@@ -4,7 +4,7 @@
     ViewBag.Title = "Профил на потребител";
 }
 
-<div class="container">
+<div>
     <div class="row">
         <div class="col-md-offset-3 col-md-3">
             @Html.LabelFor(m => Model.FullName)
@@ -104,29 +104,26 @@
         else
         {
             <div class="col-md-3">
-                <a href='#' class="btn btn-lg btn-primary">Изпрати съобщение</a>
+                @Html.ActionLink("Изпрати съобщение", "Index", "Message", routeValues: new { area = string.Empty, friendId = Model.Id}, htmlAttributes: new { title = "Съобщения" , @class="btn btn-lg btn-primary" })
             </div>
             <div class="col-md-3">
                 @if (Model.IsFriend)
                 {
                     using (Html.BeginForm("RemoveFriend", "User", new { id = Model.Id }, FormMethod.Post))
                     {
-                        @Html.AntiForgeryToken()
-                        <input type="submit" value="Премахни от приятели" class="btn btn-lg btn-danger" />
+                    @Html.AntiForgeryToken()
+                    <input type="submit" value="Премахни от приятели" class="btn btn-lg btn-danger" />
                     }
                 }
                 else
                 {
                     using (Html.BeginForm("NewFriend", "User", new { id = Model.Id }, FormMethod.Post))
                     {
-                        @Html.AntiForgeryToken()
-                        <input type="submit" value="Добави към приятели" class="btn btn-lg btn-success" />
+                    @Html.AntiForgeryToken()
+                    <input type="submit" value="Добави към приятели" class="btn btn-lg btn-success" />
                     }
                 }
             </div>
         }
     </div>
-
-
-
 </div>

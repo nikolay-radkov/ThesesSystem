@@ -31,12 +31,21 @@
     }
 
 </h2>
-<div class="container">
+<div>
     <div class="row">
         @if (!Model.IsComplete)
         {
-            @Html.ActionLink("Нова версия", "AddVersion", "Thesis", new { area = string.Empty, id = Model.Id }, new { @class = "btn btn-success" })
-            @Html.ActionLink("Нова част", "AddPart", "Thesis", new { area = string.Empty, id = Model.Id }, new { @class = "btn btn-success" })
+            <div class="col-md-8 col-sm-8">
+                @Html.ActionLink("Нова версия", "AddVersion", "Thesis", new { area = string.Empty, id = Model.Id }, new { @class = "btn btn-success" })
+                @Html.ActionLink("Нова част", "AddPart", "Thesis", new { area = string.Empty, id = Model.Id }, new { @class = "btn btn-success" })
+            </div>
+            <div class="col-md-4 col-sm-4">
+                @using (Html.BeginForm("MarkAsComplete", "Thesis", new { area = string.Empty, id = Model.Id }, FormMethod.Post, new { @class = "form-horizontal" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <input type="submit" class="btn btn-danger" value="Завършване на дипломната работа" />
+                }
+            </div>
         }
         else
         {
@@ -85,7 +94,7 @@
                 case ThesesSystem.Models.LogType.CreatedThesis:
                     <article class="panel panel-success">
                         <div class="panel-heading icon">
-                            <i class="glyphicon glyphicon-plus"></i>
+                            <i class="glyphicon glyphicon-home"></i>
                         </div>
                         <div class="panel-heading">
                             <h2 class="panel-title"><a href="@item.ForwardUrl">@string.Format(GlobalPatternConstants.CREATE_THESIS, item.UserFullName)</a></h2>
@@ -95,7 +104,7 @@
                 case ThesesSystem.Models.LogType.AddedVersion:
                 <article class="panel panel-info">
                     <div class="panel-heading icon">
-                        <i class="glyphicon glyphicon-plus"></i>
+                        <i class="glyphicon glyphicon-flag"></i>
                     </div>
                     <div class="panel-heading">
                         <h2 class="panel-title"><a href="@item.ForwardUrl">@string.Format(GlobalPatternConstants.USER_ADDED_VERSION, item.UserFullName)</a></h2>
@@ -115,7 +124,7 @@
                 case ThesesSystem.Models.LogType.AddedComment:
                 <article class="panel panel-primary">
                     <div class="panel-heading icon">
-                        <i class="glyphicon glyphicon-plus"></i>
+                        <i class="glyphicon glyphicon-comment"></i>
                     </div>
                     <div class="panel-heading">
                         <h2 class="panel-title"><a href="@item.ForwardUrl">@string.Format(GlobalPatternConstants.USER_COMMENTED, item.UserFullName)</a></h2>
@@ -125,17 +134,25 @@
                 case ThesesSystem.Models.LogType.AddedReview:
                 <article class="panel panel-primary">
                     <div class="panel-heading icon">
-                        <i class="glyphicon glyphicon-plus"></i>
+                        <i class="glyphicon glyphicon-list-alt"></i>
                     </div>
                     <div class="panel-heading">
-                        <h2 class="panel-title"><a href="@item.ForwardUrl">@string.Format(GlobalPatternConstants.USER_ADDED_REVIEW, item.UserFullName)</a></h2>
+                        <h2 class="panel-title">
+                            @Ajax.ActionLink(string.Format(GlobalPatternConstants.USER_ADDED_REVIEW, item.UserFullName), "ViewReview", "Thesis", new { area = string.Empty, id = Model.Id }, new AjaxOptions
+                            {
+                                HttpMethod = "GET",
+                                UpdateTargetId = "result",
+                                InsertionMode = InsertionMode.Replace,
+                                OnSuccess = "openPopup"
+                            })
+                        </h2>
                     </div>
                 </article>
                     break;
                 case ThesesSystem.Models.LogType.AddedFinalEvaluation:
                 <article class="panel panel-primary">
                     <div class="panel-heading icon">
-                        <i class="glyphicon glyphicon-plus"></i>
+                        <i class="glyphicon glyphicon-book"></i>
                     </div>
                     <div class="panel-heading">
                         <h2 class="panel-title"><a href="@item.ForwardUrl">@string.Format(GlobalPatternConstants.USER_ADDED_FINAL_EVALUATION, item.UserFullName)</a></h2>
@@ -143,9 +160,9 @@
                 </article>
                     break;
                 case ThesesSystem.Models.LogType.CompletedThesis:
-                <article class="panel panel-primary">
+                <article class="panel panel-success">
                     <div class="panel-heading icon">
-                        <i class="glyphicon glyphicon-plus"></i>
+                        <i class="glyphicon glyphicon-ok"></i>
                     </div>
                     <div class="panel-heading">
                         <h2 class="panel-title"><a href="@item.ForwardUrl">@string.Format(GlobalPatternConstants.USER_COMPLEDED_THESIS, item.UserFullName)</a></h2>
@@ -207,5 +224,4 @@
             $("#result").dialog("open");
         }
     </script>
-
 }

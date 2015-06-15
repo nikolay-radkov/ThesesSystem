@@ -73,12 +73,14 @@
             </div>
         </div>
     </div>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - Theses System</p>
-        </footer>
+    <div id="wrapper" class="body-content">
+        <div class="container">
+            @RenderBody()
+            <hr />
+            <footer>
+                <p>&copy; @DateTime.Now.Year - Theses System</p>
+            </footer>
+        </div>
     </div>
 
     @Scripts.Render("~/bundles/bootstrap")
