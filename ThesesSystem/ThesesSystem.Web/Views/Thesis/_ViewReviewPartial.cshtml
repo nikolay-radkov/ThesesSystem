@@ -3,7 +3,7 @@
 <fieldset>
     <div class="text-center">
         @Html.LabelFor(m => m.ReviewerName)
-        @Html.DisplayFor(m => m.ReviewerName, new { @class = "text ui-widget-content ui-corner-all" })
+        @Html.ActionLink(Model.ReviewerName, "Account", "User", new { id = Model.ReviewerId, area = string.Empty }, new { @class = string.Empty })
         <hr />
         @Html.LabelFor(m => m.Mark)
         @Html.DisplayFor(m => m.Mark, new { @class = "text ui-widget-content ui-corner-all" })

@@ -1,0 +1,20 @@
+﻿@model ThesesSystem.Web.ViewModels.Theses.FinalEvaluationViewModel
+
+<fieldset>
+    <div class="text-center">
+        @Html.LabelFor(m => m.FinalEvaluation)
+        @Html.DisplayFor(m => m.FinalEvaluation, new { @class = "text ui-widget-content ui-corner-all" })
+        <hr />
+        <label>Период на изработка:</label>
+        <div>
+            @Model.CreatedOn - @Model.FinishedAt
+            <br />
+            (@((Model.FinishedAt.Value - Model.CreatedOn).Days) дни)
+        </div>
+        <hr />
+        <div>
+            @Html.LabelFor(m => m.Pages)
+            @Html.DisplayFor(m => m.Pages, new { @class = "text ui-widget-content ui-corner-all" })
+        </div>
+    </div>
+</fieldset>

@@ -61,6 +61,15 @@
         }
 
         [NonAction]
+        private void UpdatePages(int id, int? pages)
+        {
+            var thesis = this.Data.Theses.GetById(id);
+
+            thesis.Pages = pages;
+            this.Data.SaveChanges();
+        }
+
+        [NonAction]
         private void UpdateParts(int id, IList<CreateOrUpdateThesisPartViewModel> thesisParts)
         {
             var parts = this.Data.ThesisParts.All().Where(p => p.ThesisId == id).ToList();
@@ -277,6 +286,7 @@
                     }
 
                     UpdateParts(model.Id, model.ThesisParts);
+                    UpdatePages(model.Id, model.Pages);
 
                     var logger = this.loggerCreator.Create(this.Data);
 
@@ -438,11 +448,11 @@
             var thesis = this.Data.Theses.GetById(id);
             var userId = this.User.Identity.GetUserId();
 
-            if (this.IsThesisTeacher(userId, thesis))
+            if (this.IsThesisTeacher(userId, thesis) && thesis.Evaluation == null)
             {
                 var newReview = new CreateReviewViewModel { Id = id };
                 var reviewers = this.Data.Teachers.All()
-                                  .OrderBy( t=> t.User.FirstName)
+                                  .OrderBy(t => t.User.FirstName)
                                   .ThenBy(t => t.User.LastName)
                                   .AsQueryable()
                                   .Project()
@@ -464,7 +474,7 @@
             var thesis = this.Data.Theses.GetById(id);
             var userId = this.User.Identity.GetUserId();
 
-            if (this.IsThesisTeacher(userId, thesis))
+            if (this.IsThesisTeacher(userId, thesis) && thesis.Evaluation == null)
             {
                 if (ModelState.IsValid)
                 {
@@ -510,7 +520,7 @@
         [HttpGet]
         public ActionResult ViewReview(int id)
         {
-            if (this.IsThesisStudentOrTeacher(id))
+            if (this.IsThesisStudentOrTeacher(id) && Request.IsAjaxRequest())
             {
                 var review = this.Data.Evaluations.GetById(id);
                 var reviewViewModel = Mapper.Map<ReviewViewModel>(review);
@@ -528,7 +538,7 @@
             if (this.IsThesisStudentOrTeacher(id))
             {
                 var thesis = this.Data.Theses.GetById(id);
-               
+
                 thesis.FinishedAt = DateTime.Now;
                 thesis.IsComplete = true;
                 this.Data.SaveChanges();
@@ -556,29 +566,61 @@
             var thesis = this.Data.Theses.GetById(id);
             var userId = this.User.Identity.GetUserId();
 
-            if (this.IsThesisTeacher(userId, thesis))
+            if (this.IsThesisTeacher(userId, thesis) && thesis.FinalEvaluation == null)
             {
-                //TODO: Implement view
-                return View();
+                var finalEvaluation = new CreateFinalEvaluationViewModel { Id = id };
+                return View(finalEvaluation);
             }
 
             return RedirectToAction("Index", "Storage");
         }
 
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult AddFinalEvaluation(int id, CreateFinalEvaluationViewModel model)
-        //{
-        //    var thesis = this.Data.Theses.GetById(id);
-        //    var userId = this.User.Identity.GetUserId();
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddFinalEvaluation(int id, CreateFinalEvaluationViewModel model)
+        {
+            var thesis = this.Data.Theses.GetById(id);
+            var userId = this.User.Identity.GetUserId();
 
-        //    if (this.IsThesisTeacher(userId, thesis))
-        //    {
-        //        //TODO: Implement view
-        //        return View();
-        //    }
+            if (this.IsThesisTeacher(userId, thesis) && thesis.FinalEvaluation == null)
+            {
+                if (ModelState.IsValid)
+                {
+                    thesis.FinishedAt = DateTime.Now;
+                    thesis.FinalEvaluation = model.FinalEvaluation;
+                    this.Data.SaveChanges();
 
-        //    return RedirectToAction("Index", "Storage");
-        //}
+                    var logger = this.loggerCreator.Create(this.Data);
+
+                    logger.Log(new ThesisLog
+                    {
+                        ThesisId = id,
+                        UserId = userId,
+                        LogType = LogType.AddedFinalEvaluation,
+                        ForwardUrl = string.Format(GlobalPatternConstants.FORWARD_URL_WITH_ID, "Thesis", "ViewFinalEvaluation", id)
+                    });
+
+                    return RedirectToAction("ThesisProfile", "Thesis", new { id = id });
+                }
+
+                return View(model);
+            }
+
+            return RedirectToAction("Index", "Storage");
+        }
+
+        [HttpGet]
+        public ActionResult ViewFinalEvaluation(int id)
+        {
+            if (this.IsThesisStudentOrTeacher(id) && Request.IsAjaxRequest())
+            {
+                var thesis = this.Data.Theses.GetById(id);
+                var thesisViewModel = Mapper.Map<FinalEvaluationViewModel>(thesis);
+
+                return PartialView("_ViewFinalEvaluationPartial", thesisViewModel);
+            }
+
+            return RedirectToAction("Index", "Storage");
+        }
     }
 }

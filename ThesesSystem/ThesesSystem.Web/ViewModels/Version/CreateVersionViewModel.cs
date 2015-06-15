@@ -14,6 +14,9 @@
         [Required]
         public HttpPostedFileBase Archive { get; set; }
 
+        [Required]
+        public int? Pages { get; set; }
+
         public IList<CreateOrUpdateThesisPartViewModel> ThesisParts { get; set; }
     }
 }

@@ -1,0 +1,27 @@
+﻿@model ThesesSystem.Web.ViewModels.Theses.CreateFinalEvaluationViewModel
+@{
+    ViewBag.Title = "Добавяне на крайна оценка";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm("AddFinalEvaluation", "Thesis", new { id = Model.Id, area = string.Empty }, FormMethod.Post, new { @class = "form-horizontal", role = "form"}))
+{
+    @Html.AntiForgeryToken()
+    <br />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.FinalEvaluation, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.FinalEvaluation, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.FinalEvaluation, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <br />
+    <div class="text-center">
+        <input type="submit" class=" btn btn-success" value="Добави" />
+    </div>
+}
+
+

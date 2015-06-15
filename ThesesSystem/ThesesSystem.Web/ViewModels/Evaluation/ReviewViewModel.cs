@@ -25,6 +25,8 @@
         [Display(Name = "Рецензент:")]
         public string ReviewerName { get; set; }
 
+        public string ReviewerId{ get; set; }
+
         public void CreateMappings(AutoMapper.IConfiguration configuration)
         {
             configuration.CreateMap<Evaluation, ReviewViewModel>()

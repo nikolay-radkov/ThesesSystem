@@ -8,7 +8,6 @@
     @Model.Title
     @if (Model.IsComplete)
     {
-
         if (Model.HasEvaluation)
         {
             if (Model.FinalEvaluation == null)
@@ -43,7 +42,8 @@
                 @using (Html.BeginForm("MarkAsComplete", "Thesis", new { area = string.Empty, id = Model.Id }, FormMethod.Post, new { @class = "form-horizontal" }))
                 {
                     @Html.AntiForgeryToken()
-                    <input type="submit" class="btn btn-danger" value="Завършване на дипломната работа" />
+                    <span id="submit-span" class="btn bnt-lg btn-danger sweet-10" onclick="_gaq.push(['_trackEvent', 'example', 'try', 'sweet-10']);">Завършване на дипломната работа</span>
+                    <input id="submit-button" type="submit" class="hidden btn btn-danger" value="Завършване на дипломната работа" />
                 }
             </div>
         }
@@ -73,7 +73,19 @@
 
                 if (User.IsInRole(GlobalConstants.ADMIN) && Model.FinalEvaluation == null)
                 {
-                    @Html.ActionLink("Добави крайна оценка", "AddFinalEvaluation", "Thesis", new { area = string.Empty, id = Model.Id }, new { @class = "btn btn-success" })
+                    @Html.ActionLink("Добави крайна оценка", "AddFinalEvaluation", "Thesis", new { area = string.Empty, id = Model.Id }, new { @class = "btn btn-danger" })
+                }
+                else
+                {
+                    @Ajax.ActionLink("Преглед на крайна оценка ", "ViewFinalEvaluation", "Thesis", new { area = string.Empty, id = Model.Id }, new AjaxOptions
+                    {
+                        HttpMethod = "GET",
+                        UpdateTargetId = "result",
+                        InsertionMode = InsertionMode.Replace,
+                        OnSuccess = "openPopup"
+                    },
+                    new { @class = "btn btn-success" })
+
                 }
             }
         }
@@ -178,6 +190,7 @@
 
 @section styles
 {
+    @Styles.Render("~/Content/sweetalert")
     @Styles.Render("~/Content/ui-dialog")
     <style>
         .validateTips {
@@ -209,8 +222,9 @@
 
 @section scripts
 {
+    @Scripts.Render("~/bundles/sweetalert")
     @Scripts.Render("~/bundles/jquery-ui")
-    <script type="text/javascript">
+    <script>
         $(document).ready(function () {
             $("#result").dialog({
                 autoOpen: false,
@@ -219,9 +233,37 @@
                 height: 'auto',
                 modal: true
             });
+
         });
         function openPopup() {
             $("#result").dialog("open");
+        }
+
+        function sendForm() {
+            $('#submit-button').click();
+        }
+
+        function onClick() {
+            swal({
+                title: "Сигурни ли сте, че искате да завършите дипломанта работа?",
+                text: "Няма да можете да добавяте повече нови версии или части!",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: 'Завърши!',
+                cancelButtonText: "Отказ",
+            },
+            function (isConfirm) {
+                if (isConfirm) {
+                    sendForm();
+                }
+            });
+        }
+
+        var isComplete = '@Model.IsComplete';
+        if (isComplete !== 'True') {
+            var submit = $('#submit-span');
+            submit[0].onclick = onClick;
         }
     </script>
 }
