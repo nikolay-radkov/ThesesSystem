@@ -279,6 +279,10 @@
     <Compile Include="ViewModels\Faculties\FacultyDropDownListItemViewModel.cs" />
     <Compile Include="ViewModels\Faculties\FacultyProfileViewModel.cs" />
     <Compile Include="ViewModels\Faculties\FacultyResultViewModel.cs" />
+    <Compile Include="ViewModels\Filters\FilterBy.cs" />
+    <Compile Include="ViewModels\Filters\FilterOptions.cs" />
+    <Compile Include="ViewModels\Filters\SortBy.cs" />
+    <Compile Include="ViewModels\Filters\SortType.cs" />
     <Compile Include="ViewModels\Friends\FriendViewModel.cs" />
     <Compile Include="ViewModels\Home\HomeViewModel.cs" />
     <Compile Include="ViewModels\ManageViewModels.cs" />
@@ -505,6 +509,7 @@
     <Content Include="Views\Shared\_SearchPartial.cshtml" />
     <Content Include="Views\Faculty\FacultyProfile.cshtml" />
     <Content Include="Views\Specialty\SpecialtyProfile.cshtml" />
+    <Content Include="Views\Storage\_FilterPanelPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Administration\ViewModels\" />

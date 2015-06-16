@@ -32,7 +32,7 @@
 </div>
 
 <div class="row">
-    <h2>Факултети</h2>
+    <h2>Студенти</h2>
     @foreach (var item in Model.StudentsList)
     {
         @Html.ActionLink(item.FullName, "Account", "User", new { area = string.Empty, id = item.Id }, new { @class = "thumbnail inline-block" })

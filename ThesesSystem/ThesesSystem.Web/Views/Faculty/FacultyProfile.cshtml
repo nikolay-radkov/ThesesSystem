@@ -31,7 +31,7 @@
 </div>
 
 <div class="row">
-    <h2>Факултети</h2>
+    <h2>Специалности</h2>
     @foreach (var item in Model.Specialties)
     {
             @Html.ActionLink(item.Title, "SpecialtyProfile", "Specialty", new { area = string.Empty, id = item.Id }, new { @class = "thumbnail inline-block" })

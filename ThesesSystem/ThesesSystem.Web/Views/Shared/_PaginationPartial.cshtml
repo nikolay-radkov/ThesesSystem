@@ -1,13 +1,35 @@
-﻿@model ThesesSystem.Web.ViewModels.Partials.PaginationViewModel
+﻿@using ThesesSystem.Web.ViewModels.Filters
+@model ThesesSystem.Web.ViewModels.Partials.PaginationViewModel
+@{
+    var options = ViewData["FilterOptions"] as FilterOptions;
+}
 <nav>
     <ul class="pagination">
         @if (Model.HasPrevious)
         {
-            <li>
-                <a href="@Url.Action(Model.Action, Model.Controller, routeValues: new { page = Model.CurrentPage - 1 })" aria-label="Назад">
-                    <span aria-hidden="true">&laquo;</span>
-                </a>
-            </li>
+            if (options == null)
+            {
+                <li>
+                    <a href="@Url.Action(Model.Action, Model.Controller, routeValues: new { page = Model.CurrentPage - 1 })" aria-label="Назад">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+            }
+            else
+            {
+                <li>
+                    <a href='@Url.Action(Model.Action, Model.Controller, routeValues: new
+                        {
+                            page = Model.CurrentPage - 1,
+                            KeyWord = options.KeyWord,
+                            FilterBy = (int)options.FilterBy,
+                            SortBy = (int)options.SortBy,
+                            SortType = (int)options.SortType
+                        })' aria-label="Назад">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+            }
         }
 
         @for (int i = Model.CurrentPage - 3; i < Model.CurrentPage; i++)
@@ -16,8 +38,28 @@
             {
                 continue;
             }
-            
-            <li><a href="@Url.Action(Model.Action, Model.Controller, routeValues: new { page = i })">@(i + 1)</a></li>
+
+            if (options == null)
+            {
+                <li>
+                    <a href="@Url.Action(Model.Action, Model.Controller, routeValues: new { page = i })">@(i + 1)</a>
+                </li>
+            }
+            else
+            {
+                <li>
+                    <a href='@Url.Action(Model.Action, Model.Controller, routeValues: new
+                        {
+                            page = i,
+                            KeyWord = options.KeyWord,
+                            FilterBy = (int)options.FilterBy,
+                            SortBy = (int)options.SortBy,
+                            SortType = (int)options.SortType
+                        })'>
+                        @(i + 1)
+                    </a>
+                </li>
+            }
         }
 
         <li class="disabled"><a href="#">@(Model.CurrentPage + 1)</a></li>
@@ -28,17 +70,71 @@
             {
                 break;
             }
-            
-            <li><a href="@Url.Action(Model.Action, Model.Controller, routeValues: new { page = i })">@(i + 1)</a></li>
+
+            if (options == null)
+            {
+                <li>
+                    <a href="@Url.Action(Model.Action, Model.Controller, routeValues: new { page = i })">@(i + 1)</a>
+                </li>
+            }
+            else
+            {
+                <li>
+                    <a href='@Url.Action(Model.Action, Model.Controller, routeValues: new
+                        {
+                            page = i,
+                            KeyWord = options.KeyWord,
+                            FilterBy = (int)options.FilterBy,
+                            SortBy = (int)options.SortBy,
+                            SortType = (int)options.SortType
+                        })'>
+                        @(i + 1)
+                    </a>
+                </li>
+            }
         }
 
         @if (Model.HasNext)
         {
-            <li>
-                <a href="@Url.Action(Model.Action, Model.Controller, routeValues: new { page = Model.CurrentPage + 1 })" aria-label="Напред">
-                    <span aria-hidden="true">&raquo;</span>
-                </a>
-            </li>
+
+            if (options == null)
+            {
+                <li>
+                    <a href="@Url.Action(Model.Action, Model.Controller, routeValues: new { page = Model.CurrentPage + 1 })" aria-label="Напред">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            }
+            else
+            {
+                <li>
+                    <a href='@Url.Action(Model.Action, Model.Controller, routeValues: new
+                        {
+                            page = Model.CurrentPage + 1,
+                            KeyWord = options.KeyWord,
+                            FilterBy = (int)options.FilterBy,
+                            SortBy = (int)options.SortBy,
+                            SortType = (int)options.SortType
+                        })' aria-label="напред">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            }
         }
     </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </nav>

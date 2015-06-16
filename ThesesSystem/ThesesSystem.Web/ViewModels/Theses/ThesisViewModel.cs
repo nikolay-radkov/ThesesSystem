@@ -3,6 +3,7 @@
     using System;
     using ThesesSystem.Models;
     using ThesesSystem.Web.Infrastructure.Mapping;
+    using ThesesSystem.Web.ViewModels.Filters;
 
     public class ThesisViewModel : IMapFrom<Thesis>, IHaveCustomMappings
     {

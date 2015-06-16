@@ -1,5 +1,6 @@
-﻿@model ICollection<ThesesSystem.Web.ViewModels.Theses.ThesisViewModel>
-@using ThesesSystem.Web.ViewModels.Partials
+﻿@using ThesesSystem.Web.ViewModels.Partials
+@using ThesesSystem.Web.ViewModels.Filters
+@model ICollection<ThesesSystem.Web.ViewModels.Theses.ThesisViewModel>
 @{
     ViewBag.Title = "Архив";
 }
@@ -9,27 +10,34 @@
     <div class="row">
         <div class="col-md-3">
             <aside>
-                <button class="btn btn-lg btn-danger">!!!FILTERS!!!</button>
+                @Html.Partial("_FilterPanelPartial", (FilterOptions)ViewData["FilterOptions"])
             </aside>
         </div>
         <div class="col-md-9">
             <div class="row">
-                @foreach (var item in Model)
+                @if (Model.Count == 0)
                 {
-                    <a href="@Url.Action("ThesisProfile", "Storage",  routeValues: new { id = item.Id  })">
-                        <div class="col-md-3 col-sm-4">
-                            <div class="panel panel-info">
-                                <div class="panel-heading">
-                                    <h3 class="panel-title">@item.Title</h3>
-                                </div>
-                                <div class="panel-body">
-                                    Автор: <strong>@item.StudentName</strong>
-                                    <br />
-                                    Научен ръководител: <strong>@item.SupervisorName</strong>
+                    <h3>Няма намерени дипломни работи</h3>
+                }
+                else
+                {
+                    foreach (var item in Model)
+                    {
+                        <a href="@Url.Action("ThesisProfile", "Storage",  routeValues: new { id = item.Id  })">
+                            <div class="col-md-3 col-sm-4">
+                                <div class="panel panel-info">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">@item.Title</h3>
+                                    </div>
+                                    <div class="panel-body">
+                                        Автор: <strong>@item.StudentName</strong>
+                                        <br />
+                                        Научен ръководител: <strong>@item.SupervisorName</strong>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </a>
+                        </a>
+                    }
                 }
             </div>
         </div>
