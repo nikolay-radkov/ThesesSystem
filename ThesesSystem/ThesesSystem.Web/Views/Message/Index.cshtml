@@ -89,6 +89,12 @@
                 </div>
                 <div class="panel-body">
                     <ul id="friends-container" class="media-list">
+                        @if (Model.FriendsList.Count == 0)
+                        {
+                            <li>
+                                <h3>Все още нямате предишни разговори</h3>
+                            </li>
+                        }
                         @foreach (var item in Model.FriendsList)
                         {
                             <li id='friend_@item.FromUserId' class='media @(item.IsSeen ? "" : "new-message")'>
@@ -110,6 +116,7 @@
                             </li>
                         }
                     </ul>
+
                 </div>
             </div>
 

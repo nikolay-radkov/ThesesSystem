@@ -33,10 +33,14 @@
 
 <div class="row">
     <h2>Студенти</h2>
+    @if (Model.StudentsList.Count == 0)
+    {
+        <h2>Няма намерени студенти за тази специалност</h2>    
+    }
+    
     @foreach (var item in Model.StudentsList)
     {
         @Html.ActionLink(item.FullName, "Account", "User", new { area = string.Empty, id = item.Id }, new { @class = "thumbnail inline-block" })
-
     }
 </div>
 

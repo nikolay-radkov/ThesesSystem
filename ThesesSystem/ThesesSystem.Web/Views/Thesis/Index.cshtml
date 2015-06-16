@@ -16,6 +16,13 @@
     </div>
     <div class="row">
         <ul class="thumbnails list-unstyled">
+            @if (Model.Count == 0)
+            {
+                <li>
+                    <h2>Все още нямате дипломна работа, която да разработвате.</h2>
+                    <p>Моля създайте нова или изберете от списъка с теми на преподавателите.</p>
+                </li>
+            }
             @foreach (var item in Model)
             {
                 <li class="col-md-3 col-sm-6">
