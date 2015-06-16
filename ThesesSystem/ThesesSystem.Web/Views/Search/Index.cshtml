@@ -14,7 +14,7 @@
 {
     <div class="panel">
         <div class="panel-heading">
-            <h3>Студенти</h3>
+            <h3>Студенти <span class="badge">@Model.Students.Count</span></h3>
         </div>
 
         <div class="panel-body">
@@ -39,7 +39,7 @@
 {
     <div class="panel">
         <div class="panel-heading">
-            <h3>Преподаватели</h3>
+            <h3>Преподаватели <span class="badge">@Model.Teachers.Count</span></h3>
         </div>
 
         <div class="panel-body">
@@ -65,7 +65,7 @@
 {
     <div class="panel">
         <div class="panel-heading">
-            <h3>Дипломни работи</h3>
+            <h3>Дипломни работи <span class="badge">@Model.Archives.Count</span></h3>
         </div>
         <div class="panel-body">
             <div class="row">
@@ -90,7 +90,7 @@
 {
     <div class="panel">
         <div class="panel-heading">
-            <h3>Факултети</h3>
+            <h3>Факултети <span class="badge">@Model.Faculties.Count</span></h3>
         </div>
         <div class="panel-body">
             <div class="row">
@@ -113,7 +113,7 @@
 {
     <div class="panel">
         <div class="panel-heading">
-            <h3>Специалности</h3>
+            <h3>Специалности <span class="badge">@Model.Specialties.Count</span></h3>
         </div>
         <div class="panel-body">
             <div class="row">
@@ -136,7 +136,7 @@
 {
     <div class="panel">
         <div class="panel-heading">
-            <h3>Теми</h3>
+            <h3>Теми <span class="badge">@Model.Themes.Count</span></h3>
         </div>
         <div class="panel-body">
             <div class="row">
@@ -202,7 +202,6 @@
                 $('#hidden-value').val(5);
                 searchIcon.addClass('glyphicon-file');
                 break;
-
         }
     </script>
 }

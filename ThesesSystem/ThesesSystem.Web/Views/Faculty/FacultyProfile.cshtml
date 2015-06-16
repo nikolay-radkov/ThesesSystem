@@ -1,0 +1,40 @@
+﻿@model ThesesSystem.Web.ViewModels.Faculties.FacultyProfileViewModel
+@{
+    ViewBag.Title = "Профил на факултета";
+}
+
+<h2>@Html.DisplayFor(m => Model.Title)</h2>
+
+<div class="row">
+    <div class="col-md-offset-3 col-md-3">
+        @Html.LabelFor(m => Model.StudentsNumber)
+    </div>
+    <div class="col-md-3">
+        @Html.DisplayFor(m => Model.StudentsNumber)
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-offset-3 col-md-3">
+        @Html.LabelFor(m => Model.ThesisCompleteNummber)
+    </div>
+    <div class="col-md-3">
+        @Html.DisplayFor(m => Model.ThesisCompleteNummber)
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-offset-3 col-md-3">
+        @Html.LabelFor(m => Model.ThesisInProressNumber)
+    </div>
+    <div class="col-md-3">
+        @Html.DisplayFor(m => Model.ThesisInProressNumber)
+    </div>
+</div>
+
+<div class="row">
+    <h2>Факултети</h2>
+    @foreach (var item in Model.Specialties)
+    {
+            @Html.ActionLink(item.Title, "SpecialtyProfile", "Specialty", new { area = string.Empty, id = item.Id }, new { @class = "thumbnail inline-block" })
+
+    }
+</div>

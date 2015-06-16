@@ -238,6 +238,7 @@
     <Compile Include="Controllers\BaseControllers\AdmininistrationController.cs" />
     <Compile Include="Controllers\BaseControllers\AuthorizeController.cs" />
     <Compile Include="Controllers\BaseControllers\BaseController.cs" />
+    <Compile Include="Controllers\FacultyController.cs" />
     <Compile Include="Controllers\FriendController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\IdeaController.cs" />
@@ -275,6 +276,7 @@
     <Compile Include="ViewModels\Evaluations\CreateReviewViewModel.cs" />
     <Compile Include="ViewModels\Evaluations\ReviewViewModel.cs" />
     <Compile Include="ViewModels\Faculties\FacultyDropDownListItemViewModel.cs" />
+    <Compile Include="ViewModels\Faculties\FacultyProfileViewModel.cs" />
     <Compile Include="ViewModels\Faculties\FacultyResultViewModel.cs" />
     <Compile Include="ViewModels\Friends\FriendViewModel.cs" />
     <Compile Include="ViewModels\Home\HomeViewModel.cs" />
@@ -292,6 +294,7 @@
     <Compile Include="ViewModels\Search\SearchResultViewModel.cs" />
     <Compile Include="ViewModels\Search\SearchType.cs" />
     <Compile Include="ViewModels\Search\SearchViewModel.cs" />
+    <Compile Include="ViewModels\Specialties\FacultySpecialtyViewModel.cs" />
     <Compile Include="ViewModels\Specialties\SpecialtyDropDownListItemViewModel.cs" />
     <Compile Include="ViewModels\Specialties\SpecialtyResultViewModel.cs" />
     <Compile Include="ViewModels\Students\StudentResultViewModel.cs" />
@@ -497,6 +500,7 @@
     <Content Include="Views\Tutorial\Index.cshtml" />
     <Content Include="Views\Tutorial\Create.cshtml" />
     <Content Include="Views\Shared\_SearchPartial.cshtml" />
+    <Content Include="Views\Faculty\FacultyProfile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Administration\ViewModels\" />
