@@ -8,9 +8,9 @@
 
     public static class PaginationHelper
     {
-        public static PaginationViewModel CreatePagination(string action, string controller, IThesesSystemData data, int currentPage)
+        public static PaginationViewModel CreatePagination(string action, string controller, IThesesSystemData data, int currentPage, int id=0)
         {
-            var pagesNumber = GetPages(data, controller + action);
+            var pagesNumber = GetPages(data, controller + action, id);
 
             var hasNextPage = currentPage != (pagesNumber - 1) && pagesNumber != 0;
             var hasPreviousPage = currentPage != 0;
@@ -28,7 +28,7 @@
             return pagination;
         }
 
-        private static int GetPages(IThesesSystemData data, string action)
+        private static int GetPages(IThesesSystemData data, string action, int id=0)
         {
             int pageNumber = 0;
 
@@ -45,6 +45,9 @@
                     break;
                 case "TutorialIndex":
                     pageNumber = (int)Math.Ceiling((double)data.ThesisTutorials.All().Count() / GlobalConstants.ELEMENTS_PER_PAGE);
+                    break;
+                case "SpecialtySpecialtyProfile":
+                    pageNumber = (int)Math.Ceiling((double)data.Students.All().Where(s => s.SpecialtyId == id).Count() / GlobalConstants.ELEMENTS_PER_PAGE);
                     break;
                 //TODO: Other paging
                 default:

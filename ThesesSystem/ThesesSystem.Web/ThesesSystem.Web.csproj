@@ -245,6 +245,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MessageController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
+    <Compile Include="Controllers\SpecialtyController.cs" />
     <Compile Include="Controllers\StorageController.cs" />
     <Compile Include="Controllers\ThesisController.cs" />
     <Compile Include="Controllers\TutorialController.cs" />
@@ -296,7 +297,9 @@
     <Compile Include="ViewModels\Search\SearchViewModel.cs" />
     <Compile Include="ViewModels\Specialties\FacultySpecialtyViewModel.cs" />
     <Compile Include="ViewModels\Specialties\SpecialtyDropDownListItemViewModel.cs" />
+    <Compile Include="ViewModels\Specialties\SpecialtyProfileViewModel.cs" />
     <Compile Include="ViewModels\Specialties\SpecialtyResultViewModel.cs" />
+    <Compile Include="ViewModels\Students\SpecialtyStudentViewModel.cs" />
     <Compile Include="ViewModels\Students\StudentResultViewModel.cs" />
     <Compile Include="ViewModels\Teachers\SupervisorDropDownListITemViewModel.cs" />
     <Compile Include="ViewModels\Teachers\TeacherResultViewModel.cs" />
@@ -501,6 +504,7 @@
     <Content Include="Views\Tutorial\Create.cshtml" />
     <Content Include="Views\Shared\_SearchPartial.cshtml" />
     <Content Include="Views\Faculty\FacultyProfile.cshtml" />
+    <Content Include="Views\Specialty\SpecialtyProfile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Administration\ViewModels\" />

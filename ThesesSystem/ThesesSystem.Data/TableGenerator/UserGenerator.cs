@@ -6,6 +6,7 @@
     using ThesesSystem.Common.DataGenerators;
     using ThesesSystem.Models;
     using System.Linq;
+    using System.Data.Entity.Validation;
 
     public class UserGenerator : TableGenerator, ITableGenerator
     {
@@ -25,13 +26,14 @@
             {
                 var user = new User()
                 {
-                    UserName = "aa" + index + "@aa" + index + ".com",
-                    Email = "aa" + index + "@aa" + index + ".com",
+                    UserName = "aafa" + index + "@aa" + index + ".com",
+                    Email = "aafa" + index + "@aa" + index + ".com",
                     FirstName = this.Generator.GenerateString(4, 10),
                     MiddleName = this.Generator.GenerateString(4, 10),
                     LastName = this.Generator.GenerateString(4, 10),
                     EGN = this.Generator.GenerateNumber(10000000, 90000000),
                     PhoneNumber = this.Generator.GenerateNumber(10000000, 90000000).ToString(),
+                    
                     Student = new Student()
                     {
                         FacultyNumber = this.Generator.GenerateNumber(10000000, 90000000),
@@ -41,11 +43,19 @@
                     },
                     PasswordHash = passwordHash.HashPassword("123456")
                 };
-
                 this.Context.Users.Add(user);
+              
             }
 
-            this.Context.SaveChanges();
+         
+            try
+            {
+                this.Context.SaveChanges();
+            }
+            catch (DbEntityValidationException e)
+            {
+                var s = e.EntityValidationErrors;
+            }
 
             for (int index = 0; index < this.Count / 2; index++)
             {
