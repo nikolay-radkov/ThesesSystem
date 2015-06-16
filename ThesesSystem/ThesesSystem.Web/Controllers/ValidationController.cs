@@ -13,7 +13,7 @@ using ThesesSystem.Models;
 using ThesesSystem.Web.Controllers.BaseControllers;
 using ThesesSystem.Web.Infrastructure.Constants;
 using ThesesSystem.Web.ViewModels.Faculties;
-using ThesesSystem.Web.ViewModels.Partial;
+using ThesesSystem.Web.ViewModels.Partials;
 using ThesesSystem.Web.ViewModels.Specialties;
 using ThesesSystem.Web.ViewModels.Users;
 

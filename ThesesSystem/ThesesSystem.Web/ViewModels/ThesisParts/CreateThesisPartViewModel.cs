@@ -1,4 +1,4 @@
-﻿namespace ThesesSystem.Web.ViewModels.ThesisPart
+﻿namespace ThesesSystem.Web.ViewModels.ThesisParts
 {
     using System.ComponentModel.DataAnnotations;
     using ThesesSystem.Models;

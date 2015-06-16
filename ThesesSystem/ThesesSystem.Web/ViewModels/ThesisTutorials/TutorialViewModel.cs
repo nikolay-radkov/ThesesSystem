@@ -1,21 +1,24 @@
-﻿namespace ThesesSystem.Web.ViewModels.ThesisTheme
+﻿namespace ThesesSystem.Web.ViewModels.ThesisTutorials
 {
+    using System;
     using ThesesSystem.Models;
     using ThesesSystem.Web.Infrastructure.Mapping;
 
-    public class ThesisThemeViewModel : IMapFrom<ThesisTheme>, IHaveCustomMappings
+    public class TutorialViewModel : IMapFrom<ThesisTutorial>, IHaveCustomMappings
     {
         public int Id { get; set; }
 
-        public string Title { get; set; }
+        public string TeacherId { get; set; }
 
-        public bool IsTaken { get; set; }
+        public DateTime CreatedOn { get; set; }
+
+        public string FileName { get; set; }
 
         public string TeacherName { get; set; }
 
         public void CreateMappings(AutoMapper.IConfiguration configuration)
         {
-            configuration.CreateMap<ThesisTheme, ThesisThemeViewModel>()
+            configuration.CreateMap<ThesisTutorial, TutorialViewModel>()
                .ForMember(u => u.TeacherName, opt => opt.MapFrom(u => u.Teacher.User.FirstName + " " + u.Teacher.User.LastName));
         }
     }

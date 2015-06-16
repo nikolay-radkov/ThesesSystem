@@ -1,11 +1,11 @@
-﻿namespace ThesesSystem.Web.ViewModels.Version
+﻿namespace ThesesSystem.Web.ViewModels.Versions
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.Web;
     using ThesesSystem.Models;
     using ThesesSystem.Web.Infrastructure.Mapping;
-    using ThesesSystem.Web.ViewModels.ThesisPart;
+    using ThesesSystem.Web.ViewModels.ThesisParts;
 
     public class CreateVersionViewModel : IMapFrom<Thesis>
     {

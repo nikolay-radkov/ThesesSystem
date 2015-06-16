@@ -1,4 +1,4 @@
-﻿namespace ThesesSystem.Web.ViewModels.Evaluation
+﻿namespace ThesesSystem.Web.ViewModels.Evaluations
 {
     using ThesesSystem.Web.Infrastructure.Mapping;
     using ThesesSystem.Models;

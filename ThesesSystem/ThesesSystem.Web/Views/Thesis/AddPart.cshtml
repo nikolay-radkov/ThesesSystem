@@ -1,4 +1,4 @@
-﻿@model IList<ThesesSystem.Web.ViewModels.ThesisPart.CreateOrUpdateThesisPartViewModel>
+﻿@model IList<ThesesSystem.Web.ViewModels.ThesisParts.CreateOrUpdateThesisPartViewModel>
 @{
     ViewBag.Title = "Добавяне на нова версия";
     int i = 0;
@@ -85,7 +85,7 @@
         function addRow() {
 
             @{
-                Model.Add(new ThesesSystem.Web.ViewModels.ThesisPart.CreateOrUpdateThesisPartViewModel());
+                Model.Add(new ThesesSystem.Web.ViewModels.ThesisParts.CreateOrUpdateThesisPartViewModel());
             }
 
             var index = $("#parts").children("div").length;

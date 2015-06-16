@@ -1,4 +1,4 @@
-﻿namespace ThesesSystem.Web.ViewModels.Version
+﻿namespace ThesesSystem.Web.ViewModels.Versions
 {
     using System.Collections.Generic;
     using ThesesSystem.Web.Infrastructure.Mapping;

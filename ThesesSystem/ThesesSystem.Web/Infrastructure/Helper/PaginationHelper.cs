@@ -4,7 +4,7 @@
     using System.Linq;
     using ThesesSystem.Data;
     using ThesesSystem.Web.Infrastructure.Constants;
-    using ThesesSystem.Web.ViewModels.Partial;
+    using ThesesSystem.Web.ViewModels.Partials;
 
     public static class PaginationHelper
     {

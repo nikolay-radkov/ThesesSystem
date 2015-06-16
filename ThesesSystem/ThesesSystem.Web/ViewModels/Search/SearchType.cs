@@ -26,7 +26,7 @@ namespace ThesesSystem.Web.ViewModels.Search
 
         [Display(Name = "Архив")]
         [Description("Архив")]
-        Archive,
+        Archives,
 
         [Display(Name = "Теми")]
         [Description("Теми")]

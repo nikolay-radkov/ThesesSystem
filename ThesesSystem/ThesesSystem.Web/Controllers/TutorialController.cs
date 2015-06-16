@@ -10,7 +10,7 @@ using ThesesSystem.Web.Infrastructure.Constants;
 using ThesesSystem.Web.Infrastructure.Storage;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
-using ThesesSystem.Web.ViewModels.ThesisTutorial;
+using ThesesSystem.Web.ViewModels.ThesisTutorials;
 using ThesesSystem.Web.Infrastructure.Helper;
 using Microsoft.AspNet.Identity;
 using ThesesSystem.Models;

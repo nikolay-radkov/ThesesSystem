@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using ThesesSystem.Web.Infrastructure.Mapping;
-
-namespace ThesesSystem.Web.ViewModels.Message
+﻿namespace ThesesSystem.Web.ViewModels.Messages
 {
-    public class MessageViewModel : IMapFrom<ThesesSystem.Models.Message>, IHaveCustomMappings
+    using System;
+    using ThesesSystem.Models;
+    using ThesesSystem.Web.Infrastructure.Mapping;
+
+    public class MessageViewModel : IMapFrom<Message>, IHaveCustomMappings
     {
         public string Text { get; set; }
 

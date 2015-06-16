@@ -1,12 +1,14 @@
-﻿namespace ThesesSystem.Web.ViewModels.Faculties
+﻿namespace ThesesSystem.Web.ViewModels.Theses
 {
     using ThesesSystem.Models;
     using ThesesSystem.Web.Infrastructure.Mapping;
 
-    public class FacultyDropDownListItemViewModel : IMapFrom<Faculty>
+    public class ArchiveResultViewModel : IMapFrom<Thesis>
     {
         public int Id { get; set; }
 
         public string Title { get; set; }
+
+        public string Description { get; set; }
     }
 }

@@ -1,15 +1,12 @@
-﻿namespace ThesesSystem.Web.ViewModels.ThesisPart
+﻿namespace ThesesSystem.Web.ViewModels.ThesisThemes
 {
     using System.ComponentModel.DataAnnotations;
     using ThesesSystem.Models;
     using ThesesSystem.Web.Infrastructure.Mapping;
 
-    public class CreateOrUpdateThesisPartViewModel : IMapFrom<ThesisPart>
+    public class CreateThesisThemeViewModel : IMapFrom<ThesisTheme>
     {
-        [Display(Name = "Част")]
         [Required]
         public string Title { get; set; }
-
-        public ThesisFlag Flag { get; set; }
     }
 }

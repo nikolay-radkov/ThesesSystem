@@ -4,9 +4,9 @@
 }
 
 <h2>@ViewBag.Title</h2>
-@Html.Partial("_ProcessStep", new ThesesSystem.Web.ViewModels.Partial.ProcessStepViewModel { CurrentStep = 3 })
+@Html.Partial("_ProcessStep", new ThesesSystem.Web.ViewModels.Partials.ProcessStepViewModel { CurrentStep = 3 })
 
 <div>
     @Html.Partial("_CompleteUserRegistrationPartial", Model)
-    @Html.Partial("_CompleteTeacherRegistrationPartial", new ThesesSystem.Web.ViewModels.Partial.TeacherInfoViewModel())
+    @Html.Partial("_CompleteTeacherRegistrationPartial", new ThesesSystem.Web.ViewModels.Partials.TeacherInfoViewModel())
 </div>

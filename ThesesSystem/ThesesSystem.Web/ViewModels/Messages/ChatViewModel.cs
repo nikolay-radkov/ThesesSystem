@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using ThesesSystem.Web.Infrastructure.Mapping;
-
-namespace ThesesSystem.Web.ViewModels.Message
+﻿namespace ThesesSystem.Web.ViewModels.Messages
 {
+    using System.Collections.Generic;
+    using ThesesSystem.Web.Infrastructure.Mapping;
+
     public class ChatViewModel
     {
         public ICollection<FriendItemViewModel> FriendsList { get; set; }

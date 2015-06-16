@@ -14,7 +14,7 @@
     using ThesesSystem.Web.Infrastructure.Factories.Logger;
     using ThesesSystem.Web.Infrastructure.Helper;
     using ThesesSystem.Web.ViewModels.Theses;
-    using ThesesSystem.Web.ViewModels.ThesisTheme;
+    using ThesesSystem.Web.ViewModels.ThesisThemes;
 
     public class IdeaController : AuthorizeController
     {

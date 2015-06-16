@@ -1,4 +1,4 @@
-﻿namespace ThesesSystem.Web.ViewModels.Partial
+﻿namespace ThesesSystem.Web.ViewModels.Partials
 {
     using AutoMapper;
     using System.ComponentModel.DataAnnotations;

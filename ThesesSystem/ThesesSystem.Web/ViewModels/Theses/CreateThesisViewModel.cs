@@ -4,7 +4,7 @@
     using System.ComponentModel.DataAnnotations;
     using ThesesSystem.Models;
     using ThesesSystem.Web.Infrastructure.Mapping;
-    using ThesesSystem.Web.ViewModels.ThesisPart;
+    using ThesesSystem.Web.ViewModels.ThesisParts;
 
     public class CreateThesisViewModel : IMapFrom<Thesis>
     {

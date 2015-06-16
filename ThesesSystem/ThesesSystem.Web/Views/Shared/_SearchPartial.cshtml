@@ -3,18 +3,19 @@
 @using (Html.BeginForm("Index", "Search", FormMethod.Get, new { @class = "navbar-form navbar-left", role = "search" }))
 {
     <div class="search-group row">
-            <div class="col-md-1 col-sm-1 col-xs-1 search-col">
-                <input id="hidden-value" type="hidden" name="SearchType" value="0" />
-                <span id="search-icon" class="search-options glyphicon glyphicon-globe" style="vertical-align: text-top;"></span>
-            </div>
-        <div class="col-md-9 col-sm-9 col-xs-9"><input type="text" class="search-box" name="Text" placeholder="Търси"></div>
+        <div class="col-md-2 col-sm-2 col-xs-2 search-col">
+            <input id="hidden-value" type="hidden" name="SearchType" value="0" />
+            <span id="btn-search-options" class="search-options">
+                <span id="search-icon" class="glyphicon glyphicon-globe"></span>
+            </span>
+        </div>
+        <div class="col-md-8 col-sm-8 col-xs-8 search-col"><input id="search-keyword" type="text" class="search-box" name="KeyWord" placeholder="Търси"></div>
         <div class="col-md-2 col-sm-2 col-xs-2 search-col">
             <input id="hidden-submit" type="submit" class="hidden" value="0" />
-            <span id="btn-search-submit" class="search-submit"><span class="glyphicon glyphicon-search" ></span></span>
+            <span id="btn-search-submit" class="search-submit">
+                <span class="glyphicon glyphicon-search"></span>
+            </span>
         </div>
-
-
-
         <div class="search-dropdown" style="display:none;">
             <ul>
                 <li class="glyphicon glyphicon-globe" data-value="0"> Всичко</li>

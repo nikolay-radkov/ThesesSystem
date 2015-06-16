@@ -3,7 +3,7 @@
     using System.Web.Mvc;
     using ThesesSystem.Data;
     using ThesesSystem.Models;
-    using ThesesSystem.Web.ViewModels.Partial;
+    using ThesesSystem.Web.ViewModels.Partials;
     using System.Linq;
     using Microsoft.AspNet.Identity;
 

@@ -1,16 +1,208 @@
-﻿@{
-    ViewBag.Title = "Намерени резултати";
+﻿@using ThesesSystem.Web.Infrastructure.Constants
+@model ThesesSystem.Web.ViewModels.Search.SearchResultViewModel
+@{
+    ViewBag.Title = "Резултати от търсенето";
 }
 
-<h1>Намерени резултати</h1>
 
+<hgroup class="mb20">
+    <h2>@ViewBag.Title</h2>
+    <h3 class="lead"><strong class="text-danger">@Model.ResultsCount</strong> резултата бяха намерени за <strong class="text-danger">@Model.KeyWord</strong></h3>
+</hgroup>
 
-<h2>Студенти</h2>
+@if (Model.Students.Count != 0)
+{
+    <div class="panel">
+        <div class="panel-heading">
+            <h3>Студенти</h3>
+        </div>
 
-<h2>Преподаватели</h2>
+        <div class="panel-body">
+            <div class="row">
+                @foreach (var item in Model.Students)
+                {
+                    <div class="col-sm-3 col-xs-6">
+                        <div class="thumbnail">
+                            <a href='@Url.Action("Account", "User", new { id = item.Id })'>
+                                <strong>Студент: </strong>@item.FullName
+                                <br />
+                                <strong>Е-поща: </strong>@item.Email
+                            </a>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+}
+@if (Model.Teachers.Count != 0)
+{
+    <div class="panel">
+        <div class="panel-heading">
+            <h3>Преподаватели</h3>
+        </div>
 
-<h2>Дипломни работи</h2>
+        <div class="panel-body">
+            <div class="row">
+                @foreach (var item in Model.Teachers)
+                {
+                    <div class="col-sm-3 col-xs-6">
+                        <div class="thumbnail">
+                            <a href='@Url.Action("Account", "User", new { id = item.Id })'>
+                                <strong>Учител: </strong>@item.FullName
+                                <br />
+                                <strong>Е-поща: </strong>@item.Email
+                            </a>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+}
 
-<h2>Факултети</h2>
+@if (Model.Archives.Count != 0)
+{
+    <div class="panel">
+        <div class="panel-heading">
+            <h3>Дипломни работи</h3>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                @foreach (var item in Model.Archives)
+                {
+                    <div class="col-sm-3 col-xs-6">
+                        <div class="thumbnail">
+                            <a href='@Url.Action("ThesisProfile", "Storage", new { id = item.Id })'>
+                                <strong>Заглавие: </strong>@item.Title
+                                <br />
+                                <strong>Описание: </strong>@item.Description
+                            </a>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+}
 
-<h2>Специалности</h2>
+@if (Model.Faculties.Count != 0)
+{
+    <div class="panel">
+        <div class="panel-heading">
+            <h3>Факултети</h3>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                @foreach (var item in Model.Faculties)
+                {
+                    <div class="col-sm-3 col-xs-6">
+                        <div class="thumbnail">
+                            <a href='@Url.Action("FacultyProfile", "Faculty", new { id = item.Id })'>
+                                <strong>Факултет: </strong>@item.Title
+                            </a>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+}
+
+@if (Model.Specialties.Count != 0)
+{
+    <div class="panel">
+        <div class="panel-heading">
+            <h3>Специалности</h3>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                @foreach (var item in Model.Specialties)
+                {
+                    <div class="col-sm-3 col-xs-6">
+                        <div class="thumbnail">
+                            <a href='@Url.Action("SpecialtyProfile", "Specialty", new { id = item.Id })'>
+                                <strong>Специалност: </strong>@item.Title
+                            </a>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+}
+
+@if (Model.Themes.Count != 0)
+{
+    <div class="panel">
+        <div class="panel-heading">
+            <h3>Теми</h3>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                @foreach (var item in Model.Themes)
+                {
+                    <div class="col-sm-3 col-xs-6">
+                        <div class="thumbnail">
+                            @if (User.IsInRole(GlobalConstants.STUDENT) && !item.IsTaken)
+                            {
+                                <a href='@Url.Action("Take", "Idea", new { id = item.Id })'>
+                                    <strong>Заглавие: </strong>@item.Title
+                                </a>
+                            }
+                            else
+                            {
+                                <strong>Заглавие: </strong>@item.Title
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+}
+
+@section scripts
+{
+    <script>
+        var keyWord = '@Model.KeyWord';
+        $('#search-keyword').val(keyWord);
+
+        var searchType = '@Model.SearchType';
+
+        var searchIcon = $('#search-icon').removeClass();
+        searchIcon.addClass('glyphicon');
+
+        switch (searchType) {
+            case "Everywhere":
+                $('#hidden-value').val(0);
+                searchIcon.addClass('glyphicon-globe');
+                break;
+            case "Students":
+                $('#hidden-value').val(1);
+                searchIcon.addClass('glyphicon-user');
+                break;
+            case "Teachers":
+                $('#hidden-value').val(2);
+                searchIcon.addClass('glyphicon-briefcase');
+                break;
+            case "Faculties":
+                $('#hidden-value').val(3);
+                searchIcon.addClass('glyphicon-align-justify');
+                break;
+            case "Specialties":
+                $('#hidden-value').val(4);
+                searchIcon.addClass('glyphicon-th-list');
+                break;
+            case "Archives":
+                $('#hidden-value').val(5);
+                searchIcon.addClass('glyphicon-floppy-disk');
+                break;
+            case "Themes":
+                $('#hidden-value').val(5);
+                searchIcon.addClass('glyphicon-file');
+                break;
+
+        }
+    </script>
+}

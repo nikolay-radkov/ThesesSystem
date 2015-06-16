@@ -11,7 +11,7 @@
     using ThesesSystem.Web.Controllers.BaseControllers;
     using ThesesSystem.Web.Infrastructure.Constants;
     using ThesesSystem.Web.Infrastructure.Helper;
-    using ThesesSystem.Web.ViewModels.Partial;
+    using ThesesSystem.Web.ViewModels.Partials;
     using ThesesSystem.Web.ViewModels.Users;
 
     public class UserController : AuthorizeController

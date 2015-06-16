@@ -15,11 +15,11 @@
     using ThesesSystem.Web.Infrastructure.Factories.Logger;
     using ThesesSystem.Web.Infrastructure.Storage;
     using ThesesSystem.Web.ViewModels.Comments;
-    using ThesesSystem.Web.ViewModels.Evaluation;
-    using ThesesSystem.Web.ViewModels.Teacher;
+    using ThesesSystem.Web.ViewModels.Evaluations;
+    using ThesesSystem.Web.ViewModels.Teachers;
     using ThesesSystem.Web.ViewModels.Theses;
-    using ThesesSystem.Web.ViewModels.ThesisPart;
-    using ThesesSystem.Web.ViewModels.Version;
+    using ThesesSystem.Web.ViewModels.ThesisParts;
+    using ThesesSystem.Web.ViewModels.Versions;
 
     public class ThesisController : AuthorizeController
     {

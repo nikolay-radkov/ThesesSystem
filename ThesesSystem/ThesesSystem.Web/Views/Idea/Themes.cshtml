@@ -1,4 +1,4 @@
-﻿@model ICollection<ThesesSystem.Web.ViewModels.ThesisTheme.ThesisThemeViewModel>
+﻿@model ICollection<ThesesSystem.Web.ViewModels.ThesisThemes.ThesisThemeViewModel>
 @{
     ViewBag.Title = "Теми";
     var index = 0;
@@ -50,7 +50,7 @@
     </div>
     <div class="row">
         <div class="col-lg-offset-3 text-center">
-            @Html.Partial("_PaginationPartial", (ThesesSystem.Web.ViewModels.Partial.PaginationViewModel)ViewData["Pagination"])
+            @Html.Partial("_PaginationPartial", (ThesesSystem.Web.ViewModels.Partials.PaginationViewModel)ViewData["Pagination"])
         </div>
     </div>
 </div>

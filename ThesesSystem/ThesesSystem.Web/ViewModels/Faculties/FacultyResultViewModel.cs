@@ -1,9 +1,9 @@
 ﻿namespace ThesesSystem.Web.ViewModels.Faculties
 {
-    using ThesesSystem.Models;
     using ThesesSystem.Web.Infrastructure.Mapping;
+    using ThesesSystem.Models;
 
-    public class FacultyDropDownListItemViewModel : IMapFrom<Faculty>
+    public class FacultyResultViewModel : IMapFrom<Faculty>
     {
         public int Id { get; set; }
 

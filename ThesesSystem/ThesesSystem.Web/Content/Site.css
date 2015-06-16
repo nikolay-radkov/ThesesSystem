@@ -667,10 +667,18 @@ section.module.parallax-3 {
 }
 
 .search-group .search-options {
-    border: none;
-    padding: 1px 6px;
+    -moz-border-radius: 20px;
+    -webkit-border-radius: 20px;
+    border-radius: 20px;
+    display: block;
+    text-align: center;
 }
 
+    .search-group .search-options #search-icon {
+        vertical-align: text-top;
+        border: none;
+        padding: 1px 6px;
+    }
 
     .search-group .search-options option {
         border: none;
@@ -687,7 +695,7 @@ section.module.parallax-3 {
 
     .search-dropdown ul {
         padding: 0;
-        margin-bottom:1px;
+        margin-bottom: 1px;
     }
 
     .search-dropdown li {
@@ -696,9 +704,9 @@ section.module.parallax-3 {
         list-style-type: none;
     }
 
-    .search-dropdown li:hover {
-        background-color: palegoldenrod
-    }
+        .search-dropdown li:hover {
+            background-color: palegoldenrod;
+        }
 
 .search-group .search-box:active,
 .search-group .search-box:focus,
@@ -714,7 +722,7 @@ section.module.parallax-3 {
     border: none;
     width: 100%;
     padding: 0;
-    margin:0;
+    margin: 0;
 }
 
 .search-group .search-submit {
@@ -723,7 +731,7 @@ section.module.parallax-3 {
     -webkit-border-radius: 20px;
     border-radius: 20px;
     background-color: rgb(197, 17, 17);
-    color:white;
+    color: white;
     display: block;
     text-align: center;
 }

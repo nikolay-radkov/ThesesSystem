@@ -4,6 +4,6 @@
     {
         public SearchType SearchType { get; set; }
 
-        public string Text { get; set; }
+        public string KeyWord { get; set; }
     }
 }

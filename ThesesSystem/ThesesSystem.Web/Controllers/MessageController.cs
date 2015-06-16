@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using ThesesSystem.Data;
 using ThesesSystem.Web.Controllers.BaseControllers;
-using ThesesSystem.Web.ViewModels.Message;
+using ThesesSystem.Web.ViewModels.Messages;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.AspNet.Identity;

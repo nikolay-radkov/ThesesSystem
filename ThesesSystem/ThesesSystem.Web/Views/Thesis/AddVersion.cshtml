@@ -1,4 +1,4 @@
-﻿@model ThesesSystem.Web.ViewModels.Version.CreateVersionViewModel
+﻿@model ThesesSystem.Web.ViewModels.Versions.CreateVersionViewModel
 @{
     ViewBag.Title = "Добавяне на нова версия";
     int i = 0;
@@ -58,15 +58,14 @@
             changeClass(selects[i]);
         }
 
-        function onChange()
-        {
+        function onChange() {
             changeClass(this);
         }
 
         function changeClass(item) {
             var $this = $(item);
 
-            switch($this.val()) {
+            switch ($this.val()) {
                 case '0':
                     $this.removeClass('in-progress');
                     $this.removeClass('for-evaluation');
@@ -101,7 +100,7 @@
         function addRow() {
 
             @{
-            Model.ThesisParts.Add(new ThesesSystem.Web.ViewModels.ThesisPart.CreateOrUpdateThesisPartViewModel());
+            Model.ThesisParts.Add(new ThesesSystem.Web.ViewModels.ThesisParts.CreateOrUpdateThesisPartViewModel());
         }
 
             var index = $("#parts").children("div").length;

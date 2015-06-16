@@ -6,7 +6,7 @@ using System.Linq;
 using System.Web;
 using ThesesSystem.Data;
 using ThesesSystem.Models;
-using ThesesSystem.Web.ViewModels.Message;
+using ThesesSystem.Web.ViewModels.Messages;
 
 namespace ThesesSystem.Web.Hubs
 {

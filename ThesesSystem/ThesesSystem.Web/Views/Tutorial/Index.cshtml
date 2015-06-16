@@ -1,4 +1,4 @@
-﻿@model ICollection<ThesesSystem.Web.ViewModels.ThesisTutorial.TutorialViewModel>
+﻿@model ICollection<ThesesSystem.Web.ViewModels.ThesisTutorials.TutorialViewModel>
 @{
     ViewBag.Title = "Наръчници";
 }
@@ -32,7 +32,7 @@
     </div>
     <div class="row">
         <div class="col-lg-offset-3 text-center">
-            @Html.Partial("_PaginationPartial", (ThesesSystem.Web.ViewModels.Partial.PaginationViewModel)ViewData["Pagination"])
+            @Html.Partial("_PaginationPartial", (ThesesSystem.Web.ViewModels.Partials.PaginationViewModel)ViewData["Pagination"])
         </div>
     </div>
 </div>

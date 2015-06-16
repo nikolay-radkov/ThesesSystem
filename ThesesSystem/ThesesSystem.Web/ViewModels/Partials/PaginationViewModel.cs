@@ -1,4 +1,4 @@
-﻿namespace ThesesSystem.Web.ViewModels.Partial
+﻿namespace ThesesSystem.Web.ViewModels.Partials
 {
     public class PaginationViewModel
     {
