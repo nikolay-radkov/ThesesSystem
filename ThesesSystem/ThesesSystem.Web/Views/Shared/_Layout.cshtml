@@ -45,29 +45,7 @@
                         @Html.Partial("_AdministrationDropdownPartial")
                     </ul>
 
-                    using (Html.BeginForm("Index", "Search", FormMethod.Post, new { @class = "navbar-form navbar-left", role = "search" }))
-                    {
-
-                        <div class="input-append">
-                            <div class="btn-group">
-                                <ul class="dropdown-menu">
-                                    <li><a href="#">Action</a></li>
-                                    <li><a href="#">Another action</a></li>
-                                    <li><a href="#">Something else here</a></li>
-                                </ul>
-                                <button class="btn dropdown-toggle btn-danger" data-toggle="dropdown" tabindex="-1">
-                                    <span class="caret"></span>
-                                    Всичко
-                                </button>
-                            </div>
-                            <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Търси">
-                            </div>
-                            <div class="btn-group">
-                                <button class="btn btn-danger" tabindex="-1">Намери</button>
-                            </div>
-                        </div>
-                    }
+                    @Html.Partial("_SearchPartial", new ThesesSystem.Web.ViewModels.Search.SearchViewModel())
                 }
                 @Html.Partial("_LoginPartial")
             </div>
@@ -87,5 +65,37 @@
     @Scripts.Render("~/bundles/unobtrusive")
     @Scripts.Render("~/bundles/jqueryval")
     @RenderSection("scripts", required: false)
+    <script>
+        $('#btn-search-submit').on('click', function () {
+            $('#hidden-submit').click();
+        });
+
+        $('.search-options').on('click', function () {
+            var display = $('.search-dropdown').css('display');
+
+            if (display == 'none') {
+                $('.search-dropdown').show('1');
+            }
+            else {
+                $('.search-dropdown').hide('2');
+            }
+        });
+
+        $(".search-group").hover(function () {},
+            function () {
+                $(".search-dropdown").hide('2');
+            });
+
+        $('.search-dropdown').on('click', 'li', function () {
+            var icon = this.classList;
+            $('#search-icon').removeClass();
+            $('#search-icon').addClass('search-options');
+            $('#search-icon').addClass(icon[0]);
+            $('#search-icon').addClass(icon[1]);
+            $('#hidden-value').val($(this).attr('data-value'));
+            $('.search-dropdown').hide('2');
+        });
+
+    </script>
 </body>
 </html>

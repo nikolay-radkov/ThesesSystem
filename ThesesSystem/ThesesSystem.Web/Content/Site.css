@@ -13,7 +13,7 @@ body, .body-content {
     width: 100%;
 }
 
-#wrapper .container{
+#wrapper .container {
     max-width: 80%;
     margin-left: auto;
     margin-right: auto;
@@ -610,7 +610,7 @@ section.module.parallax-3 {
     padding-bottom: 10px;
 }
 
-.badge-primary, .badge-info, .badge-success, .badge-danger  {
+.badge-primary, .badge-info, .badge-success, .badge-danger {
     display: inline-block;
     min-width: 10px;
     padding: 3px 7px;
@@ -626,7 +626,7 @@ section.module.parallax-3 {
     border-radius: 10px;
 }
 
-.badge-info{
+.badge-info {
     background-color: #5bc0de;
 }
 
@@ -635,9 +635,95 @@ section.module.parallax-3 {
 }
 
 .badge-success {
-      background-color: #5cb85c;
+    background-color: #5cb85c;
 }
 
 .badge-danger {
     background-color: #ff0039;
+}
+
+/*---Search---*/
+.search-container {
+    position: relative;
+}
+
+.search-group {
+    border: 2px solid rgba(0, 0, 0, 0.2);
+    background-color: white;
+    padding: 3px;
+    -moz-border-radius: 30px;
+    -webkit-border-radius: 30px;
+    border-radius: 30px;
+    font-size: 18px;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 5px;
+    position: relative;
+}
+
+.search-col {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.search-group .search-options {
+    border: none;
+    padding: 1px 6px;
+}
+
+
+    .search-group .search-options option {
+        border: none;
+    }
+
+.search-dropdown {
+    position: absolute;
+    z-index: 2000;
+    background-color: #fff;
+    border: 1px solid #a5a5a5;
+    top: 33px;
+    left: 12px;
+}
+
+    .search-dropdown ul {
+        padding: 0;
+        margin-bottom:1px;
+    }
+
+    .search-dropdown li {
+        display: block;
+        padding: 10px;
+        list-style-type: none;
+    }
+
+    .search-dropdown li:hover {
+        background-color: palegoldenrod
+    }
+
+.search-group .search-box:active,
+.search-group .search-box:focus,
+.search-group .search-box.active {
+    background-image: none;
+    outline: 0;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+}
+
+.search-group .search-box {
+    border: none;
+    width: 100%;
+    padding: 0;
+    margin:0;
+}
+
+.search-group .search-submit {
+    border: none;
+    -moz-border-radius: 20px;
+    -webkit-border-radius: 20px;
+    border-radius: 20px;
+    background-color: rgb(197, 17, 17);
+    color:white;
+    display: block;
+    text-align: center;
 }

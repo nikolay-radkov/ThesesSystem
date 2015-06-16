@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using ThesesSystem.Data;
 using ThesesSystem.Web.Controllers.BaseControllers;
+using ThesesSystem.Web.ViewModels.Search;
 
 namespace ThesesSystem.Web.Controllers
 {
@@ -17,7 +18,7 @@ namespace ThesesSystem.Web.Controllers
         }
 
         // GET: Search
-        public ActionResult Index()
+        public ActionResult Index(SearchViewModel model)
         {
             // TODO: Implement search page with found students, supervisors, theses and so on.
 

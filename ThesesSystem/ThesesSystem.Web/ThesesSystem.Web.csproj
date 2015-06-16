@@ -288,6 +288,8 @@
     <Compile Include="ViewModels\Partial\StudentInfoViewModel.cs" />
     <Compile Include="ViewModels\Partial\StudentRegistrationViewModel.cs" />
     <Compile Include="ViewModels\Partial\TeacherInfoViewModel.cs" />
+    <Compile Include="ViewModels\Search\SearchType.cs" />
+    <Compile Include="ViewModels\Search\SearchViewModel.cs" />
     <Compile Include="ViewModels\Specialties\SpecialtyDropDownListItemViewModel.cs" />
     <Compile Include="ViewModels\Teacher\SupervisorDropDownListITemViewModel.cs" />
     <Compile Include="ViewModels\Theses\CreateThesisViewModel.cs" />
@@ -487,6 +489,8 @@
     <Content Include="Views\Thesis\_ViewFinalEvaluationPartial.cshtml" />
     <Content Include="Views\Tutorial\Index.cshtml" />
     <Content Include="Views\Tutorial\Create.cshtml" />
+    <Content Include="Views\Shared\_SearchPartial.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\SearchType.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Administration\ViewModels\" />

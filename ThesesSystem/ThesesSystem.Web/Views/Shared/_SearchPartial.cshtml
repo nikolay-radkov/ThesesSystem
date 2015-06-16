@@ -1,0 +1,30 @@
+﻿@model ThesesSystem.Web.ViewModels.Search.SearchViewModel
+
+@using (Html.BeginForm("Index", "Search", FormMethod.Get, new { @class = "navbar-form navbar-left", role = "search" }))
+{
+    <div class="search-group row">
+            <div class="col-md-1 col-sm-1 col-xs-1 search-col">
+                <input id="hidden-value" type="hidden" name="SearchType" value="0" />
+                <span id="search-icon" class="search-options glyphicon glyphicon-globe" style="vertical-align: text-top;"></span>
+            </div>
+        <div class="col-md-9 col-sm-9 col-xs-9"><input type="text" class="search-box" name="Text" placeholder="Търси"></div>
+        <div class="col-md-2 col-sm-2 col-xs-2 search-col">
+            <input id="hidden-submit" type="submit" class="hidden" value="0" />
+            <span id="btn-search-submit" class="search-submit"><span class="glyphicon glyphicon-search" ></span></span>
+        </div>
+
+
+
+        <div class="search-dropdown" style="display:none;">
+            <ul>
+                <li class="glyphicon glyphicon-globe" data-value="0"> Всичко</li>
+                <li class="glyphicon glyphicon-user" data-value="1"> Студенти</li>
+                <li class="glyphicon glyphicon-briefcase" data-value="2"> Преподаватели</li>
+                <li class="glyphicon glyphicon-align-justify" data-value="3"> Факулети</li>
+                <li class="glyphicon glyphicon-th-list" data-value="4"> Специалности</li>
+                <li class="glyphicon glyphicon-floppy-disk" data-value="5"> Архив</li>
+                <li class="glyphicon glyphicon-file" data-value="6"> Теми</li>
+            </ul>
+        </div>
+    </div>
+}
