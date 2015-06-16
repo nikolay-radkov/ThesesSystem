@@ -84,8 +84,6 @@
             var userStore = new UserStore<User>(this.Data.Context.DbContext);
             var userManager = new UserManager<User>(userStore);
         
-
-            // TODO: Implement logic for studen and teacher validation
             switch (verificationType)
             {
                 case VerificationType.Student:

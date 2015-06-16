@@ -10,11 +10,13 @@
     {
         private ICollection<ThesisPart> thesisParts;
         private ICollection<ThesisLog> thesisLogs;
+        private ICollection<Version> versions;
 
         public Thesis()
         {
             this.thesisParts = new HashSet<ThesisPart>();
             this.thesisLogs = new HashSet<ThesisLog>();
+            this.versions = new HashSet<Version>();
         }
 
         [Key]
@@ -68,6 +70,19 @@
             set
             {
                 this.thesisLogs = value;
+            }
+        }
+
+        public virtual ICollection<Version> Versions
+        {
+            get
+            {
+                return this.versions;
+            }
+
+            set
+            {
+                this.versions = value;
             }
         }
 

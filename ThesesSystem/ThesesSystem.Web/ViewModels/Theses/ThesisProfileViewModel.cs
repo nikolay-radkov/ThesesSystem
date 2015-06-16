@@ -7,10 +7,11 @@
 
     public class ThesisProfileViewModel : IMapFrom<Thesis>, IHaveCustomMappings
     {
+        public int Id { get; set; }
+
         public string StudentId { get; set; }
 
         public string SupervisorId { get; set; }
-
 
         [Display(Name = "Заглавие")]
         public string Title { get; set; }

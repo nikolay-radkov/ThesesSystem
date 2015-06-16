@@ -2,22 +2,27 @@
 {
     using AutoMapper;
     using AutoMapper.QueryableExtensions;
+    using System.IO;
     using System.Linq;
     using System.Web.Mvc;
     using ThesesSystem.Data;
+    using ThesesSystem.Models;
     using ThesesSystem.Web.Controllers.BaseControllers;
     using ThesesSystem.Web.Infrastructure.Constants;
     using ThesesSystem.Web.Infrastructure.Helper;
+    using ThesesSystem.Web.Infrastructure.Storage;
     using ThesesSystem.Web.ViewModels.Theses;
 
     public class StorageController : AuthorizeController
     {
-        public StorageController(IThesesSystemData data)
+        private IStorage storage;
+
+        public StorageController(IThesesSystemData data, IStorage storage)
             : base(data)
         {
+            this.storage = storage;
         }
 
-        // GET: Storage
         [HttpGet]
         public ActionResult Index(int? page)
         {
@@ -44,13 +49,31 @@
         [HttpGet]
         public ActionResult ThesisProfile(int id)
         {
-            // TODO: Implement downloading
-
             var thesis = this.Data.Theses.GetById(id);
 
             var thesisViewModel = Mapper.Map<ThesisProfileViewModel>(thesis);
 
             return View(thesisViewModel);
+        }
+
+        [HttpGet]
+        public ActionResult DownloadFile(int id)
+        {
+            var thesis = this.Data.Theses.GetById(id);
+
+            var version = thesis.Versions.OrderByDescending(v => v.CreatedOn).FirstOrDefault();
+
+            if (this.User.IsInRole(GlobalConstants.TEACHER))
+            {
+                var mimeType = MimeTypeCreator.GetFileMimeType(version.FileExtension);
+                var fileBytes = storage.DownloadFile(version.StoragePath);
+
+                var ms = new MemoryStream(fileBytes);
+
+                return File(fileBytes, mimeType, version.FileName);
+            }
+
+            return RedirectToAction("Index", "Storage");
         }
     }
 }

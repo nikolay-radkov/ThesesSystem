@@ -124,6 +124,8 @@
         [HttpGet]
         public ActionResult Take(int id)
         {
+            if (this.User.IsInRole(GlobalConstants.STUDENT))
+            {
             var theme = this.Data.ThesisThemes.All()
                      .FirstOrDefault(t => t.Id == id);
 
@@ -141,6 +143,9 @@
             };
 
             return View(thesis);
+            }
+
+            return RedirectToAction("Themes", "Idea");
         }
 
         [ValidateAntiForgeryToken]
