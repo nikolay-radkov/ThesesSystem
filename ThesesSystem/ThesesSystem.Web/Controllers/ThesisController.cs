@@ -21,6 +21,7 @@
     using ThesesSystem.Web.ViewModels.Theses;
     using ThesesSystem.Web.ViewModels.ThesisParts;
     using ThesesSystem.Web.ViewModels.Versions;
+    using Common.Extensions;
 
     public class ThesisController : AuthorizeController
     {
@@ -32,6 +33,27 @@
         {
             this.loggerCreator = loggerCreater;
             this.storage = storage;
+        }
+
+        [NonAction]
+        private void CreateNotification(int id, string userId, string forwardUrl, string format)
+        {
+            var thesis = this.Data.Theses.GetById(id);
+            var toUserId = thesis.SupervisorId;
+            if (userId == toUserId)
+            {
+                toUserId = thesis.StudentId;
+            }
+
+            var notification = new Notification
+            {
+                UserId = toUserId,
+                ForwardUrl = forwardUrl,
+                Text = string.Format(format, this.GetUserFirstName(userId).TruncateLongString(GlobalConstants.TRUNCATE_SIZE), 
+                    thesis.Title.TruncateLongString(GlobalConstants.TRUNCATE_SIZE))
+            };
+
+            this.SendNotification(notification);
         }
 
         [NonAction]
@@ -232,13 +254,7 @@
                     };
                     logger.Log(log);
 
-                    var notification = new Notification
-                    {
-                        UserId = model.SupervisorId,
-                        ForwardUrl = log.ForwardUrl,
-                        Text = string.Format(GlobalPatternConstants.CREATE_THESIS, this.GetUserFullName(userId))
-                    };
-                    this.SendNotification(notification);
+                    CreateNotification(thesis.Id, userId, log.ForwardUrl, GlobalPatternConstants.NOTIFICATION_INVITATION);
 
                     return RedirectToAction("ThesisProfile", "Thesis", new { id = thesis.Id });
                 }
@@ -296,14 +312,16 @@
                     UpdatePages(model.Id, model.Pages);
 
                     var logger = this.loggerCreator.Create(this.Data);
-
-                    logger.Log(new ThesisLog
+                    var log = new ThesisLog
                     {
                         ThesisId = model.Id,
                         UserId = userId,
                         LogType = LogType.AddedVersion,
                         ForwardUrl = string.Format(GlobalPatternConstants.FORWARD_URL_WITH_ID, "Thesis", "Version", versionId)
-                    });
+                    };
+                    logger.Log(log);
+
+                    CreateNotification(id, userId, log.ForwardUrl, GlobalPatternConstants.NOTIFICATION_ADDED_VERSION);
 
                     return RedirectToAction("Version", "Thesis", new { id = versionId });
                 }
@@ -349,14 +367,16 @@
                     this.Data.SaveChanges();
 
                     var logger = this.loggerCreator.Create(this.Data);
-
-                    logger.Log(new ThesisLog
+                    var log = new ThesisLog
                     {
                         ThesisId = version.ThesisId,
                         UserId = userId,
                         LogType = LogType.AddedComment,
                         ForwardUrl = string.Format(GlobalPatternConstants.FORWARD_URL_WITH_ID, "Thesis", "Version", id)
-                    });
+                    };
+                    logger.Log(log);
+
+                    CreateNotification(version.ThesisId, userId, log.ForwardUrl, GlobalPatternConstants.NOTIFICATION_COMMENTED);
 
                     return RedirectToAction("Version", "Thesis", new { id = id });
                 }
@@ -431,14 +451,16 @@
                     UpdateParts(id, parts);
                     var userId = this.User.Identity.GetUserId();
                     var logger = this.loggerCreator.Create(this.Data);
-
-                    logger.Log(new ThesisLog
+                    var log = new ThesisLog
                     {
                         ThesisId = id,
                         UserId = userId,
                         LogType = LogType.AddedPart,
                         ForwardUrl = string.Format(GlobalPatternConstants.FORWARD_URL_WITH_ID, "Thesis", "ThesisProfile", id)
-                    });
+                    };
+                    logger.Log(log);
+
+                    CreateNotification(id, userId, log.ForwardUrl, GlobalPatternConstants.NOTIFICATION_ADDED_PART);
 
                     return RedirectToAction("ThesisProfile", "Thesis", new { id = id });
                 }
@@ -497,14 +519,16 @@
                     }
 
                     var logger = this.loggerCreator.Create(this.Data);
-
-                    logger.Log(new ThesisLog
+                    var log = new ThesisLog
                     {
                         ThesisId = id,
                         UserId = userId,
                         LogType = LogType.AddedReview,
-                        ForwardUrl = string.Format(GlobalPatternConstants.FORWARD_URL_WITH_ID, "Thesis", "ViewReview", reviewId)
-                    });
+                        ForwardUrl = string.Format(GlobalPatternConstants.FORWARD_URL_WITH_ID, "Thesis", "ThesisProfile", id)
+                    };
+                    logger.Log(log);
+
+                    CreateNotification(id, userId, log.ForwardUrl, GlobalPatternConstants.NOTIFICATION_ADDED_REVIEW);
 
                     return RedirectToAction("ThesisProfile", "Thesis", new { id = id });
                 }
@@ -552,14 +576,16 @@
 
                 var logger = this.loggerCreator.Create(this.Data);
                 var userId = this.User.Identity.GetUserId();
-
-                logger.Log(new ThesisLog
+                var log = new ThesisLog
                 {
                     ThesisId = id,
                     UserId = userId,
                     LogType = LogType.CompletedThesis,
                     ForwardUrl = string.Format(GlobalPatternConstants.FORWARD_URL_WITH_ID, "Thesis", "ThesisProfile", id)
-                });
+                };
+                logger.Log(log);
+
+                CreateNotification(id, userId, log.ForwardUrl, GlobalPatternConstants.NOTIFICATION_COMPLEDED_THESIS);
 
                 return RedirectToAction("ThesisProfile", "Thesis", new { id = id });
             }
@@ -598,14 +624,16 @@
                     this.Data.SaveChanges();
 
                     var logger = this.loggerCreator.Create(this.Data);
-
-                    logger.Log(new ThesisLog
+                    var log =new ThesisLog
                     {
                         ThesisId = id,
                         UserId = userId,
                         LogType = LogType.AddedFinalEvaluation,
-                        ForwardUrl = string.Format(GlobalPatternConstants.FORWARD_URL_WITH_ID, "Thesis", "ViewFinalEvaluation", id)
-                    });
+                        ForwardUrl = string.Format(GlobalPatternConstants.FORWARD_URL_WITH_ID, "Thesis", "ThesisProfile", id)
+                    };
+                    logger.Log(log);
+
+                    CreateNotification(id, userId, log.ForwardUrl, GlobalPatternConstants.NOTIFICATION_ADDED_FINAL_EVALUATION);
 
                     return RedirectToAction("ThesisProfile", "Thesis", new { id = id });
                 }

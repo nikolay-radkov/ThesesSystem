@@ -22,30 +22,12 @@
         }
 
         [NonAction]
-        protected void SendNotification(Notification notification)
-        {
-            this.Data.Notifications.Add(notification);
-            this.Data.SaveChanges();
-
-            var context = GlobalHost.ConnectionManager.GetHubContext<NotificationHub>();
-            var userId = NotificationHub.GetConnectionUserId(notification.UserId);
-
-            var notificationViewModel = Mapper.Map<NotificationViewModel>(notification);
-            notificationViewModel.UserId = userId;
-
-            if (userId != null)
-            {
-                context.Clients.Client(userId).addNotification(notificationViewModel);
-            }
-        }
-
-        [NonAction]
-        protected string GetUserFullName(string userId)
+        protected string GetUserFirstName(string userId)
         {
             var user = this.Data.Users.GetById(userId);
-            var userFullName = string.Format(GlobalPatternConstants.USER_FULL_NAME, user.FirstName, user.LastName);
+            var firstName = user.FirstName;
 
-            return userFullName;
+            return firstName;
         }
     }
 }

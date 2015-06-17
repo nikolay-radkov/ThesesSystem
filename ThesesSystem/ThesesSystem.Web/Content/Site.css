@@ -45,7 +45,7 @@ body, .body-content {
 }
 
 
-.inline-block{
+.inline-block {
     display: inline-block;
 }
 
@@ -739,3 +739,45 @@ section.module.parallax-3 {
     display: block;
     text-align: center;
 }
+
+
+.badge-notify {
+    background: red;
+    position: absolute;
+    top: 10px;
+    right: 8px;
+    font-size: 14px;
+    padding: 1px 6px;
+    cursor: pointer;
+}
+
+.font-size-16 {
+    font-size: 16px;
+    padding: 11px 15px;
+}
+
+.font-size-22 {
+    font-size: 17px;
+}
+
+#notification-container {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+    #notification-container li > span {
+        display: block;
+        padding: 3px 20px;
+        clear: both;
+        font-weight: normal;
+        line-height: 1.42857143;
+        color: #333333;
+        white-space: nowrap;
+        cursor: pointer;
+    }
+
+    #notification-container > li > span:hover, #notification-container > li > span:focus {
+        text-decoration: none;
+        color: #ffffff;
+        background-color: #2780e3;
+    }

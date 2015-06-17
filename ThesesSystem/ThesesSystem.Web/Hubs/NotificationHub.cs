@@ -7,6 +7,7 @@
     using ThesesSystem.Web.ViewModels.Notifications;
     using System.Linq;
     using AutoMapper.QueryableExtensions;
+    using AutoMapper;
 
     public class NotificationHub : Hub
     {
@@ -36,13 +37,10 @@
 
         public void GetNotificationHistory(string userId)
         {
-            var notifications = data.Notifications.All()
-                .Where(n => n.UserId == userId)
-                .Project()
-                .To<NotificationViewModel>()
-                .ToList();
-
-            Clients.Client(Context.ConnectionId).showNotificationHistory(notifications);
+            var user = data.Users.GetById(userId);
+            var userNotifications = Mapper.Map <UserNotificationsViewModel>(user);
+            userNotifications.Notifications = userNotifications.Notifications.OrderByDescending(n => n.CreatedOn).ToList();
+            Clients.Client(Context.ConnectionId).showNotificationHistory(userNotifications);
         }
 
         public void MarkAsSeenNotification (int notificationId)

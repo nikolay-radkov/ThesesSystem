@@ -46,7 +46,10 @@ namespace ThesesSystem.Web
                 .Include("~/Scripts/mustache.js"));  
          
             bundles.Add(new ScriptBundle("~/bundles/sweetalert")
-                .Include("~/Scripts/sweetalert.min.js"));  
+                .Include("~/Scripts/sweetalert.min.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/toastr")
+                .Include("~/Scripts/toastr.min.js"));  
         }
 
         private static void RegisterStyleBundels(BundleCollection bundles)
@@ -63,6 +66,10 @@ namespace ThesesSystem.Web
 
             bundles.Add(new StyleBundle("~/Content/ui-dialog")
             .Include("~/Content/themes/base/all.css"));
+
+             bundles.Add(new StyleBundle("~/Content/toastr")
+            .Include("~/Content/toastr.css"));
+            
         }
     }
 }

@@ -14,3 +14,4 @@
 /// <reference path="custom/simple-parallax.js" />
 /// <reference path="sweetalert.min.js" />
 /// <reference path="mustache.js" />
+/// <reference path="toastr.min.js" />

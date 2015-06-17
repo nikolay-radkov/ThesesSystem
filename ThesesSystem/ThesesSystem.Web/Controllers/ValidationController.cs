@@ -1,32 +1,42 @@
-﻿using AutoMapper;
-using AutoMapper.QueryableExtensions;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
-using Microsoft.AspNet.Identity.Owin;
-using System.Linq;
-using System.Net;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.Mvc;
-using ThesesSystem.Data;
-using ThesesSystem.Models;
-using ThesesSystem.Web.Controllers.BaseControllers;
-using ThesesSystem.Web.Infrastructure.Constants;
-using ThesesSystem.Web.ViewModels.Faculties;
-using ThesesSystem.Web.ViewModels.Partials;
-using ThesesSystem.Web.ViewModels.Specialties;
-using ThesesSystem.Web.ViewModels.Users;
-
-
-
-namespace ThesesSystem.Web.Controllers
+﻿namespace ThesesSystem.Web.Controllers
 {
+    using AutoMapper;
+    using AutoMapper.QueryableExtensions;
+    using Microsoft.AspNet.Identity;
+    using Microsoft.AspNet.Identity.EntityFramework;
+    using Microsoft.AspNet.Identity.Owin;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using System.Web;
+    using System.Web.Mvc;
+    using ThesesSystem.Data;
+    using ThesesSystem.Models;
+    using ThesesSystem.Web.Controllers.BaseControllers;
+    using ThesesSystem.Web.Infrastructure.Constants;
+    using ThesesSystem.Web.ViewModels.Faculties;
+    using ThesesSystem.Web.ViewModels.Partials;
+    using ThesesSystem.Web.ViewModels.Specialties;
+    using ThesesSystem.Web.ViewModels.Users;
+
     public class ValidationController : BaseController
     {
         public ValidationController(IThesesSystemData data)
             : base(data)
         {
 
+        }
+
+        [NonAction]
+        private void CreateNotification(string id)
+        {
+            var notification = new Notification
+            {
+                UserId = id,
+                ForwardUrl = string.Format(GlobalPatternConstants.FORWARD_URL, "Storage", "Index"),
+                Text = GlobalPatternConstants.NOTIFICATION_USER_COMPLETE
+            };
+
+            this.SendNotification(notification);
         }
 
         [HttpGet]
@@ -116,6 +126,8 @@ namespace ThesesSystem.Web.Controllers
 
                 await this.SignInUser(user);
 
+                CreateNotification(id);
+
                 return RedirectToAction("Index", "Storage");
             }
 
@@ -151,6 +163,8 @@ namespace ThesesSystem.Web.Controllers
                 this.Data.SaveChanges();
 
                 await this.SignInUser(user);
+
+                CreateNotification(id);
 
                 return RedirectToAction("Index", "Storage");
             }

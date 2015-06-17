@@ -13,6 +13,7 @@
     using ThesesSystem.Web.Infrastructure.Helper;
     using ThesesSystem.Web.ViewModels.Partials;
     using ThesesSystem.Web.ViewModels.Users;
+    using Common.Extensions;
 
     public class UserController : AuthorizeController
     {
@@ -21,7 +22,19 @@
         {
         }
 
-        // GET: User/Account
+        [NonAction]
+        private void CreateNotification(string id, string userId, string forwardUrl, string format)
+        {
+            var notification = new Notification
+            {
+                UserId = id,
+                ForwardUrl = forwardUrl,
+                Text = string.Format(format, this.GetUserFirstName(userId).TruncateLongString(GlobalConstants.TRUNCATE_SIZE))
+            };
+
+            this.SendNotification(notification);
+        }
+
         [HttpGet]
         public ActionResult Account(string id)
         {
@@ -76,14 +89,16 @@
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles=GlobalConstants.ADMIN)]
+        [Authorize(Roles = GlobalConstants.ADMIN)]
         public ActionResult Verify(string id, VerificationType verificationType)
         {
             var user = this.Data.Users.GetById(id);
+            var userId = this.User.Identity.GetUserId();
 
             var userStore = new UserStore<User>(this.Data.Context.DbContext);
             var userManager = new UserManager<User>(userStore);
-        
+            var forwardUrl = string.Empty;
+
             switch (verificationType)
             {
                 case VerificationType.Student:
@@ -92,6 +107,7 @@
                     userManager.AddToRole(user.Id, GlobalConstants.VERIFIED_USER);
                     userManager.AddToRole(user.Id, GlobalConstants.STUDENT);
                     userManager.RemoveFromRole(user.Id, GlobalConstants.NOT_VERIFIED_USER);
+                    forwardUrl = string.Format(GlobalPatternConstants.FORWARD_URL_WITH_ID, "Validation", "CompleteStudentRegistration", id);
                     break;
                 case VerificationType.Teacher:
                     user.IsVerified = true;
@@ -99,6 +115,7 @@
                     userManager.AddToRole(user.Id, GlobalConstants.VERIFIED_USER);
                     userManager.AddToRole(user.Id, GlobalConstants.TEACHER);
                     userManager.RemoveFromRole(user.Id, GlobalConstants.NOT_VERIFIED_USER);
+                    forwardUrl = string.Format(GlobalPatternConstants.FORWARD_URL_WITH_ID, "Validation", "CompleteTeacherRegistration", id);
                     break;
                 case VerificationType.Bot:
                     this.Data.Users.Delete(user);
@@ -109,7 +126,8 @@
             }
 
             this.Data.SaveChanges();
-
+            this.CreateNotification(id, userId, forwardUrl, GlobalPatternConstants.NOTIFICATION_USER_VERIFIED);
+           
             return RedirectToAction("Account", "User", new { id = id });
         }
 
@@ -118,13 +136,15 @@
         public ActionResult NewFriend(string id)
         {
             var user = this.Data.Users.GetById(id);
-
+        
             var currentUserId = User.Identity.GetUserId();
             var currentUser = this.Data.Users.All().FirstOrDefault(u => u.Id == currentUserId);
 
             currentUser.Friends.Add(user);
-
             this.Data.SaveChanges();
+
+            var forwardUrl = string.Format(GlobalPatternConstants.FORWARD_URL_WITH_ID, "User", "Account", currentUserId);
+            this.CreateNotification(id, currentUserId, forwardUrl, GlobalPatternConstants.NOTIFICATION_NEW_FRIEND);
 
             return RedirectToAction("Account", "User", new { id = id });
         }
@@ -141,6 +161,9 @@
             currentUser.Friends.Remove(user);
 
             this.Data.SaveChanges();
+
+            var forwardUrl = string.Format(GlobalPatternConstants.FORWARD_URL_WITH_ID, "User", "Account", currentUserId);
+            this.CreateNotification(id, currentUserId, forwardUrl, GlobalPatternConstants.NOTIFICATION_LOST_FRIEND);
 
             return RedirectToAction("Account", "User", new { id = id });
         }

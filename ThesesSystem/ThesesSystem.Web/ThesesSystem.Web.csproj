@@ -292,7 +292,8 @@
     <Compile Include="ViewModels\Messages\ChatViewModel.cs" />
     <Compile Include="ViewModels\Messages\FriendItemViewModel.cs" />
     <Compile Include="ViewModels\Messages\MessageViewModel.cs" />
-    <Compile Include="ViewModels\Notifications\SendNotificationViewModel.cs" />
+    <Compile Include="ViewModels\Notifications\NotificationViewModel.cs" />
+    <Compile Include="ViewModels\Notifications\UserNotificationsViewModel.cs" />
     <Compile Include="ViewModels\Partials\PaginationViewModel.cs" />
     <Compile Include="ViewModels\Partials\ProcessStepViewModel.cs" />
     <Compile Include="ViewModels\Partials\StudentInfoViewModel.cs" />
@@ -305,6 +306,7 @@
     <Compile Include="ViewModels\Specialties\SpecialtyDropDownListItemViewModel.cs" />
     <Compile Include="ViewModels\Specialties\SpecialtyProfileViewModel.cs" />
     <Compile Include="ViewModels\Specialties\SpecialtyResultViewModel.cs" />
+    <Compile Include="ViewModels\Students\Oks.cs" />
     <Compile Include="ViewModels\Students\SpecialtyStudentViewModel.cs" />
     <Compile Include="ViewModels\Students\StudentResultViewModel.cs" />
     <Compile Include="ViewModels\Teachers\SupervisorDropDownListITemViewModel.cs" />
@@ -341,6 +343,8 @@
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\sweetalert.css" />
+    <Content Include="Content\toastr.css" />
+    <Content Include="Content\toastr.min.css" />
     <Content Include="Images\background.gif" />
     <Content Include="Scripts\mustache.js" />
     <Content Include="Scripts\sweetalert.min.js" />
@@ -404,6 +408,8 @@
     <Content Include="fonts\fontawesome-webfont.ttf" />
     <Content Include="fonts\fontawesome-webfont.eot" />
     <Content Include="fonts\FontAwesome.otf" />
+    <Content Include="Content\toastr.scss" />
+    <Content Include="Content\toastr.less" />
     <None Include="Scripts\jquery-2.1.4.intellisense.js" />
     <Content Include="Icon.png" />
     <Content Include="Images\about.png" />
@@ -442,6 +448,8 @@
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\toastr.js" />
+    <Content Include="Scripts\toastr.min.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -524,6 +532,10 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ThesesSystem.Common\ThesesSystem.Common.csproj">
+      <Project>{af455803-9c71-48ef-88ef-1921b2a288ee}</Project>
+      <Name>ThesesSystem.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ThesesSystem.Contracts\ThesesSystem.Contracts.csproj">
       <Project>{a6d26ed9-04bc-4efa-8392-78650e98bff7}</Project>
       <Name>ThesesSystem.Contracts</Name>

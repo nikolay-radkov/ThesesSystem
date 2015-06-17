@@ -2,6 +2,8 @@
 {
     using ThesesSystem.Models;
     using ThesesSystem.Web.Infrastructure.Mapping;
+    using System.Linq;
+    using System;
 
     public class NotificationViewModel : IMapFrom<Notification>
     {
@@ -14,5 +16,7 @@
         public bool IsSeen { get; set; }
 
         public string UserId { get; set; }
+
+        public DateTime CreatedOn { get; set; }
     }
 }

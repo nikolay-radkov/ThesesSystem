@@ -1,4 +1,5 @@
 ﻿@using Microsoft.AspNet.Identity
+@using ThesesSystem.Web.Infrastructure.Constants
 @if (Request.IsAuthenticated)
 {
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
@@ -6,19 +7,37 @@
         @Html.AntiForgeryToken()
 
         <ul class="nav navbar-nav navbar-right">
+            @if (User.IsInRole(GlobalConstants.COMPLETE_USER))
+            {
+                <li class="dropdown">
+                    <a href="#" class=" font-size-16 dropdown-toggle " data-toggle="dropdown" role="button" aria-expanded="false">
+                        <span class="glyphicon glyphicon-align-justify font-size-22"></span>
+                        <span id="not-seen-notification" class="badge badge-notify"></span>
+                    </a>
+                    <ul id="notification-container" class="dropdown-menu" role="menu">
+                        <li>
+                            <span data-id='0'>Нямате известия</span>
+                        </li>
+                    </ul>
+                </li>
+            }
+
             <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">@User.Identity.GetUserName()<span class="caret"></span></a>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-user"></span></a>
                 <ul class="dropdown-menu" role="menu">
                     <li>
                         @Html.ActionLink("Профил", "Index", "Manage", routeValues: new { area = string.Empty }, htmlAttributes: new { title = "Профил" })
                     </li>
-                    <li class="divider"></li>
-                    <li>
-                        @Html.ActionLink("Съобщения", "Index", "Message", routeValues: new { area = string.Empty }, htmlAttributes: new { title = "Съобщения" })
-                    </li>
-                    <li>
-                        @Html.ActionLink("Приятели", "Index", "Friend", routeValues: new { area = string.Empty }, htmlAttributes: new { title = "Приятели" })
-                    </li>
+                    @if (User.IsInRole(GlobalConstants.COMPLETE_USER))
+                    {
+                        <li class="divider"></li>
+                        <li>
+                            @Html.ActionLink("Съобщения", "Index", "Message", routeValues: new { area = string.Empty }, htmlAttributes: new { title = "Съобщения" })
+                        </li>
+                        <li>
+                            @Html.ActionLink("Приятели", "Index", "Friend", routeValues: new { area = string.Empty }, htmlAttributes: new { title = "Приятели" })
+                        </li>
+                    }
                     <li class="divider"></li>
                     <li><a href="javascript:document.getElementById('logoutForm').submit()">Изход</a></li>
                 </ul>
