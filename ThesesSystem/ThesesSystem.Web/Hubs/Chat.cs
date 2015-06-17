@@ -27,32 +27,44 @@
 
         public void SendMessage(MessageViewModel message)
         {
-            message.CreatedOn = DateTime.Now;
-
-            var messageToSave = Mapper.Map<Message>(message);
-
-            if (ConnectedUsers.ContainsKey(message.ToUserId))
+            var user = data.Users.GetById(message.ToUserId);
+            if (message.ToUserId != null && user != null)
             {
-                messageToSave.IsSeen = true;
+                message.CreatedOn = DateTime.Now;
 
-                var toUserId = ConnectedUsers[message.ToUserId];
-                Clients.Client(toUserId).AddMessage(message);
+                var messageToSave = Mapper.Map<Message>(message);
+
+                if (ConnectedUsers.ContainsKey(message.ToUserId))
+                {
+                    messageToSave.IsSeen = true;
+                    message.IsSeen = true;
+
+                    var toUserId = ConnectedUsers[message.ToUserId];
+                    Clients.Client(toUserId).AddMessage(message);
+                }
+
+                data.Messages.Add(messageToSave);
+                data.SaveChanges();
+
+                var historyMessage = new MessageViewModel
+                {
+                    FromUserId = message.ToUserId,
+                    FromUserName = message.ToUserName,
+                    Text = message.Text,
+                    IsSeen = messageToSave.IsSeen,
+                    ToUserId = message.FromUserId,
+                    ToUserName = message.FromUserName,
+                    CreatedOn = message.CreatedOn
+                };
+
+                Clients.Client(Context.ConnectionId).AddToHistory(historyMessage);
+                Clients.Client(Context.ConnectionId).ShowMessage(message);
+
             }
-
-            var historyMessage = new MessageViewModel
+            else
             {
-                FromUserId = message.ToUserId,
-                FromUserName = message.ToUserName,
-                Text = message.Text,
-                ToUserId = message.ToUserId,
-                ToUserName = message.FromUserName
-            };
-
-            Clients.Client(Context.ConnectionId).AddToHistory(historyMessage);
-            Clients.Client(Context.ConnectionId).ShowMessage(message);
-
-            data.Messages.Add(messageToSave);
-            data.SaveChanges();
+                Clients.Client(Context.ConnectionId).ShowError();
+            }
         }
 
         public override System.Threading.Tasks.Task OnDisconnected(bool stopCalled)
@@ -66,8 +78,8 @@
 
                 if (ConnectedUsers.ContainsKey(userId))
                 {
-                    
-                ConnectedUsers.Remove(userId);
+
+                    ConnectedUsers.Remove(userId);
                 }
             }
 
