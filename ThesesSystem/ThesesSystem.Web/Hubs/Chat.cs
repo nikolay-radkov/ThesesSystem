@@ -39,8 +39,19 @@ namespace ThesesSystem.Web.Hubs
 
                 var toUserId = ConnectedUsers[message.ToUserId];
                 Clients.Client(toUserId).AddMessage(message);
-                Clients.Client(Context.ConnectionId).ShowMessage(message);
             }
+
+            var historyMessage = new MessageViewModel
+            {
+                FromUserId = message.ToUserId,
+                FromUserName = message.ToUserName,
+                Text = message.Text,
+                ToUserId = message.ToUserId,
+                ToUserName = message.FromUserName
+            };
+
+            Clients.Client(Context.ConnectionId).AddToHistory(historyMessage);
+            Clients.Client(Context.ConnectionId).ShowMessage(message);
 
             data.Messages.Add(messageToSave);
             data.SaveChanges();

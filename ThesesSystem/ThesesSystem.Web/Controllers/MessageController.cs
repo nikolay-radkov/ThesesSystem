@@ -91,18 +91,17 @@ namespace ThesesSystem.Web.Controllers
                                     CreatedOn = m.CreatedOn
                                 }).ToList();
 
+            var history = new Dictionary<string, FriendItemViewModel>();
 
-            friendsList = friendsList.GroupBy(f => new { f.FromUserId, f.FromUserName })
-                            .Select(y => new FriendItemViewModel()
-                            {
-                                FromUserId = y.Key.FromUserId,
-                                FromUserName = y.Key.FromUserName,
-                                IsSeen = y.Select(s => s.IsSeen).FirstOrDefault(),
-                                CreatedOn = y.Select(d => d.CreatedOn).FirstOrDefault()
-                            }
-                            )
-                            .ToList();
-            return friendsList;
+            foreach (var item in friendsList)
+            {
+                if (!history.ContainsKey(item.FromUserId))
+                {
+                    history.Add(item.FromUserId, item);
+                }
+            }
+
+            return history.Values.ToList();
         }
     }
 }

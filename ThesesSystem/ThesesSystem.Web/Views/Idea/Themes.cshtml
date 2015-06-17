@@ -42,8 +42,7 @@
                             {
                                 using (Html.BeginForm("Take", "Idea", new { id = item.Id }, FormMethod.Get, new { @class = "form-horizontal", role = "form" }))
                                 {
-                                    <span class="btn bnt-lg btn-success sweet-@index" data-id="@item.Id" onclick="_gaq.push(['_trackEvent', 'example', 'try', 'sweet-@index']);">Използвай</span>
-                                    <input id="submit-button-@item.Id" class="hidden" type="submit" value="Използвай" />
+                                    <input type="submit" class="btn btn-success" value="Използвай" />
                                 }
                             }
                         </div>
@@ -58,43 +57,3 @@
         </div>
     </div>
 </div>
-
-@section styles {
-    @Styles.Render("~/Content/sweetalert")
-}
-
-@section scripts
-{
-    @Scripts.Render("~/bundles/sweetalert")
-
-    <script>
-        function sendForm(id) {
-            $('#submit-button-' + id).click();
-        }
-
-        function onClick() {
-            var id = $(this).attr('data-id');
-
-            swal({
-                title: "Сигурни ли сте, че искате да изберете точно тази тема за дипломна работа?",
-                text: "Няма да можете да промените темата за година напред!",
-                type: "success",
-                showCancelButton: true,
-                confirmButtonColor: "#DD6B55",
-                confirmButtonText: 'Избирам!',
-                cancelButtonText: "Премахни",
-            },
-            function (isConfirm) {
-                if (isConfirm) {
-                    sendForm(id);
-                }
-            });
-        };
-
-        var sweets = $('form > span');
-
-        for (var i = 0; i < sweets.length; i++) {
-            sweets[i].onclick = onClick;
-        }
-    </script>
-}

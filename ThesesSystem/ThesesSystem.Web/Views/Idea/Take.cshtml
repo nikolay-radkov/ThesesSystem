@@ -47,13 +47,43 @@
         </div>
     </div>
 
+    <span id="span-submit" class="btn bnt-lg btn-danger sweet-10" onclick="_gaq.push(['_trackEvent', 'example', 'try', 'sweet-10']);">Създай</span>
 
-    <input type="submit" name="name" value="Създай" class="btn btn-danger" />
+    <input id="btn-submit" type="submit" name="name" value="Създай" class="hidden btn btn-danger" />
+}
+ @section styles {
+    @Styles.Render("~/Content/sweetalert")
 }
 
 @section scripts
 {
+    @Scripts.Render("~/bundles/sweetalert")
+
     <script>
+        function sendForm() {
+            $('#btn-submit').click();
+        }
+
+        function onClick() {
+            swal({
+                title: "Сигурни ли сте, че искате да създадете тази дипломна работа?",
+                text: "Няма да можете да промените темата за година напред!",
+                type: "success",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: 'СЪздай!',
+                cancelButtonText: 'Отказ',
+            },
+            function (isConfirm) {
+                if (isConfirm) {
+                    sendForm();
+                }
+            });
+        };
+
+        var sweet = $('#span-submit');
+            sweet[0].onclick = onClick;
+     
         $("#btn-add-part").on("click", addRow);
 
         function addRow() {

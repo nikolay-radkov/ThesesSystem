@@ -14,7 +14,7 @@
                 <div class="col-md-12">
                     <div id='chat_@ViewData["ToUserId"]' class="panel panel-success">
                         <div class="panel-heading">
-                            <span class="glyphicon glyphicon-comment"></span> @ViewData["ToUserName"]
+                            <a href='@Url.Action("Account", "User", new { id = ViewData["ToUserId"] })'><span class="glyphicon glyphicon-comment"></span> @ViewData["ToUserName"]</a>
                         </div>
 
                         <div id="chat-body" class="panel-body">
@@ -129,42 +129,41 @@
     <script src="/signalr/hubs"></script>
 
     <script>
-    $(function () {
-        var chatCointainer = $('#chat-body');
-        chatCointainer.animate({ scrollTop: chatCointainer[0].scrollHeight });
-        var chat = $.connection.chat;
-        registerClientMethods(chat);
+        $(document).ready(function () {
 
-        $.connection.hub.start().done(function () {
-            registerEvents(chat)
+            $.connection.hub.start().done(function () {
+                chat.server.connect(chatCredentials.fromUserId);
+
+            });
+
+            var chatCointainer = $('#chat-body');
+            chatCointainer.animate({ scrollTop: chatCointainer[0].scrollHeight });
+            var chat = $.connection.chat;
+
+
+            var chatCredentials = {
+                fromUserId: '@ViewData["FromUserId"]',
+                toUserId: '@ViewData["ToUserId"]',
+                fromUserName: '@ViewData["FromUserName"]'
+            };
+
+
+            $('#btn-send-message').click(function () {
+                var msg = $('#message-to-send').val();
+                chatCredentials.Text = msg;
+
+                chat.server.sendMessage(chatCredentials);
+                $('#message-to-send').val('');
+            });
+
+
+            chat.client.addMessage = addMessage;
+            chat.client.showMessage = showMessage;
+            chat.client.addToHistory = addToHistory;
         });
-    });
 
-    function registerEvents(chat) {
-        var chatCredentials = {
-            fromUserId: '@ViewData["FromUserId"]',
-            toUserId: '@ViewData["ToUserId"]',
-            fromUserName: '@ViewData["FromUserName"]'
-        };
-
-        chat.server.connect(chatCredentials.fromUserId);
-
-        $('#btn-send-message').click(function () {
-            var msg = $('#message-to-send').val();
-            chatCredentials.Text = msg;
-
-            chat.server.sendMessage(chatCredentials);
-            $('#message-to-send').val('');
-        });
-    }
-
-    function registerClientMethods(chat) {
-        chat.client.addMessage = addMessage;
-        chat.client.showMessage = showMessage;
-    }
-
-    function addMessage(messageModel) {
-        if (messageModel.FromUserId == '@ViewData["ToUserId"]') {
+        function addMessage(messageModel) {
+            if (messageModel.FromUserId == '@ViewData["ToUserId"]') {
 
                 var li = $('<li/>')
                     .addClass('left')
@@ -267,7 +266,7 @@
                     newA.append(newDiv);
 
                     newLi.append(newA);
-                        
+
                     ul.prepend(newLi);
                 } else {
 
@@ -318,6 +317,63 @@
 
             var chatCointainer = $('#chat-body');
             chatCointainer.animate({ scrollTop: chatCointainer[0].scrollHeight });
+        }
+        // History
+        function addToHistory(messageModel) {
+            var ul = $("ul#friends-container");
+            var li = ul.find('#friend_' + messageModel.FromUserId);
+
+            if (li.length == 0) {
+                var newLi = $('<li/>')
+                        .attr('id', 'friend_' + messageModel.FromUserId);
+
+                var newA = $('<a/>')
+                        .attr('href', '/Message?friendId=' + messageModel.FromUserId);
+                var newDiv = $('<div/>')
+                    .addClass('media-body');
+
+                var newSecondDive = $('<div/>')
+                    .addClass('media');
+
+                var newSpan = $('<span/>')
+                    .addClass('pull-left');
+
+                var newImg = $('<img/>')
+                    .attr('src', "/Images/unknown.jpg")
+                    .addClass('media-object')
+                    .addClass('img-circle')
+                    .css('max-height', '40px');
+
+                newSpan.append(newImg);
+
+                var newThirdDiv = $('<div/>')
+                    .addClass('media-body');
+
+                var newH5 = $('<h5/>')
+                    .text(messageModel.FromUserName);
+
+                var newSmall = $('<small/>')
+                    .text(messageModel.CreatedOn);
+
+                newThirdDiv.append(newH5)
+                            .append(newSmall);
+
+                newSecondDive.append(newSpan)
+                            .append(newThirdDiv);
+
+                newDiv.append(newSecondDive);
+
+                newA.append(newDiv);
+
+                newLi.append(newA);
+
+                ul.prepend(newLi);
+            } else {
+
+                li.detach();
+
+                ul.prepend(li);
+            }
         }
     </script>
 }

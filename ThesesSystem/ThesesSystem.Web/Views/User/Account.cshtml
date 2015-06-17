@@ -39,9 +39,11 @@
     </div>
     <div id="content-loading" style="display: none">Моля изчакайте...</div>
     <div id="content">
-        @if (Model.IsStudent)
+        @if (Model.IsVerified)
         {
-            @Ajax.ActionLink(
+            if (Model.IsStudent)
+            {
+                @Ajax.ActionLink(
                     "Повече информация",
                     "StudentInfo",
                     "User",
@@ -60,10 +62,10 @@
                     {
                         @class = "btn btn-primary"
                     })
-        }
-        else
-        {
-            @Ajax.ActionLink(
+            }
+            else
+            {
+                @Ajax.ActionLink(
                 "Повече информация",
                 "TeacherInfo",
                 "User",
@@ -82,8 +84,8 @@
                 {
                     @class = "btn btn-primary"
                 })
+            }
         }
-
     </div>
     <div class="row">
         @if (!Model.IsVerified)
@@ -104,23 +106,23 @@
         else
         {
             <div class="col-md-3">
-                @Html.ActionLink("Изпрати съобщение", "Index", "Message", routeValues: new { area = string.Empty, friendId = Model.Id}, htmlAttributes: new { title = "Съобщения" , @class="btn btn-lg btn-primary" })
+                @Html.ActionLink("Изпрати съобщение", "Index", "Message", routeValues: new { area = string.Empty, friendId = Model.Id }, htmlAttributes: new { title = "Съобщения", @class = "btn btn-lg btn-primary" })
             </div>
             <div class="col-md-3">
                 @if (Model.IsFriend)
                 {
                     using (Html.BeginForm("RemoveFriend", "User", new { id = Model.Id }, FormMethod.Post))
                     {
-                    @Html.AntiForgeryToken()
-                    <input type="submit" value="Премахни от приятели" class="btn btn-lg btn-danger" />
+                        @Html.AntiForgeryToken()
+                        <input type="submit" value="Премахни от приятели" class="btn btn-lg btn-danger" />
                     }
                 }
                 else
                 {
                     using (Html.BeginForm("NewFriend", "User", new { id = Model.Id }, FormMethod.Post))
                     {
-                    @Html.AntiForgeryToken()
-                    <input type="submit" value="Добави към приятели" class="btn btn-lg btn-success" />
+                        @Html.AntiForgeryToken()
+                        <input type="submit" value="Добави към приятели" class="btn btn-lg btn-success" />
                     }
                 }
             </div>
