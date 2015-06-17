@@ -256,6 +256,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Hubs\Chat.cs" />
+    <Compile Include="Hubs\NotificationHub.cs" />
     <Compile Include="Infrastructure\Constants\GlobalConstants.cs" />
     <Compile Include="App_Start\ViewEnginesConfig.cs" />
     <Compile Include="Infrastructure\Constants\GlobalPatternConstants.cs" />
@@ -291,6 +292,7 @@
     <Compile Include="ViewModels\Messages\ChatViewModel.cs" />
     <Compile Include="ViewModels\Messages\FriendItemViewModel.cs" />
     <Compile Include="ViewModels\Messages\MessageViewModel.cs" />
+    <Compile Include="ViewModels\Notifications\SendNotificationViewModel.cs" />
     <Compile Include="ViewModels\Partials\PaginationViewModel.cs" />
     <Compile Include="ViewModels\Partials\ProcessStepViewModel.cs" />
     <Compile Include="ViewModels\Partials\StudentInfoViewModel.cs" />
@@ -340,6 +342,7 @@
     <Content Include="Content\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\sweetalert.css" />
     <Content Include="Images\background.gif" />
+    <Content Include="Scripts\mustache.js" />
     <Content Include="Scripts\sweetalert.min.js" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
@@ -510,6 +513,7 @@
     <Content Include="Views\Faculty\FacultyProfile.cshtml" />
     <Content Include="Views\Specialty\SpecialtyProfile.cshtml" />
     <Content Include="Views\Storage\_FilterPanelPartial.cshtml" />
+    <Content Include="Views\Shared\_NotificationPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Administration\ViewModels\" />

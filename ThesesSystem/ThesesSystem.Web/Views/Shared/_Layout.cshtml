@@ -1,4 +1,5 @@
 ﻿@using ThesesSystem.Web.Infrastructure.Constants
+@using Microsoft.AspNet.Identity
 <!DOCTYPE html>
 <html>
 <head>
@@ -46,7 +47,21 @@
                     </ul>
 
                     @Html.Partial("_SearchPartial", new ThesesSystem.Web.ViewModels.Search.SearchViewModel())
+                    if (User.IsInRole(GlobalConstants.COMPLETE_USER))
+                    {
+                        <ul class="nav navbar-nav navbar-right">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Известия<span class="caret"></span></a>
+                                <ul id="notification-container" class="dropdown-menu" role="menu">
+                                    <li>
+                                        <span data-id='0'>Нямате известия</span>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    }
                 }
+
                 @Html.Partial("_LoginPartial")
             </div>
         </div>
@@ -64,7 +79,29 @@
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/unobtrusive")
     @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/mustache")
+    @Scripts.Render("~/bundles/signalr")
+    <script src="/signalr/hubs"></script>
     @RenderSection("scripts", required: false)
+    <script id="template-history" type="x-tmpl-mustache">
+        {{#notifications}}
+        <li class="notification-tab">
+            {{#IsSeen}}
+            <span data-url='{{ForwardUrl}}' data-id='{{Id}}'>{{Text}}</span>
+            {{/IsSeen}}
+            {{^IsSeen}}
+            <span class="new-message" data-url='{{ForwardUrl}}' data-id='{{Id}}'>{{Text}}</span>
+            {{/IsSeen}}
+
+        </li>
+        {{/notifications}}
+    </script>
+    <script id="template-notification" type="x-tmpl-mustache">
+        <li class="notification-tab">
+            <span class="new-message" data-url='{{ForwardUrl}}' data-id='{{Id}}'>{{Text}}</span>
+        </li>
+    </script>
+
     <script>
         $('#btn-search-submit').on('click', function () {
             $('#hidden-submit').click();
@@ -81,7 +118,7 @@
             }
         });
 
-        $(".search-group").hover(function () {},
+        $(".search-group").hover(function () { },
             function () {
                 $(".search-dropdown").hide('2');
             });
@@ -96,6 +133,67 @@
             $('.search-dropdown').hide('2');
         });
 
+        /*--Notification hub--*/
+        var isUserComplete = '@User.IsInRole(GlobalConstants.COMPLETE_USER)';
+
+        if (isUserComplete == 'True') {
+            $(document).ready(function () {
+
+                $.connection.hub.start().done(function () {
+                    notificationHub.server.connect(userId);
+                    notificationHub.server.getNotificationHistory(userId);
+                });
+
+                var notificationHub = $.connection.notificationHub;
+                var userId = '@User.Identity.GetUserId()';
+
+                notificationHub.client.addNotification = addNotification;
+                notificationHub.client.showNotificationHistory = showNotificationHistory
+
+                function onNotificationClick() {
+                    var forwardUrl = $(this).attr('data-url');
+                    var id = $(this).attr('data-id');
+
+                    notificationHub.server.markAsSeenNotification(id);
+
+                    window.location.replace(forwardUrl);
+                }
+
+                function addNotification(notification) {
+                    var template = $('#template-notification').html();
+                    Mustache.parse(template);
+
+                    var rendered = Mustache.render(template, notification);
+                    var $rendered = $(rendered);
+                    $rendered.on('click', 'li', onNotificationClick);
+
+                    var container = $('#notification-container');
+                    var spanId = container.find('span').attr('data-id');
+
+                    if (spanId == '0') {
+                        container.html($rendered);
+                    }
+                    else {
+                        container.prepend($rendered);
+                    }
+                }
+
+                function showNotificationHistory(notificationHistory) {
+                    if (notificationHistory.length != 0) {
+                        var notifications = { "notifications": notificationHistory };
+
+                        var template = $('#template-history').html();
+                        Mustache.parse(template);
+                        var rendered = Mustache.render(template, notifications);
+
+                        $('#notification-container').html(rendered);
+                        $('.notification-tab').on('click', 'span', onNotificationClick);
+                    }
+                }
+            });
+        }
     </script>
+
 </body>
+
 </html>

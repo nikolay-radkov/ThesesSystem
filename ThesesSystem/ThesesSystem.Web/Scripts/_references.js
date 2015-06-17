@@ -13,3 +13,4 @@
 /// <reference path="custom/google-maps.js" />
 /// <reference path="custom/simple-parallax.js" />
 /// <reference path="sweetalert.min.js" />
+/// <reference path="mustache.js" />

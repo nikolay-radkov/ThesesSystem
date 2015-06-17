@@ -16,6 +16,7 @@
     using ThesesSystem.Web.Infrastructure.Storage;
     using ThesesSystem.Web.ViewModels.Comments;
     using ThesesSystem.Web.ViewModels.Evaluations;
+    using ThesesSystem.Web.ViewModels.Notifications;
     using ThesesSystem.Web.ViewModels.Teachers;
     using ThesesSystem.Web.ViewModels.Theses;
     using ThesesSystem.Web.ViewModels.ThesisParts;
@@ -170,9 +171,7 @@
         [HttpGet]
         public ActionResult ThesisProfile(int id)
         {
-            // TODO: delete the thesis
-            // TODO: Add reviewer and admin            
-            // TODO: Add this check for every action !!!
+            // TODO: delete the thesis       
             if (IsThesisStudentOrTeacher(id))
             {
                 var thesis = this.Data.Theses.GetById(id);
@@ -224,14 +223,22 @@
                     this.Data.SaveChanges();
 
                     var logger = this.loggerCreator.Create(this.Data);
-
-                    logger.Log(new ThesisLog
+                    var log = new ThesisLog
                     {
                         ThesisId = thesis.Id,
                         UserId = userId,
                         LogType = LogType.CreatedThesis,
                         ForwardUrl = string.Format(GlobalPatternConstants.FORWARD_URL_WITH_ID, "Thesis", "ThesisProfile", thesis.Id)
-                    });
+                    };
+                    logger.Log(log);
+
+                    var notification = new Notification
+                    {
+                        UserId = model.SupervisorId,
+                        ForwardUrl = log.ForwardUrl,
+                        Text = string.Format(GlobalPatternConstants.CREATE_THESIS, this.GetUserFullName(userId))
+                    };
+                    this.SendNotification(notification);
 
                     return RedirectToAction("ThesisProfile", "Thesis", new { id = thesis.Id });
                 }

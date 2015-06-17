@@ -42,7 +42,9 @@ namespace ThesesSystem.Web
             bundles.Add(new ScriptBundle("~/bundles/jquery-ui")
                 .Include("~/Scripts/jquery-ui-1.11.4.min.js"));  
             
-
+            bundles.Add(new ScriptBundle("~/bundles/mustache")
+                .Include("~/Scripts/mustache.js"));  
+         
             bundles.Add(new ScriptBundle("~/bundles/sweetalert")
                 .Include("~/Scripts/sweetalert.min.js"));  
         }

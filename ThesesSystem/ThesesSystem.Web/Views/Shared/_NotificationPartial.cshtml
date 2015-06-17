@@ -1,0 +1,15 @@
+﻿@model ICollection<ThesesSystem.Web.ViewModels.Notifications.NotificationViewModel>
+
+<ul class="nav navbar-nav navbar-right">
+    <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Известия<span class="caret"></span></a>
+        <ul class="dropdown-menu" role="menu">
+            @foreach (var item in Model)
+            {
+                <li class="notification-tab">
+                    <span class='@(item.IsSeen ? "" : "new-message")' data-url='@item.ForwardUrl' data-id='@item.Id'>@item.Text</span>
+                </li>
+            }
+        </ul>
+    </li>
+</ul>

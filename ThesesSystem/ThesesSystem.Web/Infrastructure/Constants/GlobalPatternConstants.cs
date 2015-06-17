@@ -12,5 +12,7 @@
         public const string USER_ADDED_REVIEW = "{0} добави рецензия";
         public const string USER_ADDED_FINAL_EVALUATION = "{0} добави крайна оценка";
         public const string USER_COMPLEDED_THESIS = "{0} завърши дипломната работа";
+        public const string USER_FULL_NAME = "{0} {1}";
+
     }
 }

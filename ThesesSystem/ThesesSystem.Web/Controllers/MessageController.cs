@@ -1,18 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using ThesesSystem.Data;
-using ThesesSystem.Web.Controllers.BaseControllers;
-using ThesesSystem.Web.ViewModels.Messages;
-using AutoMapper;
-using AutoMapper.QueryableExtensions;
-using Microsoft.AspNet.Identity;
-using ThesesSystem.Models;
-
-namespace ThesesSystem.Web.Controllers
+﻿namespace ThesesSystem.Web.Controllers
 {
+    using AutoMapper.QueryableExtensions;
+    using Microsoft.AspNet.Identity;
+    using Microsoft.AspNet.SignalR;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Web.Mvc;
+    using ThesesSystem.Data;
+    using ThesesSystem.Models;
+    using ThesesSystem.Web.Controllers.BaseControllers;
+    using ThesesSystem.Web.ViewModels.Messages;
+
     public class MessageController : AuthorizeController
     {
         public MessageController(IThesesSystemData data)
@@ -21,29 +19,6 @@ namespace ThesesSystem.Web.Controllers
 
         }
 
-        // GET: Message
-        public ActionResult Index(string friendId)
-        {
-            var userId = this.User.Identity.GetUserId();
-
-            this.UpdateHistory(userId, friendId);
-            var messages = GetConversation(friendId, userId);
-            var friendsList = GetHistory(userId);
-
-            var chatViewModel = new ChatViewModel
-            {
-                Messages = messages,
-                FriendsList = friendsList
-            };
-
-            ViewData["FromUserName"] = this.Data.Users.All().Where(u => u.Id == userId).Select(u => u.FirstName + " " + u.LastName).FirstOrDefault();
-            ViewData["ToUserName"] = this.Data.Users.All().Where(u => u.Id == friendId).Select(u => u.FirstName + " " + u.LastName).FirstOrDefault();
-
-            ViewData["ToUserId"] = friendId;
-            ViewData["FromUserId"] = userId;
-
-            return View(chatViewModel);
-        }
 
         [NonAction]
         private void UpdateHistory(string userId, string friendId)
@@ -54,7 +29,7 @@ namespace ThesesSystem.Web.Controllers
 
             foreach (var item in history)
             {
-                if(!item.IsSeen)
+                if (!item.IsSeen)
                 {
                     item.IsSeen = true;
                 }
@@ -102,6 +77,31 @@ namespace ThesesSystem.Web.Controllers
             }
 
             return history.Values.ToList();
+        }
+
+
+        [HttpGet]
+        public ActionResult Index(string friendId)
+        {
+            var userId = this.User.Identity.GetUserId();
+
+            this.UpdateHistory(userId, friendId);
+            var messages = GetConversation(friendId, userId);
+            var friendsList = GetHistory(userId);
+
+            var chatViewModel = new ChatViewModel
+            {
+                Messages = messages,
+                FriendsList = friendsList
+            };
+
+            ViewData["FromUserName"] = this.Data.Users.All().Where(u => u.Id == userId).Select(u => u.FirstName + " " + u.LastName).FirstOrDefault();
+            ViewData["ToUserName"] = this.Data.Users.All().Where(u => u.Id == friendId).Select(u => u.FirstName + " " + u.LastName).FirstOrDefault();
+
+            ViewData["ToUserId"] = friendId;
+            ViewData["FromUserId"] = userId;
+
+            return View(chatViewModel);
         }
     }
 }

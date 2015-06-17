@@ -1,22 +1,31 @@
 ﻿namespace ThesesSystem.Web.Hubs
 {
-    using AutoMapper;
     using Microsoft.AspNet.SignalR;
     using System;
     using System.Collections.Generic;
     using ThesesSystem.Data;
-    using ThesesSystem.Models;
-    using ThesesSystem.Web.ViewModels.Messages;
+    using ThesesSystem.Web.ViewModels.Notifications;
+    using System.Linq;
+    using AutoMapper.QueryableExtensions;
 
-    public class Chat : Hub
+    public class NotificationHub : Hub
     {
         private static IDictionary<string, string> ConnectedUsers = new Dictionary<string, string>();
         private static IThesesSystemData data = new ThesesSystemData(new ThesesSystemDbContext());
 
+        public static string GetConnectionUserId(string modelId)
+        {
+            if (ConnectedUsers.ContainsKey(modelId))
+            {
+                return ConnectedUsers[modelId];
+            }
+
+            return null;
+        }
+
         public void Connect(string userId)
         {
             var id = Context.ConnectionId;
-
 
             if (!ConnectedUsers.ContainsKey(id) && !ConnectedUsers.ContainsKey(userId))
             {
@@ -25,33 +34,22 @@
             }
         }
 
-        public void SendMessage(MessageViewModel message)
+        public void GetNotificationHistory(string userId)
         {
-            message.CreatedOn = DateTime.Now;
+            var notifications = data.Notifications.All()
+                .Where(n => n.UserId == userId)
+                .Project()
+                .To<NotificationViewModel>()
+                .ToList();
 
-            var messageToSave = Mapper.Map<Message>(message);
+            Clients.Client(Context.ConnectionId).showNotificationHistory(notifications);
+        }
 
-            if (ConnectedUsers.ContainsKey(message.ToUserId))
-            {
-                messageToSave.IsSeen = true;
+        public void MarkAsSeenNotification (int notificationId)
+        {
+            var notification = data.Notifications.GetById(notificationId);
+            notification.IsSeen = true;
 
-                var toUserId = ConnectedUsers[message.ToUserId];
-                Clients.Client(toUserId).AddMessage(message);
-            }
-
-            var historyMessage = new MessageViewModel
-            {
-                FromUserId = message.ToUserId,
-                FromUserName = message.ToUserName,
-                Text = message.Text,
-                ToUserId = message.ToUserId,
-                ToUserName = message.FromUserName
-            };
-
-            Clients.Client(Context.ConnectionId).AddToHistory(historyMessage);
-            Clients.Client(Context.ConnectionId).ShowMessage(message);
-
-            data.Messages.Add(messageToSave);
             data.SaveChanges();
         }
 
@@ -66,8 +64,8 @@
 
                 if (ConnectedUsers.ContainsKey(userId))
                 {
-                    
-                ConnectedUsers.Remove(userId);
+
+                    ConnectedUsers.Remove(userId);
                 }
             }
 
