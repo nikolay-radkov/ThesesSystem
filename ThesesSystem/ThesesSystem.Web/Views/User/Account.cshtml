@@ -3,94 +3,96 @@
 @{
     ViewBag.Title = "Профил на потребител";
 }
+<h2>Информация за потребителя</h2>
+<br />
+<div class="panel shadowed">
+    <div class="row">
+        <div class="col-md-3 col-lg-3 col-sm-3" align="center">
+            <img alt="User Pic" src="~/Images/unknown.jpg" class="img-circle img-responsive" />
+        </div>
+        <div class=" col-md-9 col-lg-9 col-sm-9">
+            <table class="table table-user-information">
+                <tbody>
+                    <tr>
+                        <td>@Html.LabelFor(m => Model.FullName)</td>
+                        <td>@Html.DisplayFor(m => Model.FullName)</td>
+                    </tr>
+                    <tr>
+                        <td>@Html.LabelFor(m => Model.EGN)</td>
+                        <td>@Html.DisplayFor(m => Model.EGN)</td>
+                    </tr>
+                    <tr>
+                        <td>@Html.LabelFor(m => Model.PhoneNumber)</td>
+                        <td>@Html.DisplayFor(m => Model.PhoneNumber)</td>
+                    </tr>
+                    <tr>
+                        <td>@Html.LabelFor(m => Model.Email)</td>
+                        <td>@Html.DisplayFor(m => Model.Email)</td>
+                    </tr>
+                    <tr id="content">
+                        <td>
+                            <div>
+                                <div id="content-loading" style="display: none">Моля изчакайте...</div>
+                                @if (Model.IsVerified)
+                                {
+                                    if (Model.IsStudent)
+                                    {
+                                        @Ajax.ActionLink(
+                                            "Повече информация",
+                                            "StudentInfo",
+                                            "User",
+                                            new
+                                            {
+                                                id = @Model.Id
+                                            },
+                                            new AjaxOptions
+                                            {
+                                                UpdateTargetId = "content",
+                                                LoadingElementId = "content-loading",
+                                                HttpMethod = "GET",
+                                                InsertionMode = InsertionMode.ReplaceWith
+                                            },
+                                            new
+                                            {
+                                                @class = "btn btn-primary btn-sm"
+                                            })
+                                    }
+                                    else
+                                    {
+                                        @Ajax.ActionLink(
+                                            "Повече информация",
+                                            "TeacherInfo",
+                                            "User",
+                                            new
+                                            {
+                                                id = @Model.Id
+                                            },
+                                            new AjaxOptions
+                                            {
+                                                UpdateTargetId = "content",
+                                                LoadingElementId = "content-loading",
+                                                HttpMethod = "GET",
+                                                InsertionMode = InsertionMode.ReplaceWith
+                                            },
+                                            new
+                                            {
+                                                @class = "btn btn-primary btn-sm"
+                                            })
+                                    }
+                                }
+                            </div>
+                        </td>
+                        <td></td>
+                    </tr>
 
-<div>
-    <div class="row">
-        <div class="col-md-offset-3 col-md-3">
-            @Html.LabelFor(m => Model.FullName)
-        </div>
-        <div class="col-md-3">
-            @Html.DisplayFor(m => Model.FullName)
+                </tbody>
+            </table>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-offset-3 col-md-3">
-            @Html.LabelFor(m => Model.EGN)
-        </div>
-        <div class="col-md-3">
-            @Html.DisplayFor(m => Model.EGN)
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-offset-3 col-md-3">
-            @Html.LabelFor(m => Model.PhoneNumber)
-        </div>
-        <div class="col-md-3">
-            @Html.DisplayFor(m => Model.PhoneNumber)
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-offset-3 col-md-3">
-            @Html.LabelFor(m => Model.Email)
-        </div>
-        <div class="col-md-3">
-            @Html.DisplayFor(m => Model.Email)
-        </div>
-    </div>
-    <div id="content-loading" style="display: none">Моля изчакайте...</div>
-    <div id="content">
-        @if (Model.IsVerified)
-        {
-            if (Model.IsStudent)
-            {
-                @Ajax.ActionLink(
-                    "Повече информация",
-                    "StudentInfo",
-                    "User",
-                    new
-                    {
-                        id = @Model.Id
-                    },
-                    new AjaxOptions
-                    {
-                        UpdateTargetId = "content",
-                        LoadingElementId = "content-loading",
-                        HttpMethod = "GET",
-                        InsertionMode = InsertionMode.Replace
-                    },
-                    new
-                    {
-                        @class = "btn btn-primary"
-                    })
-            }
-            else
-            {
-                @Ajax.ActionLink(
-                "Повече информация",
-                "TeacherInfo",
-                "User",
-                new
-                {
-                    id = @Model.Id
-                },
-                new AjaxOptions
-                {
-                    UpdateTargetId = "content",
-                    LoadingElementId = "content-loading",
-                    HttpMethod = "GET",
-                    InsertionMode = InsertionMode.Replace
-                },
-                new
-                {
-                    @class = "btn btn-primary"
-                })
-            }
-        }
-    </div>
-    <div class="row">
-        @if (!Model.IsVerified)
-        {
-            <div class="col-md-offset-3 col-md-3">
+    @if (!Model.IsVerified)
+    {
+        <div class="row">
+            <div class="col-md-offset-3 col-sm-6 col-xs-12 col-md-4 col-lg-4">
                 @if (User.IsInRole(GlobalConstants.ADMIN))
                 {
                     using (Html.BeginForm("Verify", "User", new { id = Model.Id }, FormMethod.Post))
@@ -102,13 +104,16 @@
                     }
                 }
             </div>
-        }
-        else
-        {
-            <div class="col-md-3">
+        </div>
+    }
+    else
+    {
+        <div class="row">
+            <div class="col-sm-6 col-xs-12 col-md-4 col-lg-4">
                 @Html.ActionLink("Изпрати съобщение", "Index", "Message", routeValues: new { area = string.Empty, friendId = Model.Id }, htmlAttributes: new { title = "Съобщения", @class = "btn btn-lg btn-primary" })
             </div>
-            <div class="col-md-3">
+
+            <div class=" col-md-offset-4 col-lg-offset-4  col-sm-6 col-xs-12 col-md-4 col-lg-4 text-right">
                 @if (Model.IsFriend)
                 {
                     using (Html.BeginForm("RemoveFriend", "User", new { id = Model.Id }, FormMethod.Post))
@@ -126,6 +131,6 @@
                     }
                 }
             </div>
-        }
-    </div>
+        </div>
+    }
 </div>

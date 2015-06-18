@@ -12,9 +12,11 @@
         public int Id { get; set; }
 
         [Required]
+        [Display(Name="Архив")]
         public HttpPostedFileBase Archive { get; set; }
 
         [Required]
+        [Display(Name="Страници")]
         public int? Pages { get; set; }
 
         public IList<CreateOrUpdateThesisPartViewModel> ThesisParts { get; set; }

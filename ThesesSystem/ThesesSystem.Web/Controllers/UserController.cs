@@ -107,7 +107,7 @@
                     userManager.AddToRole(user.Id, GlobalConstants.VERIFIED_USER);
                     userManager.AddToRole(user.Id, GlobalConstants.STUDENT);
                     userManager.RemoveFromRole(user.Id, GlobalConstants.NOT_VERIFIED_USER);
-                    forwardUrl = string.Format(GlobalPatternConstants.FORWARD_URL_WITH_ID, "Validation", "CompleteStudentRegistration", id);
+                    forwardUrl = string.Format(GlobalPatternConstants.FORWARD_URL_WITH_ID, "Storage", "Index", id);
                     break;
                 case VerificationType.Teacher:
                     user.IsVerified = true;
@@ -115,7 +115,7 @@
                     userManager.AddToRole(user.Id, GlobalConstants.VERIFIED_USER);
                     userManager.AddToRole(user.Id, GlobalConstants.TEACHER);
                     userManager.RemoveFromRole(user.Id, GlobalConstants.NOT_VERIFIED_USER);
-                    forwardUrl = string.Format(GlobalPatternConstants.FORWARD_URL_WITH_ID, "Validation", "CompleteTeacherRegistration", id);
+                    forwardUrl = string.Format(GlobalPatternConstants.FORWARD_URL_WITH_ID, "Storage", "Index", id);
                     break;
                 case VerificationType.Bot:
                     this.Data.Users.Delete(user);

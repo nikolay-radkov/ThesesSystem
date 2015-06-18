@@ -31,7 +31,7 @@
                             <h2 class="text-center">@Html.ActionLink(@item.Title, "ThesisProfile", "Thesis", new { area = string.Empty, id = item.Id }, new { @class = string.Empty })</h2>
                             <p>@item.Description</p>
                             <p><i class="fa fa-user fa-2x"></i> Студент: @Html.ActionLink(item.StudentName, "Account", "User", new { area = string.Empty, id = item.StudentId }, new { @class = string.Empty })</p>
-                            <p><i class="fa fa-user fa-2x"></i> Студент: @Html.ActionLink(item.SupervisorName, "Account", "User", new { area = string.Empty, id = item.SupervisorId }, new { @class = string.Empty })</p>
+                            <p><i class="fa fa-user fa-2x"></i> Ръководител: @Html.ActionLink(item.SupervisorName, "Account", "User", new { area = string.Empty, id = item.SupervisorId }, new { @class = string.Empty })</p>
                         </div>
                         <div class="modal-footer" style="text-align: left">
                             <div class="progress">
