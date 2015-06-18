@@ -8,7 +8,7 @@
         {
             if (str.Length > maxLength)
             {
-                return str.Substring(0, maxLength) + "...";
+                return str.Substring(0, maxLength - 3) + "...";
             }
 
             return str.Substring(0, str.Length);
