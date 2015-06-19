@@ -549,6 +549,7 @@
     <Content Include="Views\Specialty\SpecialtyProfile.cshtml" />
     <Content Include="Views\Storage\_FilterPanelPartial.cshtml" />
     <Content Include="Views\Shared\_NotificationPartial.cshtml" />
+    <Content Include="Views\Home\Feedback.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Administration\ViewModels\" />

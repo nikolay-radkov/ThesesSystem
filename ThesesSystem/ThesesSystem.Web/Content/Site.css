@@ -25,6 +25,11 @@ body, .body-content {
     margin-left: auto;
     margin-right: auto;
 } 
+
+.feedback {
+    width: 100%;
+     height: 80vh;
+}
 /* Override the default bootstrap behavior where horizontal description lists 
    will truncate terms that are too long to fit in the left column 
 */

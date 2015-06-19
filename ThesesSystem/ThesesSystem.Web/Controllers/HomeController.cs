@@ -32,6 +32,11 @@ namespace ThesesSystem.Web.Controllers
             }
         }
 
+        public ActionResult Feedback()
+        {
+            return View();
+        }
+
         [HttpGet]
         public ActionResult Error()
         {
