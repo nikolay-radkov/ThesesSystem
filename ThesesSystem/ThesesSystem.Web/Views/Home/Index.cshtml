@@ -27,12 +27,10 @@
                     <span class="icon-bar"></span>
                 </button>
             </div>
-            @Html.ActionLink(GlobalConstants.APPLICATION_NAME, "Index", "Home", new { area = string.Empty }, new { @class = "navbar-brand" })
-            <div class="navbar-collapse collapse">
+           <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li><a href="#top">Начало</a></li>
                     <li><a href="#state">Състояние</a></li>
-                    <li><a href="#questions">Въпроси</a></li>
                     <li><a href="#services">Услуги</a></li>
                 </ul>
                 @Html.Partial("_LoginPartial")
@@ -67,70 +65,26 @@
             </div>
         </section>
 
-        <section id="questions" class="module content second text-center">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12">
-                        <h1>Задавали ли сте си някои от тези въпроси?</h1>
-                    </div>
-                </div>
-                <div class="row paralax-content">
-                    <div class="col-sm-6 col-md-4">
-                        <div class="thumbnail">
-                            <img src="~/Images/question1.png" class="img-circle">
-                            <div class="caption">
-                                <h3>Каква тема да избера?</h3>
-                                <hr />
-                                <p>Не се чудете, а рагледайте идеите на преподавателите или използвайте генераторът ни на идеи.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-4">
-                        <div class="thumbnail">
-                            <img src="~/Images/question2.jpg" class="img-circle">
-                            <div class="caption">
-                                <h3>Кой преподавател да избера?</h3>
-                                <hr />
-                                <p>
-                                    В системата ще намерите информация за всеки преподавател, дипломните работи, на които е бил научен ръководител и предложенията му за Вас.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-4">
-                        <div class="thumbnail">
-                            <img src="~/Images/question3.png" class="img-circle">
-                            <div class="caption">
-                                <h3>Какви са точните изисквания към една дипломна работа?</h3>
-                                <hr />
-                                <p>Разполагаме с обща информация за съдържанието на дипломната работа, както й някои препоръки от страна на преподавателите.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="services" class="module parallax parallax-3">
+        <section class="module parallax parallax-3">
             <div class="container">
                 <h1>При нас ще намерите:</h1>
             </div>
         </section>
 
-        <section class="module content third">
+        <section id="services" class="module content third">
             <div class="container">
                 <div class="row text-center">
                     <div class="col-sm-4 col-xs-6 col-md-4">
                         <i class="glyphicon glyphicon-cloud"> </i>
-                        <h4>Реални идеи</h4>
+                        <h2>Реални идеи</h2>
                     </div>
                     <div class="col-sm-4 col-xs-6 col-md-4">
-                        <i class="glyphicon glyphicon-leaf"> </i>
-                        <h4>Съхранение на различни версии на дипломната Ви работа</h4>
+                        <i class="glyphicon glyphicon-flag"> </i>
+                        <h2>Съхранение на различни версии на дипломната Ви работа</h2>
                     </div>
                     <div class="col-sm-4 col-xs-6 col-md-4">
                         <i class="glyphicon glyphicon-phone-alt"> </i>
-                        <h4>Комуникация с научни ръководители</h4>
+                        <h2>Комуникация с научни ръководители</h2>
                     </div>
                 </div>
             </div>
@@ -141,45 +95,38 @@
             <div class="container">
                 <div class="row">
                     <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3">
-                        <h4 class="line3 center standart-h4title"><span>Navigation</span></h4>
+                        <h4 class="line3 center standart-h4title"><span>Навигация</span></h4>
                         <ul class="footer-links">
-                            <li><a href="#">Home</a></li>
-                            <li><a href="#">project</a></li>
-                            <li><a href="#">Elements</a></li>
-                            <li><a href="#">Contact</a></li>
-                            <li><a href="#">Blog</a></li>
+                            <li><a href="#top">Начало</a></li>
+                            <li><a href="#state">Състояние</a></li>
+                            <li><a href="#services">Услуги</a></li>
+                            <li>@Html.ActionLink("Вход", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+                            <li>@Html.ActionLink("Регистрация", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
                         </ul>
                     </div>
 
                     <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3">
-                        <h4 class="line3 center standart-h4title"><span>Useful Links</span></h4>
+                        <h4 class="line3 center standart-h4title"><span>Полезни връзки</span></h4>
                         <ul class="footer-links">
-                            <li><a href="http://www.bootstraptor.com">Bootstraptor.com</a></li>
-                            <li><a href="http://www.bootstraptor.com">Bootstraptor.com</a></li>
-                            <li><a href="http://www.bootstraptor.com">Bootstraptor.com</a></li>
-                            <li><a href="http://www.bootstraptor.com">Bootstraptor.com</a></li>
-                            <li><a href="http://www.bootstraptor.com">Bootstrap templates</a></li>
+                            <li><a href="https://github.com/nikolay-radkov/ThesesSystem">Сорс код на системата</a></li>
+                            <li><a href="http://tu-sofia.bg" />ТУ-София</a></li>
+                            <li><a href="http://www.asp.net/mvc">ASP.NET MVC</a></li>
+                            <li><a href="http://getbootstrap.com/">Twitter Bootstrap</a></li>
                         </ul>
                     </div>
 
                     <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3">
-                        <h4 class="line3 center standart-h4title"><span>Useful Links</span></h4>
+                        <h4 class="line3 center standart-h4title"><span>Генератори на идеи</span></h4>
                         <ul class="footer-links">
-                            <li><a href="http://www.bootstraptor.com">Bootstraptor.com</a></li>
-                            <li><a href="http://www.bootstraptor.com">Bootstraptor.com</a></li>
-                            <li><a href="http://www.bootstraptor.com">Bootstraptor.com</a></li>
-                            <li><a href="http://www.bootstraptor.com">Bootstraptor.com</a></li>
-                            <li><a href="http://www.bootstraptor.com">Bootstrap templates</a></li>
+                            <li><a href="http://ideagenerator.creativitygames.net/">Creativity Games</a></li>
+                            <li><a href="http://www.portent.com/tools/title-maker">Portent</a></li>
+
                         </ul>
                     </div>
 
                     <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3">
-                        <h4 class="line3 center standart-h4title"><span>Our office</span></h4>
+                        <h4 class="line3 center standart-h4title"><span>Контакти</span></h4>
                         <address>
-                            <strong>bootstraptor.com, LLC.</strong><br>
-                            <i class="icon-map-marker"></i> 795 Folsom Ave, Suite 600<br>
-                            San Francisco, CA 94107<br>
-                            <i class="icon-phone-sign"></i> + 4 (123) 456-7890
 
                         </address>
                     </div>
@@ -190,21 +137,20 @@
             <div class="container">
                 <hr>
                 <div class="row">
-                    <div class="col-sm-12 col-lg-12">
-                        <p>© 2013 Build with <a class="" href="http://www.bootstraptor.com">www.bootstraptor.com</a></p>
+                    <div class="col-sm-12 col-lg-12 text-center">
+                        <p>
+                            © @DateTime.Now.Year създаден с помощта на  <a href="http://www.asp.net/mvc">ASP.NET MVC</a> и <a href="http://getbootstrap.com/">Twitter Bootstrap</a>.
+                            <br /><small>Сайтът е разработен от <a href="https://github.com/nikolay-radkov">Николай Радков</a></small>
+                        </p>
                     </div>
                 </div>
             </div>
         </div>
-        <section>
-            <div id="google_map"></div>
-        </section>
     </footer>
 
 
     @Scripts.Render("~/bundles/bootstrap")
-    @Scripts.Render("~/bundles/maps");
-    @Scripts.Render("~/bundles/parallax");
+    @Scripts.Render("~/bundles/parallax")
 
     <script>
         $(function () {

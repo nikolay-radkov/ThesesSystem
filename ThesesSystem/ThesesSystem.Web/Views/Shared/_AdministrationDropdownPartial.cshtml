@@ -10,7 +10,20 @@
                 </li>
             }
             <li class="divider"></li>
-            <li>@Html.ActionLink("Administraciq!!!", "Verification", "User", new { area = "Administration" }, new { @class = string.Empty })
+            <li>
+                @Html.ActionLink("Теми", "Index", "ThesisThemes", new { area = "Administration" }, new { @class = string.Empty })
+            </li>
+            <li>
+                @Html.ActionLink("Наръчници", "Index", "ThesisTutorials", new { area = "Administration" }, new { @class = string.Empty })
+            </li>
+            <li>
+                @Html.ActionLink("Дипломни работи", "Index", "Theses", new { area = "Administration" }, new { @class = string.Empty })
+            </li>
+            <li>
+                @Html.ActionLink("Факултети", "Index", "Faculties", new { area = "Administration" }, new { @class = string.Empty })
+            </li>
+            <li
+                >@Html.ActionLink("Специалности", "Index", "Specialties", new { area = "Administration" }, new { @class = string.Empty })
             </li>
         </ul>
     </li>

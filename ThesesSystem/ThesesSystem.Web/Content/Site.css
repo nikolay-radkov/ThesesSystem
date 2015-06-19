@@ -13,13 +13,18 @@ body, .body-content {
     width: 100%;
 }
 
-#wrapper .container {
+#wrapper>.container {
     max-width: 80%;
     margin-left: auto;
     margin-right: auto;
     background-color: #ebebeb;
 }
-
+#wrapper>footer {
+    
+    max-width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+} 
 /* Override the default bootstrap behavior where horizontal description lists 
    will truncate terms that are too long to fit in the left column 
 */
@@ -29,10 +34,10 @@ body, .body-content {
 
 #black-footer {
     background: url("../Images/about.png") 50% 0 fixed;
-    -moz-box-shadow: 0 0 50px rgba(0,0,0,0.8);
-    -webkit-box-shadow: 0 0 50px rgba(0,0,0,0.8);
-    box-shadow: 0 0 50px rgba(0,0,0,0.8);
-    padding: 100px 0;
+    -moz-box-shadow: 0 0 10px rgba(0,0,0,0.8);
+    -webkit-box-shadow: 0 0 10px rgba(0,0,0,0.8);
+    box-shadow: 0 0 10px rgba(0,0,0,0.8);
+    padding: 50px 0 30px 0;
     color: #fff;
     height: auto;
     margin: 0 auto;
@@ -55,6 +60,7 @@ body, .body-content {
 section.module.first {
     background-color: rgb(195, 15, 0);
     color: #ffffff;
+      padding: 100px;
 }
 
 section.module.second {
@@ -65,6 +71,7 @@ section.module.second {
 section.module.third {
     background-color: rgb(156, 244, 10);
     color: #ffffff;
+     padding: 100px;
 }
 
 section.module:last-child {
@@ -102,7 +109,7 @@ section.module p:last-child {
 }
 
 section.module.content {
-    padding: 40px 0;
+    
 }
 
 section.module.parallax {

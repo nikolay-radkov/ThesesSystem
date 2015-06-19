@@ -1,6 +1,6 @@
 ﻿@model ThesesSystem.Web.ViewModels.Search.SearchViewModel
 
-@using (Html.BeginForm("Index", "Search", FormMethod.Get, new { @class = "navbar-form navbar-left", role = "search" }))
+@using (Html.BeginForm("Index", "Search", new { area = string.Empty }, FormMethod.Get, new { @class = "navbar-form navbar-left", role = "search" }))
 {
     <div class="search-group row">
         <div class="col-md-2 col-sm-2 col-xs-2 search-col">
