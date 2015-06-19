@@ -244,6 +244,7 @@
     <Compile Include="Controllers\BaseControllers\AuthorizeController.cs" />
     <Compile Include="Controllers\BaseControllers\BaseController.cs" />
     <Compile Include="Controllers\FacultyController.cs" />
+    <Compile Include="Controllers\FeedbackController.cs" />
     <Compile Include="Controllers\FriendController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\IdeaController.cs" />
@@ -351,6 +352,7 @@
     <Content Include="Content\toastr.css" />
     <Content Include="Content\toastr.min.css" />
     <Content Include="Images\background.gif" />
+    <Content Include="Images\feedback.png" />
     <Content Include="Scripts\mustache.js" />
     <Content Include="Scripts\sweetalert.min.js" />
     <Content Include="Content\themes\base\accordion.css" />
@@ -549,7 +551,7 @@
     <Content Include="Views\Specialty\SpecialtyProfile.cshtml" />
     <Content Include="Views\Storage\_FilterPanelPartial.cshtml" />
     <Content Include="Views\Shared\_NotificationPartial.cshtml" />
-    <Content Include="Views\Home\Feedback.cshtml" />
+    <Content Include="Views\Feedback\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Administration\ViewModels\" />

@@ -57,6 +57,9 @@
     <div id="wrapper" class="body-content">
         <div class="container">
             @RenderBody()
+            <a href="@Url.Action("Index","Feedback", new { area = string.Empty })">
+                <img id="feedback" src="~/Images/feedback.png" alt="Feedback" />
+            </a>
             <hr />
         </div>
         <footer>
