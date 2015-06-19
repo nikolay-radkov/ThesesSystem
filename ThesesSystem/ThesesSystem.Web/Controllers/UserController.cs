@@ -41,7 +41,7 @@
             var user = this.Data.Users.GetById(id);
             var userViewModel = Mapper.Map<UserProfileViewModel>(user);
             var currentUserId = User.Identity.GetUserId();
-            var currentUser = this.Data.Users.All().FirstOrDefault(u => u.Id == currentUserId);
+            var currentUser = this.Data.Users.GetById(currentUserId);
 
             userViewModel.IsFriend = currentUser.Friends.Where(u => u.Id == id).Count() != 0;
 

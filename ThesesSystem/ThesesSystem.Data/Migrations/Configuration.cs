@@ -18,28 +18,32 @@ namespace ThesesSystem.Data.Migrations
 
         protected override void Seed(ThesesSystemDbContext context)
         {
-            var generator = DefaultRandomGenerator.Instance;
-       
-            context.Configuration.AutoDetectChangesEnabled = false;
-
-
-            ICollection<ITableGenerator> populators = new List<ITableGenerator>()
+            var count = context.Faculties.OrderBy(f => f.CreatedOn).Count();
+            if (count == 0)
             {
-                // new FacultyGenerator(generator, context),
-                // new SpecialtyGenerator(generator,context),
-                // new UserGenerator(generator, context),
-                //  new ThesisGenerator(generator, context),
-                // new RoleGenerator(generator, context),
-                // new ThesisThemeGenerator(generator, context)
-            };
+                var generator = DefaultRandomGenerator.Instance;
 
-            foreach (var populator in populators)
-            {
-                populator.Generate();
-                populator.Context.SaveChanges();
+                context.Configuration.AutoDetectChangesEnabled = false;
+
+
+                ICollection<ITableGenerator> populators = new List<ITableGenerator>()
+                {
+                     new FacultyGenerator(generator, context),
+                     new SpecialtyGenerator(generator,context),
+                     new UserGenerator(generator, context),
+                     new ThesisGenerator(generator, context),
+                     new RoleGenerator(generator, context),
+                     new ThesisThemeGenerator(generator, context)
+                };
+
+                foreach (var populator in populators)
+                {
+                    populator.Generate();
+                    populator.Context.SaveChanges();
+                }
+
+                context.Configuration.AutoDetectChangesEnabled = true;
             }
-
-            context.Configuration.AutoDetectChangesEnabled = true;
         }
     }
 }

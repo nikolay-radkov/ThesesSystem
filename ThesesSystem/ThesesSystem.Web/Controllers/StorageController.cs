@@ -170,8 +170,6 @@
         [HttpGet]
         public ActionResult Index(int? page, FilterOptions options)
         {
-            //TODO: implement searching and filtering
-
             int currentPage = page ?? 0;
             var theses = this.Data.Theses
                                     .All()

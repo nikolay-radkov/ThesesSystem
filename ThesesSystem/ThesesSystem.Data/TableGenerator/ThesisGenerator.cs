@@ -1,6 +1,7 @@
 ﻿namespace ThesesSystem.Data.TableGenerator
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using ThesesSystem.Common.DataGenerators;
     using ThesesSystem.Models;
@@ -34,7 +35,15 @@
                     Title = this.Generator.GenerateString(3, 30),
                     SupervisorId = supervisorIds[index],
                     Pages = this.Generator.GenerateNumber(40, 60),
-                    IsComplete = true
+                    IsComplete = true,
+                    Versions = new HashSet<ThesesSystem.Models.Version>()
+                    {
+                        new ThesesSystem.Models.Version {
+                            FileExtension = "rar",
+                            FileName = "Дипломна работа.rar",
+                            StoragePath = "/uploads/14.6.2015 г. 16.21.15+Дипломна работа.rar"
+                        }
+                    }
                 };
 
                 this.Context.Theses.Add(thesis);
@@ -48,6 +57,7 @@
                 {
                     StudentId = userIds[this.Count / 2 + index],
                     Title = this.Generator.GenerateString(3, 30),
+                    Description = this.Generator.GenerateString(3, 30),
                     SupervisorId = supervisorIds[this.Count / 2 + index],
                     IsComplete = false
                 };

@@ -18,7 +18,6 @@
 
         public override void Generate()
         {
-
             var passwordHash = new PasswordHasher();
             var specialtyIds = this.Context.Specialties.Select(f => f.Id).ToArray();
 
@@ -31,6 +30,7 @@
                     FirstName = this.Generator.GenerateString(4, 10),
                     MiddleName = this.Generator.GenerateString(4, 10),
                     LastName = this.Generator.GenerateString(4, 10),
+                    IsVerified = true,
                     EGN = this.Generator.GenerateNumber(10000000, 90000000),
                     PhoneNumber = this.Generator.GenerateNumber(10000000, 90000000).ToString(),
                     
@@ -41,7 +41,9 @@
                         SpecialtyGroup = this.Generator.GenerateNumber(1, 50),
                         SpecialtyId = specialtyIds[index % (specialtyIds.Length - 1)]
                     },
-                    PasswordHash = passwordHash.HashPassword("123456")
+                    PasswordHash = passwordHash.HashPassword("123456"),
+                    LockoutEnabled = true,
+                    SecurityStamp = Guid.NewGuid().ToString()
                 };
                 this.Context.Users.Add(user);
               
@@ -66,6 +68,7 @@
                     FirstName = this.Generator.GenerateString(4, 10),
                     MiddleName = this.Generator.GenerateString(4, 10),
                     LastName = this.Generator.GenerateString(4, 10),
+                    IsVerified = true,
                     EGN = this.Generator.GenerateNumber(10000000, 90000000),
                     PhoneNumber = this.Generator.GenerateNumber(10000000, 90000000).ToString(),
                     Teacher = new Teacher()
@@ -73,7 +76,9 @@
                         Cabinet = this.Generator.GenerateNumber(1, 300),
                         OfficePhoneNumber = this.Generator.GenerateNumber(2000, 90000).ToString()
                     },
-                    PasswordHash = passwordHash.HashPassword("123456")
+                    PasswordHash = passwordHash.HashPassword("123456"),
+                    LockoutEnabled = true,
+                    SecurityStamp = Guid.NewGuid().ToString()
                 };
 
                 this.Context.Users.Add(user);

@@ -46,15 +46,53 @@
 
             for (int index = 0; index < userIds.Length; index++)
             {
-                var roleresult = userManager.AddToRole(userIds[index], STUDENT);
+                userManager.AddToRole(userIds[index], STUDENT);
+                userManager.AddToRole(userIds[index], VERIFIED_USER);
+                userManager.AddToRole(userIds[index], COMPLETE_USER);
             }
 
             for (int index = 0; index < teacherIds.Length; index++)
             {
-                var roleresult = userManager.AddToRole(teacherIds[index], TEACHER);
+                userManager.AddToRole(teacherIds[index], TEACHER);
+                userManager.AddToRole(teacherIds[index], VERIFIED_USER);
+                userManager.AddToRole(teacherIds[index], COMPLETE_USER);
             }
 
+            this.GenerateAdmin(userManager);
+
             this.Context.SaveChanges();
+        }
+
+        private void GenerateAdmin(UserManager<User> userManager)
+        {
+            var passwordHash = new PasswordHasher();
+            var user = new User()
+            {
+                UserName = "admin@thesessystem.com",
+                Email = "admin@thesessystem.com",
+                FirstName = this.Generator.GenerateString(4, 10),
+                MiddleName = this.Generator.GenerateString(4, 10),
+                LastName = this.Generator.GenerateString(4, 10),
+                EGN = this.Generator.GenerateNumber(10000000, 90000000),
+                IsVerified = true,
+                PhoneNumber = this.Generator.GenerateNumber(10000000, 90000000).ToString(),
+                Teacher = new Teacher()
+                {
+                    Cabinet = this.Generator.GenerateNumber(1, 300),
+                    OfficePhoneNumber = this.Generator.GenerateNumber(2000, 90000).ToString()
+                },
+                PasswordHash = passwordHash.HashPassword("admin@thesessystem.com"),
+                LockoutEnabled = true,
+                SecurityStamp = Guid.NewGuid().ToString()
+            };
+
+            this.Context.Users.Add(user);
+            this.Context.SaveChanges();
+
+            userManager.AddToRole(user.Id, ADMIN);
+            userManager.AddToRole(user.Id, TEACHER);
+            userManager.AddToRole(user.Id, VERIFIED_USER);
+            userManager.AddToRole(user.Id, COMPLETE_USER);
         }
     }
 }
