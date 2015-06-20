@@ -49,16 +49,6 @@
               
             }
 
-         
-            try
-            {
-                this.Context.SaveChanges();
-            }
-            catch (DbEntityValidationException e)
-            {
-                var s = e.EntityValidationErrors;
-            }
-
             for (int index = 0; index < this.Count / 2; index++)
             {
                 var user = new User()
@@ -83,8 +73,6 @@
 
                 this.Context.Users.Add(user);
             }
-
-            this.Context.SaveChanges();
         }
     }
 }

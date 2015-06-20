@@ -36,7 +36,6 @@
                 }
             }
 
-            this.Context.SaveChanges();
         }
 
     }

@@ -25,8 +25,6 @@
 
                 this.Context.Faculties.Add(faculty);
             }
-
-            this.Context.SaveChanges();
         }
     }
 }

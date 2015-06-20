@@ -34,9 +34,6 @@
                     this.Context.Specialties.Add(specialty);
                 }
             }
-
-            this.Context.SaveChanges();
         }
-
     }
 }

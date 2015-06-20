@@ -59,8 +59,6 @@
             }
 
             this.GenerateAdmin(userManager);
-
-            this.Context.SaveChanges();
         }
 
         private void GenerateAdmin(UserManager<User> userManager)

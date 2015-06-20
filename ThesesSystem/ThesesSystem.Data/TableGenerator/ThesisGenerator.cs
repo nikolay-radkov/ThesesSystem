@@ -49,8 +49,6 @@
                 this.Context.Theses.Add(thesis);
             }
 
-            this.Context.SaveChanges();
-
             for (int index = 0; index < this.Count / 2; index++)
             {
                 var thesis = new Thesis()
@@ -64,8 +62,6 @@
 
                 this.Context.Theses.Add(thesis);
             }
-
-            this.Context.SaveChanges();
         }
     }
 }
