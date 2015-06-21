@@ -12,7 +12,8 @@ namespace ThesesSystem.Web.Infrastructure.Filters
      public class CompleteUserAttribute : AuthorizeAttribute
     {
         //Called when access is denied
-        protected override void HandleUnauthorizedRequest(AuthorizationContext filterContext)
+        protected override void HandleUnauthorizedRequest(AuthorizationContext 
+            filterContext)
         {
             var user = filterContext.HttpContext.User;
           
@@ -20,14 +21,18 @@ namespace ThesesSystem.Web.Infrastructure.Filters
             if (!user.Identity.IsAuthenticated)
             {
                 filterContext.Result = new RedirectToRouteResult(
-                        new RouteValueDictionary(new { controller = "Account", action = "Login" })
+                    new RouteValueDictionary(new { 
+                        controller = "Account", action = "Login" 
+                    })
                 );
             }
             else if (user.IsInRole(GlobalConstants.NOT_VERIFIED_USER))
             {
 
                 filterContext.Result = new RedirectToRouteResult(
-                        new RouteValueDictionary(new { controller = "Validation", action = "NotVerified" })
+                    new RouteValueDictionary(new { 
+                        controller = "Validation", action = "NotVerified" 
+                    })
                 );
 
             }
@@ -36,13 +41,21 @@ namespace ThesesSystem.Web.Infrastructure.Filters
                 if (user.IsInRole(GlobalConstants.STUDENT))
                 {
                     filterContext.Result = new RedirectToRouteResult(
-                        new RouteValueDictionary(new { controller = "Validation", action = "CompleteStudentRegistration", id = user.Identity.GetUserId() })
+                        new RouteValueDictionary(new { 
+                            controller = "Validation", 
+                            action = "CompleteStudentRegistration", 
+                            id = user.Identity.GetUserId() 
+                        })
                     );
                 }
                 else if (user.IsInRole(GlobalConstants.TEACHER))
                 {
                     filterContext.Result = new RedirectToRouteResult(
-                       new RouteValueDictionary(new { controller = "Validation", action = "CompleteTeacherRegistration", id = user.Identity.GetUserId() })
+                       new RouteValueDictionary(new { 
+                           controller = "Validation", 
+                           action = "CompleteTeacherRegistration", 
+                           id = user.Identity.GetUserId() 
+                       })
                     );
                 }
             }
