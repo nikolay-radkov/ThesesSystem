@@ -1,10 +1,12 @@
 ﻿@{
-    ViewBag.Title = "Не потвърден профил";
+    ViewBag.Title = "Непотвърден профил";
 }
-<h1>@ViewBag.Title </h1>
+<h2>@ViewBag.Title </h2>
 
 @Html.Partial("_ProcessStep", new ThesesSystem.Web.ViewModels.Partials.ProcessStepViewModel { CurrentStep = 2 })
+<br />
 
-
-<h2>Моля изчакайте дoкaто Вашият профил бъде потвърден от администратор или се свържете с него на телефон: <strong>+359 888 888 888</strong></h2>
-
+<div class="alert alert-info" role="alert">
+    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+    <strong>Моля изчакайте дoкaто Вашият профил бъде потвърден от администратор.</strong>
+</div>

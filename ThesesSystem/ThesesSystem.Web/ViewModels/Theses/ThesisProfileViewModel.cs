@@ -1,9 +1,11 @@
 ﻿namespace ThesesSystem.Web.ViewModels.Theses
 {
     using System;
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using ThesesSystem.Models;
     using ThesesSystem.Web.Infrastructure.Mapping;
+    using ThesesSystem.Web.ViewModels.ThesisParts;
 
     public class ThesisProfileViewModel : IMapFrom<Thesis>, IHaveCustomMappings
     {
@@ -22,7 +24,6 @@
         [Display(Name = "Специалност")]
         public string Specialty { get; set; }
 
-
         [Display(Name = "Защитена на")]
         public DateTime? FinishedAt { get; set; }
 
@@ -30,6 +31,7 @@
         public int? Pages { get; set; }
 
         [Display(Name = "Оценка")]
+        [DisplayFormat(DataFormatString = "{0:f2}", ApplyFormatInEditMode = true)]
         public float? FinalEvaluation { get; set; }
 
         [Display(Name = "Научен ръководител")]
@@ -37,6 +39,8 @@
 
         [Display(Name = "Студент")]
         public string StudentName { get; set; }
+
+        public ICollection<PartViewModel> ThesisParts { get; set; }
 
         public void CreateMappings(AutoMapper.IConfiguration configuration)
         {

@@ -1,19 +1,30 @@
 ﻿@model ThesesSystem.Web.ViewModels.Partials.TeacherInfoViewModel
 
-<tr>
-    <td>
+<div class="row border-bottom">
+    <div class="col-md-6">
         @Html.LabelFor(m => Model.OfficePhoneNumber)
-    </td>
-    <td>
+    </div>
+    <div class="col-md-6">
         @Html.DisplayFor(m => Model.OfficePhoneNumber)
-    </td>
-</tr>
-
-<tr>
-    <td>
+    </div>
+</div>
+<div class="row border-bottom">
+    <div class="col-md-6">
         @Html.LabelFor(m => Model.Cabinet)
-    </td>
-    <td>
+    </div>
+    <div class="col-md-6">
         @Html.DisplayFor(m => Model.Cabinet)
-    </td>
-</tr>
+    </div>
+</div>
+@foreach (var item in Model.Theses)
+{
+    if (item.IsComplete)
+    {
+        <a href='@Url.Action("ThesisProfile", "Storage", new {id = item.Id})' class="badge-success">@item.Title</a>
+    }
+    else
+    {
+        <span class="badge">@item.Title</span>
+    }
+
+}

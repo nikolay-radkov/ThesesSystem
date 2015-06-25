@@ -3,40 +3,42 @@
     ViewBag.Title = "Наръчници";
 }
 
-<div>
+<h2>
     <div class="row">
-        <div class="row">
-            <div class="col-md-9"><h2>@ViewBag.Title</h2></div>
-            @if (this.User.IsInRole(ThesesSystem.Web.Infrastructure.Constants.GlobalConstants.TEACHER))
-            {
-                <div class="col-md-2">
-                    @Html.ActionLink("Нова наръчник", "Create", "Tutorial", new { area = string.Empty }, new { @class = "btn btn-lg btn-primary shadowed" })
-                </div>
-            }
-            <br />
+        <div class="col-md-9 text-left">
+            @ViewBag.Title
         </div>
-        @if (Model.Count == 0)
+        @if (this.User.IsInRole(ThesesSystem.Web.Infrastructure.Constants.GlobalConstants.TEACHER))
         {
-            <h2>Все още няма качени наръчници за изготвяне на дипломна работа</h2>
-        }
-        @foreach (var item in Model)
-        {
-            <div class="col-md-8">
-                <div class="row shadowed">
-                    <div class="col-md-9 col-sm-9">
-                        <h2><a href='@Url.Action("Account", "User", new { id = item.TeacherId })'>@item.TeacherName</a></h2>
-                        <h3>@item.CreatedOn</h3>
-                    </div>
-                    <div class="col-md-3 col-sm-3">
-                        @Html.ActionLink("Свали", "DownloadTutorial", "Tutorial", new { id = item.Id }, new { target = "_blank", @class = "btn btn-danger" })
-                    </div>
-                </div>
+            <div class="col-md-2">
+                @Html.ActionLink("Нов наръчник", "Create", "Tutorial", new { area = string.Empty }, new { @class = "btn btn-primary shadowed" })
             </div>
         }
+        <br />
     </div>
+</h2>
+<div class="row">
+    @if (Model.Count == 0)
+    {
+        <h2 class="alert alert-info">Все още няма качени наръчници за изготвяне на дипломна работа</h2>
+    }
+    @foreach (var item in Model)
+    {
+        <div class="col-md-8">
+            <div class="row shadowed">
+                <div class="col-md-9 col-sm-9">
+                    <h2><a href='@Url.Action("Account", "User", new { id = item.TeacherId })'>@item.TeacherName</a></h2>
+                    <h3>@item.CreatedOn</h3>
+                </div>
+                <div class="col-md-3 col-sm-3">
+                    @Html.ActionLink("Свали", "DownloadTutorial", "Tutorial", new { id = item.Id }, new { target = "_blank", @class = "btn btn-danger" })
+                </div>
+            </div>
+        </div>
+    }
+</div>
     <div class="row">
-        <div class="col-lg-offset-3 text-center">
+        <div class="text-center">
             @Html.Partial("_PaginationPartial", (ThesesSystem.Web.ViewModels.Partials.PaginationViewModel)ViewData["Pagination"])
         </div>
     </div>
-</div>

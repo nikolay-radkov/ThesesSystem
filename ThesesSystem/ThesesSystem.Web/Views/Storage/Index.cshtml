@@ -1,11 +1,12 @@
 ﻿@using ThesesSystem.Web.ViewModels.Partials
 @using ThesesSystem.Web.ViewModels.Filters
+@using ThesesSystem.Common.Extensions
 @model ICollection<ThesesSystem.Web.ViewModels.Theses.ThesisViewModel>
 @{
     ViewBag.Title = "Архив";
 }
 
-<h2>Добре дошли в Архива!</h2>
+<h2>@ViewBag.Title</h2>
 <div>
     <div class="row">
         <div class="col-md-3">
@@ -23,11 +24,11 @@
                 {
                     foreach (var item in Model)
                     {
-                        <a href="@Url.Action("ThesisProfile", "Storage",  routeValues: new { id = item.Id  })">
+                        <a href='@Url.Action("ThesisProfile", "Storage",  routeValues: new { id = item.Id  })'>
                             <div class="col-md-3 col-sm-4">
-                                <div class="panel panel-info">
+                                <div class="panel panel-info shadowed">
                                     <div class="panel-heading">
-                                        <h3 class="panel-title">@item.Title</h3>
+                                        <h3 class="panel-title">@item.Title.TruncateLongString(13)</h3>
                                     </div>
                                     <div class="panel-body">
                                         Автор: <strong>@item.StudentName</strong>

@@ -27,5 +27,6 @@
         public const string NOTIFICATION_NEW_FRIEND = "{0} Ви добави като приятел";
         public const string NOTIFICATION_LOST_FRIEND = "{0} Ви премахна от приятели";
         public const string NOTIFICATION_NEW_MESSAGE = "{0} Ви изпрати съобщение";
+        public const string NOTIFICATION_REVIEW_PART = "{0} маркира за проверка частта {1}";
     }
 }

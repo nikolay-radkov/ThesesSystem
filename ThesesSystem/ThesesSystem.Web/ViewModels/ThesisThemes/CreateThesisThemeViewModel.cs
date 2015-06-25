@@ -6,7 +6,8 @@
 
     public class CreateThesisThemeViewModel : IMapFrom<ThesisTheme>
     {
-        [Required]
+        [Required(ErrorMessage="Трябва да попълните полето за заглавие")]
+        [Display(Name="Заглавие")]
         public string Title { get; set; }
     }
 }

@@ -1,17 +1,19 @@
 ﻿@using ThesesSystem.Web.Infrastructure.Constants;
 @{
-    ViewBag.Title = "Генератор";
+    ViewBag.Title = "Генератор на идеи";
 }
 
 <h2>@ViewBag.Title</h2>
 <div>
     <div class="row">
-        <div class="col-md-6 col-sm-6 col-xs-6">
-            <button id="btn-add-image" class="btn btn-success shadowed">Добави картинка</button>
-            <button id="btn-add-word" class="btn btn-success shadowed">Добави дума</button>
+        <div class="col-md-3 col-sm-3 ">
+            <button id="btn-add-image" class="btn btn-success shadowed max-width">Добави картинка</button>
         </div>
-        <div class="col-md-3 col-sm-3 col-xs-3 text-right">
-            <button id="btn-remove" class="btn btn-danger shadowed">Изчисти полето</button>
+        <div class="col-md-3 col-sm-3">
+            <button id="btn-add-word" class="btn btn-success shadowed max-width">Добави дума</button>
+        </div>
+        <div class="col-md-3 col-sm-3 text-right">
+            <button id="btn-remove" class="btn btn-danger shadowed max-width">Изчисти полето</button>
         </div>
     </div>
     <div class="row">
@@ -23,16 +25,16 @@
         <div class="col-md-3 col-sm-3">
 
             <div class="btn-group-vertical" role="group" aria-label="Генератори">
-               <h2>Външни генератори</h2>
-                <a href="http://ideagenerator.creativitygames.net/" target="_blank" type="button" class="btn btn-info">Creativity Games</a>
-                <a href="http://www.portent.com/tools/title-maker" target="_blank" type="button" class="btn btn-info">Portent</a>
-                <a href="https://play.google.com/store/apps/details?id=com.designtop.generator" target="_blank" type="button" class="btn btn-info">Idea Generator (приложение)</a>
+                <h3>Външни генератори</h3>
+                <a href="http://ideagenerator.creativitygames.net/" target="_blank" type="button" class="btn btn-info max-width">Creativity Games</a>
+                <a href="http://www.portent.com/tools/title-maker" target="_blank" type="button" class="btn btn-info max-width">Portent</a>
+                <a href="https://play.google.com/store/apps/details?id=com.designtop.generator" target="_blank" type="button" class="btn btn-info max-width">Idea Generator (приложение)</a>
 
             </div>
         </div>
     </div>
 </div>
-
+<br />
 
 @section styles
 {

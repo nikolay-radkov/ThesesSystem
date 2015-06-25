@@ -96,11 +96,14 @@
         private void UpdateParts(int id, IList<CreateOrUpdateThesisPartViewModel> thesisParts)
         {
             var parts = this.Data.ThesisParts.All().Where(p => p.ThesisId == id).ToList();
+            var userId = this.User.Identity.GetUserId();
 
             int index = 0;
             for (index = 0; index < parts.Count; index++)
             {
                 parts[index].Flag = thesisParts[index].Flag;
+                CreateNotification(id, userId, string.Format(GlobalPatternConstants.FORWARD_URL_WITH_ID, "Thesis", "ThesisProfile", id), GlobalPatternConstants.NOTIFICATION_REVIEW_PART);
+
             }
 
             for (int i = index; i < thesisParts.Count; i++)

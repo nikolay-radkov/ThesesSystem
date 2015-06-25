@@ -327,9 +327,11 @@
     <Compile Include="ViewModels\Theses\ThemeResultViewModel.cs" />
     <Compile Include="ViewModels\Theses\ThesisLogViewModel.cs" />
     <Compile Include="ViewModels\Theses\ThesisProfileViewModel.cs" />
+    <Compile Include="ViewModels\Theses\ThesisTitleViewModel.cs" />
     <Compile Include="ViewModels\Theses\ThesisViewModel.cs" />
     <Compile Include="ViewModels\ThesisParts\CreateOrUpdateThesisPartViewModel.cs" />
     <Compile Include="ViewModels\ThesisParts\CreateThesisPartViewModel.cs" />
+    <Compile Include="ViewModels\ThesisParts\PartViewModel.cs" />
     <Compile Include="ViewModels\ThesisThemes\CreateThesisThemeViewModel.cs" />
     <Compile Include="ViewModels\ThesisThemes\ThesisThemeViewModel.cs" />
     <Compile Include="ViewModels\ThesisTutorials\CreateTutorialViewModel.cs" />

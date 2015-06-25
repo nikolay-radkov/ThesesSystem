@@ -1,14 +1,14 @@
-﻿using Microsoft.AspNet.Identity;
-using System;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.Mvc;
-using System.Web.Routing;
-using ThesesSystem.Web.Infrastructure.Constants;
-
-namespace ThesesSystem.Web.Infrastructure.Filters
+﻿namespace ThesesSystem.Web.Infrastructure.Filters
 {
-    [AttributeUsageAttribute(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = true)]
+    using Microsoft.AspNet.Identity;
+    using System;
+    using System.Web;
+    using System.Web.Mvc;
+    using System.Web.Routing;
+    using ThesesSystem.Web.Infrastructure.Constants;
+
+    [AttributeUsageAttribute(AttributeTargets.Class | 
+        AttributeTargets.Method, Inherited = true, AllowMultiple = true)]
      public class CompleteUserAttribute : AuthorizeAttribute
     {
         //Called when access is denied

@@ -3,78 +3,86 @@
 @{
     ViewBag.Title = "Профил на дипломна работа";
 }
+<h2>@ViewBag.Title</h2>
+<div class="page-body shadowed">
 
-<div>
-    <div class="row">
-        <div class="col-md-offset-3 col-md-3">
-            @Html.LabelFor(m => Model.Title)
+    <h3 class="text-center"><i class="fa fa-book fa-2x"></i> @Html.DisplayFor(m => Model.Title)</h3>
+   
+    <br />
+    <div class="text-center row">
+        <div class="row">
+            @foreach (var item in Model.ThesisParts)
+            {
+                <span class="badge">@item.Title</span>
+            }
         </div>
-        <div class="col-md-3">
-            @Html.DisplayFor(m => Model.Title)
+        <br />
+        <div class=" col-md-6 col-md-offset-3 ">
+            <div class="row border-bottom">
+                <div class="col-md-6">
+                    @Html.LabelFor(m => Model.StudentName)
+                </div>
+                <div class="col-md-6">
+                    <a href='@Url.Action("Account", "User", new { id = Model.StudentId })'>@Html.DisplayFor(m => Model.StudentName)</a>
+                </div>
+            </div>
+            <div class="row border-bottom">
+                <div class="col-md-6">
+                    @Html.LabelFor(m => Model.Faculty)
+                </div>
+                <div class="col-md-6">
+                    @Html.DisplayFor(m => Model.Faculty)
+                </div>
+            </div>
+            <div class="row border-bottom">
+                <div class="col-md-6">
+                    @Html.LabelFor(m => Model.Specialty)
+                </div>
+                <div class="col-md-6">
+                    @Html.DisplayFor(m => Model.Specialty)
+                </div>
+            </div>
+            <div class="row border-bottom">
+                <div class="col-md-6">
+                    @Html.LabelFor(m => Model.FinishedAt)
+                </div>
+                <div class="col-md-6">
+                    @Html.DisplayFor(m => Model.FinishedAt)
+                </div>
+            </div>
+            <div class="row border-bottom">
+                <div class="col-md-6">
+                    @Html.LabelFor(m => Model.Pages)
+                </div>
+                <div class="col-md-6">
+                    @Html.DisplayFor(m => Model.Pages)
+                </div>
+            </div>
+            <div class="row border-bottom">
+                <div class="col-md-6">
+                    @Html.LabelFor(m => Model.FinalEvaluation)
+                </div>
+                <div class="col-md-6">
+                    @Html.DisplayFor(m => Model.FinalEvaluation)
+                </div>
+            </div>
+            <div class="row border-bottom">
+                <div class="col-md-6">
+                    @Html.LabelFor(m => Model.SupervisorName)
+                </div>
+                <div class="col-md-6">
+                    <a href='@Url.Action("Account", "User", new { id = Model.SupervisorId })'>@Html.DisplayFor(m => Model.SupervisorName)</a>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-offset-3 col-md-3">
-            @Html.LabelFor(m => Model.StudentName)
-        </div>
-        <div class="col-md-3">
-            <a href='@Url.Action("Account", "User", new { id = Model.StudentId })'>@Html.DisplayFor(m => Model.StudentName)</a>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-offset-3 col-md-3">
-            @Html.LabelFor(m => Model.Faculty)
-        </div>
-        <div class="col-md-3">
-            @Html.DisplayFor(m => Model.Faculty)
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-offset-3 col-md-3">
-            @Html.LabelFor(m => Model.Specialty)
-        </div>
-        <div class="col-md-3">
-            @Html.DisplayFor(m => Model.Specialty)
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-offset-3 col-md-3">
-            @Html.LabelFor(m => Model.FinishedAt)
-        </div>
-        <div class="col-md-3">
-            @Html.DisplayFor(m => Model.FinishedAt)
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-offset-3 col-md-3">
-            @Html.LabelFor(m => Model.Pages)
-        </div>
-        <div class="col-md-3">
-            @Html.DisplayFor(m => Model.Pages)
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-offset-3 col-md-3">
-            @Html.LabelFor(m => Model.FinalEvaluation)
-        </div>
-        <div class="col-md-3">
-            @Html.DisplayFor(m => Model.FinalEvaluation)
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-offset-3 col-md-3">
-            @Html.LabelFor(m => Model.SupervisorName)
-        </div>
-        <div class="col-md-3">
-            <a href='@Url.Action("Account", "User", new { id = Model.SupervisorId })'>@Html.DisplayFor(m => Model.SupervisorName)</a>
-        </div>
-    </div>
-
+    <br />
     @if (User.IsInRole(GlobalConstants.ADMIN) || User.IsInRole(GlobalConstants.TEACHER))
     {
+        <br />
         <div class="row">
             <div class="col-md-12 text-center">
-                @Html.ActionLink("Свали", "DownloadFile", "Storage", new { id = Model.Id }, new { target = "_blank", @class = "btn btn-danger" })
+                @Html.ActionLink("Свали", "DownloadFile", "Storage", new { id = Model.Id }, new { target = "_blank", @class = "btn btn-lg btn-danger" })
             </div>
         </div>
     }

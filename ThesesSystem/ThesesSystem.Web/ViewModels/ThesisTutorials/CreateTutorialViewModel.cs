@@ -7,7 +7,8 @@
 
     public class CreateTutorialViewModel : IMapFrom<ThesisTutorial>
     {
-        [Required]
+        [Required(ErrorMessage="Трябва да изберете файл")]
+        [Display(Name="Документ")]
         public HttpPostedFileBase Archive { get; set; }
     }
 }

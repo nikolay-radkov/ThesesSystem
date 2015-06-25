@@ -5,124 +5,127 @@
 @{
     ViewBag.Title = "Съобщения";
 }
+<h2 class="text-center">@ViewBag.Title</h2>
+<div class="row">
+    <div class="col-md-8">
+        <div id="chat-window" class="row">
+            <div class="col-md-12">
+                <div id='chat_@ViewData["ToUserId"]' class="panel panel-success">
+                    <div class="panel-heading">
+                        <a href='@Url.Action("Account", "User", new { id = ViewData["ToUserId"] })'><span class="glyphicon glyphicon-comment"></span> @ViewData["ToUserName"]</a>
+                    </div>
 
-<div>
-    <h3 class="text-center">Чат</h3>
-    <div class="row">
-        <div class="col-md-8">
-            <div id="chat-window" class="row">
-                <div class="col-md-12">
-                    <div id='chat_@ViewData["ToUserId"]' class="panel panel-success">
-                        <div class="panel-heading">
-                            <a href='@Url.Action("Account", "User", new { id = ViewData["ToUserId"] })'><span class="glyphicon glyphicon-comment"></span> @ViewData["ToUserName"]</a>
-                        </div>
-
-                        <div id="chat-body" class="panel-body">
-                            <ul id="chat-container" class="chat">
-                                @if (Model.Messages.Count == 0)
+                    <div id="chat-body" class="panel-body">
+                        <ul id="chat-container" class="chat">
+                            @if (Model.Messages.Count == 0)
+                            {
+                                <li data-no-messages="true">
+                                    <h2>Все още нямате съобщения</h2>
+                                </li>
+                            }
+                            @foreach (var item in Model.Messages)
+                            {
+                                if (this.User.Identity.GetUserId() == item.FromUserId)
                                 {
-                                    <li data-no-messages="true">
-                                        <h2>Все още нямате съобщения</h2>
+                                    <li class="right clearfix">
+                                        <span class="chat-img pull-right">
+                                            <img src="http://placehold.it/50/FA6F57/fff&text=ME" alt="User Avatar" class="img-circle" />
+                                        </span>
+                                        <div class="chat-body clearfix">
+                                            <div class="header">
+                                                <small class=" text-muted"><span class="glyphicon glyphicon-time"></span>@item.CreatedOn</small>
+                                                <strong class="pull-right primary-font">@item.FromUserName</strong>
+                                            </div>
+                                            <p>
+                                                @item.Text
+                                            </p>
+                                        </div>
                                     </li>
                                 }
-                                @foreach (var item in Model.Messages)
+                                else
                                 {
-                                    if (this.User.Identity.GetUserId() == item.FromUserId)
-                                    {
-                                        <li class="right clearfix">
-                                            <span class="chat-img pull-right">
-                                                <img src="http://placehold.it/50/FA6F57/fff&text=ME" alt="User Avatar" class="img-circle" />
-                                            </span>
-                                            <div class="chat-body clearfix">
-                                                <div class="header">
-                                                    <small class=" text-muted"><span class="glyphicon glyphicon-time"></span>@item.CreatedOn</small>
-                                                    <strong class="pull-right primary-font">@item.FromUserName</strong>
-                                                </div>
-                                                <p>
-                                                    @item.Text
-                                                </p>
+                                    <li class="left clearfix">
+                                        <span class="chat-img pull-left">
+                                            <img src="http://placehold.it/50/55C1E7/fff&text=U" alt="User Avatar" class="img-circle" />
+                                        </span>
+                                        <div class="chat-body clearfix">
+                                            <div class="header">
+                                                <strong class="primary-font">@item.FromUserName</strong> <small class="pull-right text-muted">
+                                                    <span class="glyphicon glyphicon-time"></span>@item.CreatedOn
+                                                </small>
                                             </div>
-                                        </li>
-                                    }
-                                    else
-                                    {
-                                        <li class="left clearfix">
-                                            <span class="chat-img pull-left">
-                                                <img src="http://placehold.it/50/55C1E7/fff&text=U" alt="User Avatar" class="img-circle" />
-                                            </span>
-                                            <div class="chat-body clearfix">
-                                                <div class="header">
-                                                    <strong class="primary-font">@item.FromUserName</strong> <small class="pull-right text-muted">
-                                                        <span class="glyphicon glyphicon-time"></span>@item.CreatedOn
-                                                    </small>
-                                                </div>
-                                                <p>
-                                                    @item.Text
-                                                </p>
-                                            </div>
-                                        </li>
-                                    }
+                                            <p>
+                                                @item.Text
+                                            </p>
+                                        </div>
+                                    </li>
                                 }
-                            </ul>
+                            }
+                        </ul>
 
+                    </div>
+
+                    <div class="panel-footer">
+                        @*<div class="input-group">
+                            <textarea id="message-to-send" class="form-control" rows="2" placeholder="Въведете вашето съобщение..."></textarea>
+
+                            <span class="input-group-btn">
+                                <input type="submit" id="btn-send-message" class="btn btn-warning" value="Изпрати" />
+
+                            </span>
+                        </div>*@
+                        <div class="row text-center">
+                            <textarea id="message-to-send" class="form-control" rows="2" placeholder="Въведете вашето съобщение..."></textarea>
                         </div>
-
-                        <div class="panel-footer">
-
-                            <div class="input-group">
-                                <textarea id="message-to-send" class="form-control" rows="2" placeholder="Въведете вашето съобщение..."></textarea>
-
-                                <span class="input-group-btn">
-                                    <input type="submit" id="btn-send-message" class="btn btn-warning" value="Изпрати" />
-
-                                </span>
-                            </div>
+                        <div class="row text-center">
+                            <button id="btn-send-message" type="submit" class="btn btn-warning btn-lg glyphicon glyphicon-send"></button>
                         </div>
 
                     </div>
+
                 </div>
             </div>
-
         </div>
-        <div class="col-md-4">
-            <div id="history-window" class="panel panel-success">
-                <div class="panel-heading">
-                    История
-                </div>
-                <div class="panel-body">
-                    <ul id="friends-container" class="media-list">
-                        @if (Model.FriendsList.Count == 0)
-                        {
-                            <li data-no-history="true">
-                                <h3>Все още нямате предишни разговори</h3>
-                            </li>
-                        }
-                        @foreach (var item in Model.FriendsList)
-                        {
-                            <li id='friend_@item.FromUserId' class='media @(item.IsSeen ? "" : "new-message")'>
-                                <a href='@Url.Action("Index", "Message", new { friendId = item.FromUserId })'>
-                                    <div class="media-body">
 
-                                        <div class="media">
-                                            <span class="pull-left">
-                                                <img class="media-object img-circle" style="max-height:40px;" src="~/Images/unknown.jpg" />
-                                            </span>
-                                            <div class="media-body">
-                                                <h5>@item.FromUserName</h5>
-                                                <small>@item.CreatedOn</small>
-                                            </div>
+    </div>
+    <div class="col-md-4">
+        <div id="history-window" class="panel panel-success">
+            <div class="panel-heading">
+                История
+            </div>
+            <div class="panel-body">
+                <ul id="friends-container" class="media-list">
+                    @if (Model.FriendsList.Count == 0)
+                    {
+                        <li data-no-history="true">
+                            <h3>Все още нямате предишни разговори</h3>
+                        </li>
+                    }
+                    @foreach (var item in Model.FriendsList)
+                    {
+                        <li id='friend_@item.FromUserId' class='media @(item.IsSeen ? "" : "new-message")'>
+                            <a href='@Url.Action("Index", "Message", new { friendId = item.FromUserId })'>
+                                <div class="media-body">
+
+                                    <div class="media">
+                                        <span class="pull-left">
+                                            <img class="media-object img-circle" style="max-height:40px;" src="~/Images/unknown.jpg" />
+                                        </span>
+                                        <div class="media-body">
+                                            <h5>@item.FromUserName</h5>
+                                            <small>@item.CreatedOn</small>
                                         </div>
-
                                     </div>
-                                </a>
-                            </li>
-                        }
-                    </ul>
 
-                </div>
+                                </div>
+                            </a>
+                        </li>
+                    }
+                </ul>
+
             </div>
-
         </div>
+
     </div>
 </div>
 
@@ -169,8 +172,8 @@
     <script id="template-message-history" type="x-tmpl-mustache">
         {{#IsSeen}}
         <li id='friend_{{FromUserId}}' class='media'>
-        {{/IsSeen}}
-        {{^IsSeen}}
+            {{/IsSeen}}
+            {{^IsSeen}}
         <li id='friend_{{FromUserId}}' class='media new-message'>
             {{/IsSeen}}
             <a href='/Message?friendId={{FromUserId}}'>

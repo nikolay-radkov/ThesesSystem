@@ -3,51 +3,52 @@
     ViewBag.Title = "Разработка";
 }
 
-<div>
+<h2>
     <div class="row">
-        <div class="col-md-9"><h2>@ViewBag.Title</h2></div>
+        <div class="col-md-9 text-left">
+            @ViewBag.Title
+        </div>
         @if (this.User.IsInRole(ThesesSystem.Web.Infrastructure.Constants.GlobalConstants.STUDENT))
         {
             <div class="col-md-2">
-                @Html.ActionLink("Нова дипломна работа", "Create", "Thesis", new { area = string.Empty }, new { @class = "btn btn-lg btn-primary shadowed" })
+                @Html.ActionLink("Създай", "Create", "Thesis", new { area = string.Empty }, new { @class = "btn btn-danger max-width" })
             </div>
         }
-        <br />
     </div>
-    <div class="row">
-        <ul class="thumbnails list-unstyled">
-            @if (Model.Count == 0)
-            {
-                <li>
-                    <h2>Все още нямате дипломна работа, която да разработвате.</h2>
-                    <p>Моля създайте нова или изберете от списъка с теми на преподавателите.</p>
-                </li>
-            }
-            @foreach (var item in Model)
-            {
-                <li class="col-md-3 col-sm-6">
-                    <div class="thumbnail shadowed" style="padding: 0">
-                        <div class="caption">
-                            <h2 class="text-center">@Html.ActionLink(@item.Title, "ThesisProfile", "Thesis", new { area = string.Empty, id = item.Id }, new { @class = string.Empty })</h2>
-                            <p>@item.Description</p>
-                            <p><i class="fa fa-user fa-2x"></i> Студент: @Html.ActionLink(item.StudentName, "Account", "User", new { area = string.Empty, id = item.StudentId }, new { @class = string.Empty })</p>
-                            <p><i class="fa fa-user fa-2x"></i> Ръководител: @Html.ActionLink(item.SupervisorName, "Account", "User", new { area = string.Empty, id = item.SupervisorId }, new { @class = string.Empty })</p>
+</h2>
+<div class="row">
+    <ul class="thumbnails list-unstyled">
+        @if (Model.Count == 0)
+        {
+            <li class="alert alert-info">
+                <h2>Все още нямате дипломна работа, която да разработвате.</h2>
+                <p>Моля създайте нова или изберете от списъка с теми на преподавателите.</p>
+            </li>
+        }
+        @foreach (var item in Model)
+        {
+            <li class="col-md-3 col-sm-6">
+                <div class="thumbnail shadowed" style="padding: 0">
+                    <div class="caption">
+                        <h2 class="text-center">@Html.ActionLink(@item.Title, "ThesisProfile", "Thesis", new { area = string.Empty, id = item.Id }, new { @class = string.Empty })</h2>
+                        <p>@item.Description</p>
+                        <p><i class="fa fa-user fa-2x"></i> Студент: @Html.ActionLink(item.StudentName, "Account", "User", new { area = string.Empty, id = item.StudentId }, new { @class = string.Empty })</p>
+                        <p><i class="fa fa-user fa-2x"></i> Ръководител: @Html.ActionLink(item.SupervisorName, "Account", "User", new { area = string.Empty, id = item.SupervisorId }, new { @class = string.Empty })</p>
+                    </div>
+                    <div class="modal-footer" style="text-align: left">
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="@item.CompletedPercent" aria-valuemin="0" aria-valuemax="100" style="width: @item.CompletedPercent%;">
+                                @item.CompletedPercent%
+                            </div>
                         </div>
-                        <div class="modal-footer" style="text-align: left">
-                            <div class="progress">
-                                <div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="@item.CompletedPercent" aria-valuemin="0" aria-valuemax="100" style="width: @item.CompletedPercent%;">
-                                    @item.CompletedPercent%
-                                </div>
-                            </div>
-                            <div class="row text-center">
-                                <div class="col-md-6"><b>ОКС</b><br /><small>@Html.DisplayFor(x => item.Oks)</small></div>
-                                <div class="col-md-6"><b>Дни на разработка</b><br /><small>@item.DaysDeveloping</small></div>
-                            </div>
+                        <div class="row text-center">
+                            <div class="col-md-6"><b>ОКС</b><br /><small>@Html.DisplayFor(x => item.Oks)</small></div>
+                            <div class="col-md-6"><b>Дни на разработка</b><br /><small>@item.DaysDeveloping</small></div>
                         </div>
                     </div>
+                </div>
 
-                </li>
-            }
-        </ul>
-    </div>
+            </li>
+        }
+    </ul>
 </div>

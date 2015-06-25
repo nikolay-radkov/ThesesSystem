@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = "Профил на потребител";
 }
-<h2>Информация за потребителя</h2>
+<h2>@ViewBag.Title</h2>
 <br />
 <div class="panel shadowed">
     <div class="row">
@@ -11,33 +11,45 @@
             <img alt="User Pic" src="~/Images/unknown.jpg" class="img-circle img-responsive" />
         </div>
         <div class=" col-md-9 col-lg-9 col-sm-9">
-            <table class="table table-user-information">
-                <tbody>
-                    <tr>
-                        <td>@Html.LabelFor(m => Model.FullName)</td>
-                        <td>@Html.DisplayFor(m => Model.FullName)</td>
-                    </tr>
-                    <tr>
-                        <td>@Html.LabelFor(m => Model.EGN)</td>
-                        <td>@Html.DisplayFor(m => Model.EGN)</td>
-                    </tr>
-                    <tr>
-                        <td>@Html.LabelFor(m => Model.PhoneNumber)</td>
-                        <td>@Html.DisplayFor(m => Model.PhoneNumber)</td>
-                    </tr>
-                    <tr>
-                        <td>@Html.LabelFor(m => Model.Email)</td>
-                        <td>@Html.DisplayFor(m => Model.Email)</td>
-                    </tr>
-                    <tr id="content">
-                        <td>
-                            <div>
-                                <div id="content-loading" style="display: none">Моля изчакайте...</div>
-                                @if (Model.IsVerified)
-                                {
-                                    if (Model.IsStudent)
-                                    {
-                                        @Ajax.ActionLink(
+            <div class="row border-bottom">
+                <div class="col-md-6">
+                    @Html.LabelFor(m => Model.FullName)
+                </div>
+                <div class="col-md-6">
+                    @Html.DisplayFor(m => Model.FullName)
+                </div>
+            </div>
+            <div class="row border-bottom">
+                <div class="col-md-6">
+                    @Html.LabelFor(m => Model.EGN)
+                </div>
+                <div class="col-md-6">
+                    @Html.DisplayFor(m => Model.EGN)
+                </div>
+            </div>
+            <div class="row border-bottom">
+                <div class="col-md-6">
+                    @Html.LabelFor(m => Model.PhoneNumber)
+                </div>
+                <div class="col-md-6">
+                    @Html.DisplayFor(m => Model.PhoneNumber)
+                </div>
+            </div>
+            <div class="row border-bottom">
+                <div class="col-md-6">
+                    @Html.LabelFor(m => Model.Email)
+                </div>
+                <div class="col-md-6">
+                    @Html.DisplayFor(m => Model.Email)
+                </div>
+            </div>
+            <div id="content">
+                <div id="content-loading" style="display: none">Моля изчакайте...</div>
+                @if (Model.IsVerified)
+                {
+                    if (Model.IsStudent)
+                    {
+                        @Ajax.ActionLink(
                                             "Повече информация",
                                             "StudentInfo",
                                             "User",
@@ -54,12 +66,12 @@
                                             },
                                             new
                                             {
-                                                @class = "btn btn-primary btn-sm"
+                                                @class = "btn btn-info btn-sm"
                                             })
-                                    }
-                                    else
-                                    {
-                                        @Ajax.ActionLink(
+                    }
+                    else
+                    {
+                        @Ajax.ActionLink(
                                             "Повече информация",
                                             "TeacherInfo",
                                             "User",
@@ -76,17 +88,11 @@
                                             },
                                             new
                                             {
-                                                @class = "btn btn-primary btn-sm"
+                                                @class = "btn btn-info btn-sm"
                                             })
-                                    }
-                                }
-                            </div>
-                        </td>
-                        <td></td>
-                    </tr>
-
-                </tbody>
-            </table>
+                    }
+                }
+            </div>
         </div>
     </div>
     @if (!Model.IsVerified)
@@ -100,7 +106,7 @@
                         @Html.AntiForgeryToken()
                         @Html.DropDownList("verificationType", EnumHelper.GetSelectList(typeof(ThesesSystem.Web.ViewModels.Users.VerificationType)), new { @class = "form-control" })
 
-                        <input type="submit" value="Потвърди" class="btn btn-lg btn-danger" />
+                        <input type="submit" value="Потвърди" class="btn btn-lg btn-danger max-width" />
                     }
                 }
             </div>
@@ -109,17 +115,17 @@
     else
     {
         <div class="row">
-            <div class="col-sm-6 col-xs-12 col-md-4 col-lg-4">
-                @Html.ActionLink("Изпрати съобщение", "Index", "Message", routeValues: new { area = string.Empty, friendId = Model.Id }, htmlAttributes: new { title = "Съобщения", @class = "btn btn-lg btn-primary" })
+            <div class="col-sm-6 col-xs-12 col-md-4 col-lg-4 text-center">
+                <a href='@Url.Action("Index", "Message", new { area = string.Empty, friendId = Model.Id })'><button class="btn btn-lg btn-primary max-width">Изпрати съобщение</button></a>
             </div>
 
-            <div class=" col-md-offset-4 col-lg-offset-4  col-sm-6 col-xs-12 col-md-4 col-lg-4 text-right">
+            <div class=" col-md-offset-4 col-lg-offset-4  col-sm-6 col-xs-12 col-md-4 col-lg-4">
                 @if (Model.IsFriend)
                 {
                     using (Html.BeginForm("RemoveFriend", "User", new { id = Model.Id }, FormMethod.Post))
                     {
                         @Html.AntiForgeryToken()
-                        <input type="submit" value="Премахни от приятели" class="btn btn-lg btn-danger" />
+            <input type="submit" value="Премахни от приятели" class="btn btn-lg btn-danger max-width " />
                     }
                 }
                 else
@@ -127,7 +133,7 @@
                     using (Html.BeginForm("NewFriend", "User", new { id = Model.Id }, FormMethod.Post))
                     {
                         @Html.AntiForgeryToken()
-                        <input type="submit" value="Добави към приятели" class="btn btn-lg btn-success" />
+                        <input type="submit" value="Добави към приятели" class="btn btn-lg btn-success max-width " />
                     }
                 }
             </div>

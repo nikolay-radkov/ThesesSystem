@@ -190,8 +190,9 @@
         [NonAction]
         private async Task SignInUser(User user)
         {
-            var signInManager = Request.GetOwinContext().Get<ApplicationSignInManager>();
-            await signInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+            var signInManager = Request.GetOwinContext()
+                .Get<ApplicationSignInManager>();
+            await signInManager.SignInAsync(user, false, false);
         }
     }
 }

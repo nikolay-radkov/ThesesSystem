@@ -4,19 +4,21 @@
 }
 
 <h2>@ViewBag.Title</h2>
-
-@using (Html.BeginForm("Create", "Tutorial", new { area = string.Empty }, FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
-{
-    @Html.AntiForgeryToken()
-    <hr />
-    @Html.ValidationSummary("", new { @class = "text-danger" })
-    <div class="form-group">
-        @Html.LabelFor(m => m.Archive, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(m => m.Archive, new { type = "file", accept = ".rar,.tar,.zip,.7z,.bz,.bz2" })
-            @Html.ValidationMessageFor(model => model.Archive, "", new { @class = "text-danger" })
+<div class="row text-center">
+    @using (Html.BeginForm("Create", "Tutorial", new { area = string.Empty }, FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+        <hr />
+        @Html.ValidationSummary("", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(m => m.Archive, new { @class = "col-md-offset-2 col-md-2 control-label" })
+            <div class="col-md-6">
+                @Html.TextBoxFor(m => m.Archive, new { type = "file", accept = ".rar,.tar,.zip,.7z,.bz,.bz2" })
+                @Html.ValidationMessageFor(model => model.Archive, "", new { @class = "text-danger" })
+            </div>
         </div>
-    </div>
 
-    <input type="submit" name="name" value="Създай" class="btn btn-danger" />
-}
+        <input type="submit" name="name" value="Създай" class="btn btn-lg btn-danger" />
+    }
+</div>
+<br />

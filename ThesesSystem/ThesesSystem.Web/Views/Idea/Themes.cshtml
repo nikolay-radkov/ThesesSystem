@@ -3,57 +3,59 @@
     ViewBag.Title = "Теми";
     var index = 0;
 }
-<div>
+<h2>
     <div class="row">
-        <div class="row">
-            <div class="col-md-9"><h2>@ViewBag.Title</h2></div>
-            @if (this.User.IsInRole(ThesesSystem.Web.Infrastructure.Constants.GlobalConstants.TEACHER))
-            {
-                <div class="col-md-2">
-                    @Html.ActionLink("Нова тема", "Create", "Idea", new { area = string.Empty }, new { @class = "btn btn-lg btn-primary shadowed" })
-                </div>
-            }
-            <br />
+        <div class="col-md-9 text-left">
+            @ViewBag.Title
         </div>
-        @if (Model.Count == 0)
+        @if (this.User.IsInRole(ThesesSystem.Web.Infrastructure.Constants.GlobalConstants.TEACHER))
         {
-            <h2>Няма намерени теми за диломна работа</h2>
-        }
-        @foreach (var item in Model)
-        {
-            index++;
-            <div class="col-md-8">
-                <div class="row shadowed">
-                    <div class="col-md-9 col-sm-9">
-                        <h2>@item.Title</h2>
-                        <h3>@item.TeacherName</h3>
-                    </div>
-                    @if (User.IsInRole(ThesesSystem.Web.Infrastructure.Constants.GlobalConstants.STUDENT))
-                    {
-                        <div class="col-md-3 col-sm-3">
-                            @if (item.IsTaken)
-                            {
-                                <div class="alert alert-danger" role="alert">
-                                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-                                    <span>Заета</span>
-                                </div>
-                            }
-                            else
-                            {
-                                using (Html.BeginForm("Take", "Idea", new { id = item.Id }, FormMethod.Get, new { @class = "form-horizontal", role = "form" }))
-                                {
-                                    <input type="submit" class="btn btn-success" value="Използвай" />
-                                }
-                            }
-                        </div>
-                    }
-                </div>
+            <div class="col-md-2">
+                @Html.ActionLink("Нова тема", "Create", "Idea", new { area = string.Empty }, new { @class = "btn btn-primary shadowed" })
             </div>
         }
     </div>
-    <div class="row">
-        <div class="col-lg-offset-3 text-center">
-            @Html.Partial("_PaginationPartial", (ThesesSystem.Web.ViewModels.Partials.PaginationViewModel)ViewData["Pagination"])
+</h2>
+<div class="row">
+
+    @if (Model.Count == 0)
+    {
+        <h2>Няма намерени теми за диломна работа</h2>
+    }
+    @foreach (var item in Model)
+    {
+        index++;
+        <div class="col-md-8">
+            <div class="row shadowed">
+                <div class="col-md-9 col-sm-9">
+                    <h2>@item.Title</h2>
+                    <h3>@item.TeacherName</h3>
+                </div>
+                @if (User.IsInRole(ThesesSystem.Web.Infrastructure.Constants.GlobalConstants.STUDENT))
+                {
+                    <div class="col-md-3 col-sm-3">
+                        @if (item.IsTaken)
+                        {
+                            <div class="alert alert-danger" role="alert">
+                                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                <span>Заета</span>
+                            </div>
+                        }
+                        else
+                        {
+                            using (Html.BeginForm("Take", "Idea", new { id = item.Id }, FormMethod.Get, new { @class = "form-horizontal", role = "form" }))
+                            {
+                                <input type="submit" class="btn btn-success" value="Използвай" />
+                            }
+                        }
+                    </div>
+                }
+            </div>
         </div>
+    }
+</div>
+<div class="row">
+    <div class="col-lg-offset-3 text-center">
+        @Html.Partial("_PaginationPartial", (ThesesSystem.Web.ViewModels.Partials.PaginationViewModel)ViewData["Pagination"])
     </div>
 </div>
