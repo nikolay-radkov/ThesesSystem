@@ -5,7 +5,7 @@
     using ThesesSystem.Models;
     using ThesesSystem.Web.Infrastructure.Mapping;
 
-    public class FacultyDetailViewModel : IMapFrom<Faculty>
+    public class FacultyUpdateViewModel : IMapFrom<Faculty>
     {
         public int Id { get; set; }
 

@@ -41,7 +41,7 @@
                 return HttpNotFound();
             }
 
-            var viewModel = Mapper.Map<FacultyDetailViewModel>(faculty);
+            var viewModel = Mapper.Map<FacultyUpdateViewModel>(faculty);
 
             return View(viewModel);
         }
@@ -80,14 +80,14 @@
                 return HttpNotFound();
             }
 
-            var viewModel = Mapper.Map<FacultyDetailViewModel>(faculty);
+            var viewModel = Mapper.Map<FacultyUpdateViewModel>(faculty);
 
             return View(viewModel);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(FacultyDetailViewModel model)
+        public ActionResult Edit(FacultyUpdateViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -101,9 +101,9 @@
             return View(model);
         }
 
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int? id)
+        public ActionResult Delete(int? id)
         {
             if (id == null)
             {

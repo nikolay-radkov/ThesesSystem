@@ -239,8 +239,11 @@
     <Compile Include="Areas\Administration\Controllers\ThesisThemesController.cs" />
     <Compile Include="Areas\Administration\Controllers\ThesisTutorialsController.cs" />
     <Compile Include="Areas\Administration\ViewModels\Faculties\FacultyCreateViewModel.cs" />
-    <Compile Include="Areas\Administration\ViewModels\Faculties\FacultyDetailViewModel.cs" />
+    <Compile Include="Areas\Administration\ViewModels\Faculties\FacultyUpdateViewModel.cs" />
     <Compile Include="Areas\Administration\ViewModels\Faculties\FacultyViewModel.cs" />
+    <Compile Include="Areas\Administration\ViewModels\Specialties\SpecialtyCreateViewModel.cs" />
+    <Compile Include="Areas\Administration\ViewModels\Specialties\SpecialtyUpdateViewModel.cs" />
+    <Compile Include="Areas\Administration\ViewModels\Specialties\SpecialtyViewModel.cs" />
     <Compile Include="Areas\Administration\ViewModels\ThesisThemes\ThesisThemeDetailViewModel.cs" />
     <Compile Include="Areas\Administration\ViewModels\ThesisThemes\ThesisThemeViewModel.cs" />
     <Compile Include="Areas\Administration\ViewModels\ThesisTutorials\ThesisTutorialDetailViewModel.cs" />
@@ -557,7 +560,6 @@
     <Content Include="Views\Feedback\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Areas\Administration\ViewModels\Specialties\" />
     <Folder Include="Areas\Administration\ViewModels\Theses\" />
   </ItemGroup>
   <ItemGroup>

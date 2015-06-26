@@ -1,133 +1,122 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
-using System.Net;
-using System.Web;
-using System.Web.Mvc;
-using ThesesSystem.Data;
-using ThesesSystem.Models;
-
-namespace ThesesSystem.Web.Areas.Administration.Controllers
+﻿namespace ThesesSystem.Web.Areas.Administration.Controllers
 {
-    public class SpecialtiesController : Controller
-    {
-        private ThesesSystemDbContext db = new ThesesSystemDbContext();
+    using AutoMapper;
+    using AutoMapper.QueryableExtensions;
+    using System.Linq;
+    using System.Net;
+    using System.Web.Mvc;
+    using ThesesSystem.Data;
+    using ThesesSystem.Models;
+    using ThesesSystem.Web.Areas.Administration.ViewModels.Specialties;
+    using ThesesSystem.Web.Controllers.BaseControllers;
 
-        // GET: Administration/Specialties
-        public ActionResult Index()
+    public class SpecialtiesController : AdministrationController
+    {
+        public SpecialtiesController(IThesesSystemData data)
+            : base(data)
         {
-            var specialties = db.Specialties.Include(s => s.Faculty);
-            return View(specialties.ToList());
         }
 
-        // GET: Administration/Specialties/Details/5
+        public ActionResult Index()
+        {
+            var specialties = this.Data.Specialties.All()
+                                .Project()
+                                .To<SpecialtyViewModel>()
+                                .ToList();
+
+            return View(specialties);
+        }
+
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Specialty specialty = db.Specialties.Find(id);
+
+            var specialty = this.Data.Specialties.GetById(id);
+
             if (specialty == null)
             {
                 return HttpNotFound();
             }
-            return View(specialty);
+
+            var viewModel = Mapper.Map<SpecialtyUpdateViewModel>(specialty);
+
+            return View(viewModel);
         }
 
-        // GET: Administration/Specialties/Create
         public ActionResult Create()
         {
-            ViewBag.FacultyId = new SelectList(db.Faculties, "Id", "Title");
+            ViewBag.FacultyId = new SelectList(this.Data.Faculties.All(), "Id", "Title");
             return View();
         }
 
-        // POST: Administration/Specialties/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Title,FacultyId,IsDeleted,DeletedOn,CreatedOn,ModifiedOn")] Specialty specialty)
+        public ActionResult Create(SpecialtyCreateViewModel model)
         {
             if (ModelState.IsValid)
             {
-                db.Specialties.Add(specialty);
-                db.SaveChanges();
+                var specialty = Mapper.Map<Specialty>(model);
+                this.Data.Specialties.Add(specialty);
+                this.Data.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.FacultyId = new SelectList(db.Faculties, "Id", "Title", specialty.FacultyId);
-            return View(specialty);
+            return View(model);
         }
 
-        // GET: Administration/Specialties/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Specialty specialty = db.Specialties.Find(id);
+
+            var specialty = this.Data.Specialties.GetById(id);
+      
             if (specialty == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.FacultyId = new SelectList(db.Faculties, "Id", "Title", specialty.FacultyId);
-            return View(specialty);
+
+            var viewModel = Mapper.Map<SpecialtyUpdateViewModel>(specialty);
+
+            ViewBag.FacultyId = new SelectList(this.Data.Faculties.All(), "Id", "Title", specialty.FacultyId);
+            return View(viewModel);
         }
 
-        // POST: Administration/Specialties/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Title,FacultyId,IsDeleted,DeletedOn,CreatedOn,ModifiedOn")] Specialty specialty)
+        public ActionResult Edit(SpecialtyUpdateViewModel model)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(specialty).State = EntityState.Modified;
-                db.SaveChanges();
+                var specialty = Mapper.Map<Specialty>(model);
+
+                this.Data.Specialties.Update(specialty);
+                this.Data.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.FacultyId = new SelectList(db.Faculties, "Id", "Title", specialty.FacultyId);
-            return View(specialty);
+
+            return View(model);
         }
 
-        // GET: Administration/Specialties/Delete/5
+        // POST: Administration/Specialties/Delete/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Specialty specialty = db.Specialties.Find(id);
-            if (specialty == null)
-            {
-                return HttpNotFound();
-            }
-            return View(specialty);
-        }
 
-        // POST: Administration/Specialties/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            Specialty specialty = db.Specialties.Find(id);
-            db.Specialties.Remove(specialty);
-            db.SaveChanges();
+            this.Data.Specialties.Delete(id);
+            this.Data.SaveChanges();
+
             return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
         }
     }
 }

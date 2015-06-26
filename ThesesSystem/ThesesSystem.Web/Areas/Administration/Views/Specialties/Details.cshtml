@@ -1,7 +1,6 @@
-﻿@model ThesesSystem.Models.Specialty
-
+﻿@model ThesesSystem.Web.Areas.Administration.ViewModels.Specialties.SpecialtyUpdateViewModel
 @{
-    ViewBag.Title = "Информация за специалности";
+    ViewBag.Title = "Информация за специалност";
 }
 
 <h2>@ViewBag.Title</h2>
@@ -9,53 +8,25 @@
 <div>
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Faculty.Title)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Faculty.Title)
-        </dd>
-
-        <dt>
             @Html.DisplayNameFor(model => model.Title)
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.Title)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.IsDeleted)
+            @Html.DisplayNameFor(model => model.FacultyTitle)
         </dt>
-
         <dd>
-            @Html.DisplayFor(model => model.IsDeleted)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.DeletedOn)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DeletedOn)
+            @Html.DisplayFor(model => model.FacultyTitle)
         </dd>
 
         <dt>
             @Html.DisplayNameFor(model => model.CreatedOn)
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.CreatedOn)
         </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ModifiedOn)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ModifiedOn)
-        </dd>
-
     </dl>
 </div>
 <p>

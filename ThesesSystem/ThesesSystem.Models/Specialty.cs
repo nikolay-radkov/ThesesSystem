@@ -23,7 +23,6 @@
         [MinLength(1)]
         public string Title { get; set; }
 
-
         public int FacultyId { get; set; }
 
         public virtual Faculty Faculty { get; set; }
