@@ -1,54 +1,20 @@
-﻿@model ThesesSystem.Models.ThesisTutorial
+﻿@model ThesesSystem.Web.Areas.Administration.ViewModels.ThesisTutorials.ThesisTutorialDetailViewModel
 
 @{
-    ViewBag.Title = "Details";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Информация за наръчник";
 }
 
 <h2>@ViewBag.Title</h2>
 
 <div>
-    <h4>ThesisTutorial</h4>
-    <hr />
     <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Teacher.OfficePhoneNumber)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Teacher.OfficePhoneNumber)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.FilePath)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.FilePath)
-        </dd>
-
         <dt>
             @Html.DisplayNameFor(model => model.FileName)
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.FileName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.IsDeleted)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.IsDeleted)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.DeletedOn)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DeletedOn)
+            <a href="/Administration/ThesisTutorials/DownloadTutorial/@Model.Id"><i class="fa fa-download"></i></a>
         </dd>
 
         <dt>
@@ -58,18 +24,16 @@
         <dd>
             @Html.DisplayFor(model => model.CreatedOn)
         </dd>
-
         <dt>
-            @Html.DisplayNameFor(model => model.ModifiedOn)
+            @Html.DisplayNameFor(model => model.TeacherName)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.ModifiedOn)
+            @Html.DisplayFor(model => model.TeacherName)
         </dd>
-
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Промяна", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Назад", "Index")
 </p>

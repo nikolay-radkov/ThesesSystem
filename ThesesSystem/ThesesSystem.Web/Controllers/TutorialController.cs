@@ -14,6 +14,7 @@ using ThesesSystem.Web.ViewModels.ThesisTutorials;
 using ThesesSystem.Web.Infrastructure.Helper;
 using Microsoft.AspNet.Identity;
 using ThesesSystem.Models;
+using System.Net;
 
 namespace ThesesSystem.Web.Controllers
 {
@@ -101,9 +102,19 @@ namespace ThesesSystem.Web.Controllers
         }
 
         [HttpGet]
-        public ActionResult DownloadTutorial(int id)
+        public ActionResult DownloadTutorial(int? id)
         {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
             var tutorial = this.Data.ThesisTutorials.GetById(id);
+
+            if (tutorial == null)
+            {
+                return HttpNotFound();
+            }
 
             var mimeType = MimeTypeCreator.GetFileMimeType(string.Empty);
             var fileBytes = storage.DownloadFile(tutorial.FilePath);

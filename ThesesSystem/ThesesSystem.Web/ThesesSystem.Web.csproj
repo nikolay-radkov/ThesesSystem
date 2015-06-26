@@ -238,8 +238,14 @@
     <Compile Include="Areas\Administration\Controllers\ThesesController.cs" />
     <Compile Include="Areas\Administration\Controllers\ThesisThemesController.cs" />
     <Compile Include="Areas\Administration\Controllers\ThesisTutorialsController.cs" />
+    <Compile Include="Areas\Administration\ViewModels\Faculties\FacultyCreateViewModel.cs" />
+    <Compile Include="Areas\Administration\ViewModels\Faculties\FacultyDetailViewModel.cs" />
+    <Compile Include="Areas\Administration\ViewModels\Faculties\FacultyViewModel.cs" />
     <Compile Include="Areas\Administration\ViewModels\ThesisThemes\ThesisThemeDetailViewModel.cs" />
     <Compile Include="Areas\Administration\ViewModels\ThesisThemes\ThesisThemeViewModel.cs" />
+    <Compile Include="Areas\Administration\ViewModels\ThesisTutorials\ThesisTutorialDetailViewModel.cs" />
+    <Compile Include="Areas\Administration\ViewModels\ThesisTutorials\ThesisTutorialUpdateViewModel.cs" />
+    <Compile Include="Areas\Administration\ViewModels\ThesisTutorials\ThesisTutorialViewModel.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseControllers\AdministrationController.cs" />
     <Compile Include="Controllers\BaseControllers\AuthorizeController.cs" />
@@ -550,7 +556,10 @@
     <Content Include="Views\Shared\_NotificationPartial.cshtml" />
     <Content Include="Views\Feedback\Index.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Areas\Administration\ViewModels\Specialties\" />
+    <Folder Include="Areas\Administration\ViewModels\Theses\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />

@@ -1,133 +1,148 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
-using System.Net;
-using System.Web;
-using System.Web.Mvc;
-using ThesesSystem.Data;
-using ThesesSystem.Models;
-
-namespace ThesesSystem.Web.Areas.Administration.Controllers
+﻿namespace ThesesSystem.Web.Areas.Administration.Controllers
 {
-    public class ThesisTutorialsController : Controller
+    using AutoMapper;
+    using AutoMapper.QueryableExtensions;
+    using System;
+    using System.IO;
+    using System.Linq;
+    using System.Net;
+    using System.Web.Mvc;
+    using ThesesSystem.Data;
+    using ThesesSystem.Models;
+    using ThesesSystem.Web.Areas.Administration.ViewModels.ThesisTutorials;
+    using ThesesSystem.Web.Controllers.BaseControllers;
+    using ThesesSystem.Web.Infrastructure.Constants;
+    using ThesesSystem.Web.Infrastructure.Storage;
+    public class ThesisTutorialsController : AdministrationController
     {
-        private ThesesSystemDbContext db = new ThesesSystemDbContext();
+        private IStorage storage;
 
-        // GET: Administration/ThesisTutorials
-        public ActionResult Index()
+        public ThesisTutorialsController(IThesesSystemData data, IStorage storage)
+            : base(data)
         {
-            var thesisTutorials = db.ThesisTutorials.Include(t => t.Teacher);
-            return View(thesisTutorials.ToList());
+            this.storage = storage;
         }
 
-        // GET: Administration/ThesisTutorials/Details/5
+        public ActionResult Index()
+        {
+            var thesisTutorials = this.Data.ThesisTutorials.All()
+                                 .Project()
+                                 .To<ThesisTutorialViewModel>()
+                                 .ToList();
+
+            return View(thesisTutorials);
+        }
+
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ThesisTutorial thesisTutorial = db.ThesisTutorials.Find(id);
+
+            var thesisTutorial = this.Data.ThesisTutorials.GetById(id);
+
             if (thesisTutorial == null)
             {
                 return HttpNotFound();
             }
-            return View(thesisTutorial);
+
+            var viewModel = Mapper.Map<ThesisTutorialDetailViewModel>(thesisTutorial);
+
+            return View(viewModel);
         }
 
-        // GET: Administration/ThesisTutorials/Create
-        public ActionResult Create()
-        {
-            ViewBag.TeacherId = new SelectList(db.Teachers, "Id", "OfficePhoneNumber");
-            return View();
-        }
-
-        // POST: Administration/ThesisTutorials/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,FilePath,FileName,TeacherId,IsDeleted,DeletedOn,CreatedOn,ModifiedOn")] ThesisTutorial thesisTutorial)
-        {
-            if (ModelState.IsValid)
-            {
-                db.ThesisTutorials.Add(thesisTutorial);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
-            ViewBag.TeacherId = new SelectList(db.Teachers, "Id", "OfficePhoneNumber", thesisTutorial.TeacherId);
-            return View(thesisTutorial);
-        }
-
-        // GET: Administration/ThesisTutorials/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ThesisTutorial thesisTutorial = db.ThesisTutorials.Find(id);
+
+            var thesisTutorial = this.Data.ThesisTutorials.GetById(id);
+
             if (thesisTutorial == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.TeacherId = new SelectList(db.Teachers, "Id", "OfficePhoneNumber", thesisTutorial.TeacherId);
-            return View(thesisTutorial);
+
+            var viewModel = Mapper.Map<ThesisTutorialUpdateViewModel>(thesisTutorial);
+
+            return View(viewModel);
         }
 
-        // POST: Administration/ThesisTutorials/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,FilePath,FileName,TeacherId,IsDeleted,DeletedOn,CreatedOn,ModifiedOn")] ThesisTutorial thesisTutorial)
+        public ActionResult Edit(ThesisTutorialUpdateViewModel model)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && model.Archive != null && model.Archive.ContentLength > 0)
             {
-                db.Entry(thesisTutorial).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                try
+                {
+                    byte[] byteArray = null;
+
+                    using (var memory = new MemoryStream())
+                    {
+                        model.Archive.InputStream.CopyTo(memory);
+                        byteArray = memory.GetBuffer();
+                    }
+
+                    var fileName = string.Format(GlobalPatternConstants.VERSION_NAME, DateTime.Now.ToUniversalTime(), model.Archive.FileName);
+                    var fullPath = storage.UploadFile(byteArray, fileName, GlobalConstants.STORAGE_FOLDER);
+
+                    var thesisTutorial = this.Data.ThesisTutorials.GetById(model.Id);
+                    thesisTutorial.FileName = fileName;
+                    thesisTutorial.FilePath = fullPath;
+
+                    this.Data.ThesisTutorials.Update(thesisTutorial);
+                    this.Data.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                catch (Exception)
+                {
+                    return View(model);
+                }
+
             }
-            ViewBag.TeacherId = new SelectList(db.Teachers, "Id", "OfficePhoneNumber", thesisTutorial.TeacherId);
-            return View(thesisTutorial);
+            return View(model);
         }
 
-        // GET: Administration/ThesisTutorials/Delete/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ThesisTutorial thesisTutorial = db.ThesisTutorials.Find(id);
-            if (thesisTutorial == null)
-            {
-                return HttpNotFound();
-            }
-            return View(thesisTutorial);
-        }
 
-        // POST: Administration/ThesisTutorials/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            ThesisTutorial thesisTutorial = db.ThesisTutorials.Find(id);
-            db.ThesisTutorials.Remove(thesisTutorial);
-            db.SaveChanges();
+            this.Data.ThesisTutorials.Delete(id);
+            this.Data.SaveChanges();
+
             return RedirectToAction("Index");
         }
 
-        protected override void Dispose(bool disposing)
+        [HttpGet]
+        public ActionResult DownloadTutorial(int? id)
         {
-            if (disposing)
+            if (id == null)
             {
-                db.Dispose();
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            base.Dispose(disposing);
+
+            var tutorial = this.Data.ThesisTutorials.GetById(id);
+
+            if (tutorial == null)
+            {
+                return HttpNotFound();
+            }
+
+            var mimeType = MimeTypeCreator.GetFileMimeType(string.Empty);
+            var fileBytes = storage.DownloadFile(tutorial.FilePath);
+
+            var ms = new MemoryStream(fileBytes);
+
+            return File(fileBytes, mimeType, tutorial.FileName);
         }
     }
 }

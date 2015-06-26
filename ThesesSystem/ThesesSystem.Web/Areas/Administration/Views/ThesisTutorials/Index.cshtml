@@ -1,70 +1,79 @@
-﻿@model IEnumerable<ThesesSystem.Models.ThesisTutorial>
+﻿@model IEnumerable<ThesesSystem.Web.Areas.Administration.ViewModels.ThesisTutorials.ThesisTutorialViewModel>
 
 @{
-    ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Наръчници за дипломни работи";
 }
 
 <h2>@ViewBag.Title</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 <table class="table">
     <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Teacher.OfficePhoneNumber)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.FilePath)
-        </th>
         <th>
             @Html.DisplayNameFor(model => model.FileName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.IsDeleted)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DeletedOn)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CreatedOn)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ModifiedOn)
+            @Html.DisplayNameFor(model => model.TeacherName)
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Teacher.OfficePhoneNumber)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.FilePath)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.FileName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IsDeleted)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DeletedOn)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CreatedOn)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ModifiedOn)
-        </td>
-        <td>
-            @Html.ActionLink("Промяна", "Edit", new { id = item.Id }) |
-            @Html.ActionLink("Детайли", "Details", new { id = item.Id }) |
-            @Html.ActionLink("Изтриване", "Delete", new { id = item.Id })
-        </td>
-    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.FileName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TeacherName)
+            </td>
+            <td>
+                @Html.ActionLink("Промяна", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Детайли", "Details", new { id = item.Id }) |
+                @using (Html.BeginForm("Delete", "ThesisTutorials", new { area = "Administration", id = item.Id }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <span data-id="@item.Id" class="sweet-@(item.Id + 10) span-submit" onclick="_gaq.push(['_trackEvent', 'example', 'try', 'sweet-@(item.Id + 10)']);">Изтрий</span>
+
+                    <input id="btn-submit-@item.Id" type="submit" name="name" value="Създай" class="hidden btn btn-danger" />
+                }
+            </td>
+        </tr>
+    }
+</table>
+@section styles {
+    @Styles.Render("~/Content/sweetalert")
 }
 
-</table>
+@section scripts
+{
+    @Scripts.Render("~/bundles/sweetalert")
+
+    <script>
+        function sendForm(id) {
+            $('#btn-submit-' + id).click();
+        }
+
+        function onClick() {
+            var $this = $(this);
+
+            swal({
+                title: "Сигурни ли сте, че искате да изтриете този запис?",
+                type: "success",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: 'Изтрий!',
+                cancelButtonText: 'Отказ',
+            },
+            function (isConfirm) {
+                if (isConfirm) {
+                    var id = $this.attr('data-id');
+                    sendForm(id);
+                }
+            });
+        };
+
+        var sweets = $('.span-submit');
+        sweets.on('click', onClick);
+    </script>
+}
