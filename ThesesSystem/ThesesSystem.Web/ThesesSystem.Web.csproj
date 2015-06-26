@@ -234,13 +234,14 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Areas\Administration\AdministrationAreaRegistration.cs" />
     <Compile Include="Areas\Administration\Controllers\FacultiesController.cs" />
-    <Compile Include="Areas\Administration\Controllers\HomeController.cs" />
     <Compile Include="Areas\Administration\Controllers\SpecialtiesController.cs" />
     <Compile Include="Areas\Administration\Controllers\ThesesController.cs" />
     <Compile Include="Areas\Administration\Controllers\ThesisThemesController.cs" />
     <Compile Include="Areas\Administration\Controllers\ThesisTutorialsController.cs" />
+    <Compile Include="Areas\Administration\ViewModels\ThesisThemes\ThesisThemeDetailViewModel.cs" />
+    <Compile Include="Areas\Administration\ViewModels\ThesisThemes\ThesisThemeViewModel.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\BaseControllers\AdmininistrationController.cs" />
+    <Compile Include="Controllers\BaseControllers\AdministrationController.cs" />
     <Compile Include="Controllers\BaseControllers\AuthorizeController.cs" />
     <Compile Include="Controllers\BaseControllers\BaseController.cs" />
     <Compile Include="Controllers\FacultyController.cs" />
@@ -421,27 +422,20 @@
     <Content Include="Content\toastr.scss" />
     <Content Include="Content\toastr.less" />
     <Content Include="Areas\Administration\Views\Faculties\Create.cshtml" />
-    <Content Include="Areas\Administration\Views\Faculties\Delete.cshtml" />
     <Content Include="Areas\Administration\Views\Faculties\Details.cshtml" />
     <Content Include="Areas\Administration\Views\Faculties\Edit.cshtml" />
     <Content Include="Areas\Administration\Views\Faculties\Index.cshtml" />
     <Content Include="Areas\Administration\Views\Specialties\Create.cshtml" />
-    <Content Include="Areas\Administration\Views\Specialties\Delete.cshtml" />
     <Content Include="Areas\Administration\Views\Specialties\Details.cshtml" />
     <Content Include="Areas\Administration\Views\Specialties\Edit.cshtml" />
     <Content Include="Areas\Administration\Views\Specialties\Index.cshtml" />
-    <Content Include="Areas\Administration\Views\ThesisTutorials\Create.cshtml" />
-    <Content Include="Areas\Administration\Views\ThesisTutorials\Delete.cshtml" />
     <Content Include="Areas\Administration\Views\ThesisTutorials\Details.cshtml" />
     <Content Include="Areas\Administration\Views\ThesisTutorials\Edit.cshtml" />
     <Content Include="Areas\Administration\Views\ThesisTutorials\Index.cshtml" />
-    <Content Include="Areas\Administration\Views\ThesisThemes\Create.cshtml" />
-    <Content Include="Areas\Administration\Views\ThesisThemes\Delete.cshtml" />
     <Content Include="Areas\Administration\Views\ThesisThemes\Details.cshtml" />
     <Content Include="Areas\Administration\Views\ThesisThemes\Edit.cshtml" />
     <Content Include="Areas\Administration\Views\ThesisThemes\Index.cshtml" />
     <Content Include="Areas\Administration\Views\Theses\Create.cshtml" />
-    <Content Include="Areas\Administration\Views\Theses\Delete.cshtml" />
     <Content Include="Areas\Administration\Views\Theses\Details.cshtml" />
     <Content Include="Areas\Administration\Views\Theses\Edit.cshtml" />
     <Content Include="Areas\Administration\Views\Theses\Index.cshtml" />
@@ -556,10 +550,7 @@
     <Content Include="Views\Shared\_NotificationPartial.cshtml" />
     <Content Include="Views\Feedback\Index.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Areas\Administration\ViewModels\" />
-    <Folder Include="Areas\Administration\Views\Home\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />

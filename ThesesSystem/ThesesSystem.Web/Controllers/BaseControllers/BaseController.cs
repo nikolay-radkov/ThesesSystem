@@ -16,7 +16,7 @@
         public BaseController(IThesesSystemData data)
         {
             this.Data = data;
-           }
+        }
 
         protected IThesesSystemData Data { get; set; }
 
