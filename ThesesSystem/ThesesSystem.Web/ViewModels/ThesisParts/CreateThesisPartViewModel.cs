@@ -7,7 +7,7 @@
     public class CreateThesisPartViewModel : IMapFrom<ThesisPart>, IHaveCustomMappings
     {
         [Display(Name="Част")]
-        [Required]
+        [Required(ErrorMessage = "{0} е задължително поле")]
         public string Title { get; set; }
 
         public void CreateMappings(AutoMapper.IConfiguration configuration)

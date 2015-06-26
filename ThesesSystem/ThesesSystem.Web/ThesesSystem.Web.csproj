@@ -343,6 +343,7 @@
     <Compile Include="ViewModels\Versions\CreateVersionViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\book.css" />
     <Content Include="Content\bootstrap.cosmo.css" />
     <Content Include="Content\bootstrap.cosmo.min.css" />
     <Content Include="Content\css\font-awesome.css" />

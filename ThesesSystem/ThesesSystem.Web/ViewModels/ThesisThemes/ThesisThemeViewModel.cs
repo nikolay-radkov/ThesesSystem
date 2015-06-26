@@ -11,6 +11,8 @@
 
         public bool IsTaken { get; set; }
 
+        public string TeacherId { get; set; }
+        
         public string TeacherName { get; set; }
 
         public void CreateMappings(AutoMapper.IConfiguration configuration)

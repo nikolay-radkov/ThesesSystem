@@ -25,10 +25,10 @@
         </div>
     </div>
     <div class="form-group">
-        @Html.LabelFor(model => model.SupervisorId, "SupervisorId", htmlAttributes: new { @class = "control-label col-md-2" })
+        <label for="SupervisorName" class="control-label col-md-2">Научен ръководител</label>
         <div class="col-md-10">
-            @Html.TextBoxFor(m => ViewData["SupervisorName"], new { @class = "form-control", @readonly = "readonly"})
-            @Html.TextBoxFor(m => m.SupervisorId, new { @class = "form-control hidden", @readonly = "readonly"})
+            @Html.TextBoxFor(m => ViewData["SupervisorName"], new { @class = "form-control", @readonly = "readonly" })
+            @Html.TextBoxFor(m => m.SupervisorId, new { @class = "form-control hidden", @readonly = "readonly" })
             @Html.ValidationMessageFor(model => model.SupervisorId, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -51,7 +51,8 @@
 
     <input id="btn-submit" type="submit" name="name" value="Създай" class="hidden btn btn-danger" />
 }
- @section styles {
+<br />
+@section styles {
     @Styles.Render("~/Content/sweetalert")
 }
 
@@ -71,7 +72,7 @@
                 type: "success",
                 showCancelButton: true,
                 confirmButtonColor: "#DD6B55",
-                confirmButtonText: 'СЪздай!',
+                confirmButtonText: 'Създай!',
                 cancelButtonText: 'Отказ',
             },
             function (isConfirm) {
@@ -82,8 +83,8 @@
         };
 
         var sweet = $('#span-submit');
-            sweet[0].onclick = onClick;
-     
+        sweet[0].onclick = onClick;
+
         $("#btn-add-part").on("click", addRow);
 
         function addRow() {
@@ -109,6 +110,7 @@
                             .attr("id", "ThesisParts_" + index + "__Title")
                             .attr("name", "ThesisParts[" + index + "].Title")
                             .attr("required", "required")
+                            .attr("data-val-required", "Част е задължително поле")
                             .addClass("form-control");
             div.append(input);
 

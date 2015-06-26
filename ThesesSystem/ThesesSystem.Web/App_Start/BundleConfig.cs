@@ -58,6 +58,9 @@ namespace ThesesSystem.Web
                 .Include("~/Content/bootstrap.cosmo.css",
                         "~/Content/font-awesome.min.css"));
 
+            bundles.Add(new StyleBundle("~/Content/book")
+                .Include("~/Content/book.css"));
+
             bundles.Add(new StyleBundle("~/Content/custom")
                 .Include("~/Content/site.css"));
 

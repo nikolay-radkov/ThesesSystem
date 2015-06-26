@@ -16,6 +16,8 @@
         }
     </div>
 </h2>
+
+
 <div class="row">
 
     @if (Model.Count == 0)
@@ -25,31 +27,51 @@
     @foreach (var item in Model)
     {
         index++;
-        <div class="col-md-8">
-            <div class="row shadowed">
-                <div class="col-md-9 col-sm-9">
-                    <h2>@item.Title</h2>
-                    <h3>@item.TeacherName</h3>
-                </div>
-                @if (User.IsInRole(ThesesSystem.Web.Infrastructure.Constants.GlobalConstants.STUDENT))
-                {
-                    <div class="col-md-3 col-sm-3">
-                        @if (item.IsTaken)
-                        {
-                            <div class="alert alert-danger" role="alert">
-                                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-                                <span>Заета</span>
-                            </div>
-                        }
-                        else
-                        {
-                            using (Html.BeginForm("Take", "Idea", new { id = item.Id }, FormMethod.Get, new { @class = "form-horizontal", role = "form" }))
+        <div class="col-xs-12 col-sm-6 col-lg-4">
+            <div class="box">
+                <div class="icon">
+
+                    @if (!item.IsTaken)
+                    {
+                        <div class="image not-taken">
+                            <i class="fa fa-flag"></i>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="image taken">
+                            <i class="fa fa-ban"></i>
+                        </div>
+                    }
+
+                    <div class="info shadowed">
+                        <h3 class="title">"@item.Title"</h3>
+                        <p>
+                            от <a href='@Url.Action("Account", "User", new { area = string.Empty, id = item.TeacherId })'>
+                                @item.TeacherName
+                            </a>
+                        </p>
+                        <div class="more">
+                            @if (User.IsInRole(ThesesSystem.Web.Infrastructure.Constants.GlobalConstants.STUDENT))
                             {
-                                <input type="submit" class="btn btn-success" value="Използвай" />
+                                if (item.IsTaken)
+                                {
+                                    <div class="alert alert-danger" role="alert">
+                                        <span>Заета</span>
+                                    </div>
+                                }
+                                else
+                                {
+                                    using (Html.BeginForm("Take", "Idea", new { id = item.Id }, FormMethod.Get, new { @class = "form-horizontal", role = "form" }))
+                                    {
+                                        <input type="submit" class="btn btn-success" value="Използвай" />
+                                    }
+                                }
                             }
-                        }
+                        </div>
                     </div>
-                }
+                </div>
+                <div class="space"></div>
             </div>
         </div>
     }

@@ -13,14 +13,14 @@
             this.ThesisParts = new HashSet<CreateThesisPartViewModel>();
         }
 
-        [Required]
+        [Required(ErrorMessage = "{0} е задължително поле")]
         public string SupervisorId { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "{0} е задължително поле")]
         [Display(Name = "Заглавие")]
         public string Title { get; set; }
 
-        [Required]
+        [Required(ErrorMessage="{0} е задължително поле")]
         [Display(Name = "Кратко описание")]
         public string Description { get; set; }
 
