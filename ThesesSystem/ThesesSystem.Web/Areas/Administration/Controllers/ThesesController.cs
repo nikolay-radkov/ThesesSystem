@@ -1,141 +1,186 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
-using System.Net;
-using System.Web;
-using System.Web.Mvc;
-using ThesesSystem.Data;
-using ThesesSystem.Models;
-
-namespace ThesesSystem.Web.Areas.Administration.Controllers
+﻿namespace ThesesSystem.Web.Areas.Administration.Controllers
 {
-    public class ThesesController : Controller
-    {
-        private ThesesSystemDbContext db = new ThesesSystemDbContext();
+    using AutoMapper;
+    using AutoMapper.QueryableExtensions;
+    using System;
+    using System.IO;
+    using System.Linq;
+    using System.Net;
+    using System.Web.Mvc;
+    using ThesesSystem.Data;
+    using ThesesSystem.Models;
+    using ThesesSystem.Web.Areas.Administration.ViewModels.Theses;
+    using ThesesSystem.Web.Areas.Administration.ViewModels.Users;
+    using ThesesSystem.Web.Controllers.BaseControllers;
+    using ThesesSystem.Web.Infrastructure.Constants;
+    using ThesesSystem.Web.Infrastructure.Storage;
 
-        // GET: Administration/Theses
-        public ActionResult Index()
+    public class ThesesController : AdministrationController
+    {
+        private IStorage storage;
+
+        public ThesesController(IThesesSystemData data, IStorage storage)
+            : base(data)
         {
-            var theses = db.Theses.Include(t => t.Evaluation).Include(t => t.Student).Include(t => t.Supervisor);
-            return View(theses.ToList());
+            this.storage = storage;
         }
 
-        // GET: Administration/Theses/Details/5
+        private void CreateSelectLists()
+        {
+            var students = this.Data.Users.All()
+                            .Where(u => u.Student != null)
+                            .Project()
+                            .To<UserDropDownItemViewModel>()
+                            .ToList();
+
+            var teachers = this.Data.Users.All()
+                          .Where(u => u.Teacher != null)
+                          .Project()
+                          .To<UserDropDownItemViewModel>()
+                          .ToList();
+
+            ViewBag.StudentId = new SelectList(students, "Id", "FullName");
+            ViewBag.SupervisorId = new SelectList(teachers, "Id", "FullName");
+            ViewBag.ReviewerId = new SelectList(teachers, "Id", "FullName");
+        }
+
+        public ActionResult Index()
+        {
+            var theses = this.Data.Theses.All()
+                                .Project()
+                                .To<ThesisViewModel>()
+                                .ToList();
+
+            return View(theses);
+        }
+
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Thesis thesis = db.Theses.Find(id);
+
+            var thesis = this.Data.Theses.GetById(id);
+
             if (thesis == null)
             {
                 return HttpNotFound();
             }
-            return View(thesis);
+
+            var viewModel = Mapper.Map<ThesisDetailViewModel>(thesis);
+
+            return View(viewModel);
         }
 
-        // GET: Administration/Theses/Create
         public ActionResult Create()
         {
-            ViewBag.Id = new SelectList(db.Evaluations, "Id", "FilePath");
-            ViewBag.StudentId = new SelectList(db.Students, "Id", "Id");
-            ViewBag.SupervisorId = new SelectList(db.Teachers, "Id", "OfficePhoneNumber");
+            this.CreateSelectLists();
             return View();
         }
 
-        // POST: Administration/Theses/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Title,Description,FinishedAt,Pages,FinalEvaluation,IsComplete,SupervisorId,StudentId,IsDeleted,DeletedOn,CreatedOn,ModifiedOn")] Thesis thesis)
+        public ActionResult Create(ThesisCreateViewModel model)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid 
+                && (model.ThesisArchive != null && model.ThesisArchive.ContentLength > 0)
+                && (model.ReviewArchive != null && model.ReviewArchive.ContentLength > 0))
             {
-                db.Theses.Add(thesis);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+                try
+                {
+                    byte[] byteArray = null;
 
-            ViewBag.Id = new SelectList(db.Evaluations, "Id", "FilePath", thesis.Id);
-            ViewBag.StudentId = new SelectList(db.Students, "Id", "Id", thesis.StudentId);
-            ViewBag.SupervisorId = new SelectList(db.Teachers, "Id", "OfficePhoneNumber", thesis.SupervisorId);
-            return View(thesis);
+                    using (var memory = new MemoryStream())
+                    {
+                        model.ThesisArchive.InputStream.CopyTo(memory);
+                        byteArray = memory.GetBuffer();
+                    }
+
+                    var fileName = string.Format(GlobalPatternConstants.VERSION_NAME, DateTime.Now.ToUniversalTime(), model.ThesisArchive.FileName);
+                    var fullPath = storage.UploadFile(byteArray, fileName, GlobalConstants.STORAGE_FOLDER);
+                    var extensionStartIndex = model.ThesisArchive.FileName.LastIndexOf('.');
+                    var fileExtension = model.ThesisArchive.FileName.Substring(extensionStartIndex + 1, model.ThesisArchive.FileName.Length - extensionStartIndex - 1).ToLower();
+
+                    var thesis = Mapper.Map<Thesis>(model);
+                    thesis.IsComplete = true;
+                    thesis.Versions.Add(new ThesesSystem.Models.Version
+                    {        
+                        StoragePath = fullPath,
+                        FileName = fileName,
+                        FileExtension = fileExtension
+                    });
+
+                    byteArray = null;
+
+                    using (var memory = new MemoryStream())
+                    {
+                        model.ReviewArchive.InputStream.CopyTo(memory);
+                        byteArray = memory.GetBuffer();
+                    }
+
+                    fileName = string.Format(GlobalPatternConstants.VERSION_NAME, DateTime.Now.ToUniversalTime(), model.ReviewArchive.FileName);
+                    fullPath = storage.UploadFile(byteArray, fileName, GlobalConstants.STORAGE_FOLDER);
+                    extensionStartIndex = model.ReviewArchive.FileName.LastIndexOf('.');
+                    fileExtension = model.ReviewArchive.FileName.Substring(extensionStartIndex + 1, model.ReviewArchive.FileName.Length - extensionStartIndex - 1).ToLower();
+
+                    thesis.Evaluation = new Evaluation
+                    {
+                        FilePath = fullPath,
+                        FileName = fileName,
+                        FileExtension = fileExtension,
+                        ReviewerId = model.ReviewerId,
+                        Mark = model.Mark
+                    };
+
+                    this.Data.Theses.Add(thesis);
+                    this.Data.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                catch (Exception)
+                {
+                    this.CreateSelectLists();
+                    return View(model);
+                }
+            }
+        
+            this.CreateSelectLists();
+            return View(model);
         }
 
-        // GET: Administration/Theses/Edit/5
-        public ActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Thesis thesis = db.Theses.Find(id);
-            if (thesis == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.Id = new SelectList(db.Evaluations, "Id", "FilePath", thesis.Id);
-            ViewBag.StudentId = new SelectList(db.Students, "Id", "Id", thesis.StudentId);
-            ViewBag.SupervisorId = new SelectList(db.Teachers, "Id", "OfficePhoneNumber", thesis.SupervisorId);
-            return View(thesis);
-        }
-
-        // POST: Administration/Theses/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Title,Description,FinishedAt,Pages,FinalEvaluation,IsComplete,SupervisorId,StudentId,IsDeleted,DeletedOn,CreatedOn,ModifiedOn")] Thesis thesis)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(thesis).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            ViewBag.Id = new SelectList(db.Evaluations, "Id", "FilePath", thesis.Id);
-            ViewBag.StudentId = new SelectList(db.Students, "Id", "Id", thesis.StudentId);
-            ViewBag.SupervisorId = new SelectList(db.Teachers, "Id", "OfficePhoneNumber", thesis.SupervisorId);
-            return View(thesis);
-        }
-
-        // GET: Administration/Theses/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Thesis thesis = db.Theses.Find(id);
-            if (thesis == null)
-            {
-                return HttpNotFound();
-            }
-            return View(thesis);
-        }
 
-        // POST: Administration/Theses/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            Thesis thesis = db.Theses.Find(id);
-            db.Theses.Remove(thesis);
-            db.SaveChanges();
+            this.Data.Theses.Delete(id);
+            this.Data.SaveChanges();
+
             return RedirectToAction("Index");
         }
 
-        protected override void Dispose(bool disposing)
+        [HttpGet]
+        public ActionResult DownloadFile(int id)
         {
-            if (disposing)
+            var thesis = this.Data.Theses.GetById(id);
+
+            var version = thesis.Versions.OrderByDescending(v => v.CreatedOn).FirstOrDefault();
+
+            if (this.User.IsInRole(GlobalConstants.TEACHER))
             {
-                db.Dispose();
+                var mimeType = MimeTypeCreator.GetFileMimeType(version.FileExtension);
+                var fileBytes = storage.DownloadFile(version.StoragePath);
+
+                var ms = new MemoryStream(fileBytes);
+
+                return File(fileBytes, mimeType, version.FileName);
             }
-            base.Dispose(disposing);
+
+            return RedirectToAction("Index", "Storage");
         }
     }
 }

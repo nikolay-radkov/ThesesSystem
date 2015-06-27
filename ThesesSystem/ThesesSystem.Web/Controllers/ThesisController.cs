@@ -196,7 +196,6 @@
         [HttpGet]
         public ActionResult ThesisProfile(int id)
         {
-            // TODO: delete the thesis       
             if (IsThesisStudentOrTeacher(id))
             {
                 var thesis = this.Data.Theses.GetById(id);

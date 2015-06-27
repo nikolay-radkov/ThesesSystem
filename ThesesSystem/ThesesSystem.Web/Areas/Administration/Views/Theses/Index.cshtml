@@ -1,55 +1,21 @@
-﻿@model IEnumerable<ThesesSystem.Models.Thesis>
+﻿@model IEnumerable<ThesesSystem.Web.Areas.Administration.ViewModels.Theses.ThesisViewModel>
 
 @{
-    ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Дипломни работи";
 }
 
-<h2>Index</h2>
+<h2>@ViewBag.Title</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Добави архивна дипломна работа", "Create")
 </p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Evaluation.FilePath)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Student.Id)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Supervisor.OfficePhoneNumber)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.Title)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Description)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.FinishedAt)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Pages)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.FinalEvaluation)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.IsComplete)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.IsDeleted)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DeletedOn)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CreatedOn)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ModifiedOn)
+            @Html.DisplayNameFor(model => model.StudentName)
         </th>
         <th></th>
     </tr>
@@ -58,48 +24,15 @@
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Evaluation.FilePath)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Student.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Supervisor.OfficePhoneNumber)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.Title)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Description)
+                @Html.DisplayFor(modelItem => item.StudentName)
             </td>
+           
             <td>
-                @Html.DisplayFor(modelItem => item.FinishedAt)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Pages)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FinalEvaluation)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsComplete)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsDeleted)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DeletedOn)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreatedOn)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ModifiedOn)
-            </td>
-            <td>
-                @Html.ActionLink("Промяна", "Edit", new { id = item.Id }) |
-                @Html.ActionLink("Детайли", "Details", new { id = item.Id }) |
-                @using (Html.BeginForm("Delete", "ThesisThemes", new { area = "Administration", id = item.Id }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                @Html.ActionLink("Детайли", "Details", new { id = item.Id })
+                @using (Html.BeginForm("Delete", "Theses", new { area = "Administration", id = item.Id }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
                 {
                     @Html.AntiForgeryToken()
                     <span data-id="@item.Id" class="sweet-@(item.Id + 10) span-submit" onclick="_gaq.push(['_trackEvent', 'example', 'try', 'sweet-@(item.Id + 10)']);">Изтрий</span>

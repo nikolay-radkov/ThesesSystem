@@ -1,120 +1,94 @@
-﻿@model ThesesSystem.Models.Thesis
-
+﻿@model ThesesSystem.Web.Areas.Administration.ViewModels.Theses.ThesisDetailViewModel
+@using ThesesSystem.Web.Infrastructure.Constants
 @{
-    ViewBag.Title = "Информация за дипломни работи";
+    ViewBag.Title = "Информация на дипломна работа";
 }
 
-<h2>Details</h2>
+<h2>@ViewBag.Title</h2>
+<div class="page-body shadowed">
 
-<div>
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Evaluation.FilePath)
-        </dt>
+    <h3 class="text-center"><i class="fa fa-book fa-2x"></i> @Html.DisplayFor(m => Model.Title)</h3>
 
-        <dd>
-            @Html.DisplayFor(model => model.Evaluation.FilePath)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Student.Id)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Student.Id)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Supervisor.OfficePhoneNumber)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Supervisor.OfficePhoneNumber)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Title)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.FinishedAt)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.FinishedAt)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Pages)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Pages)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.FinalEvaluation)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.FinalEvaluation)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.IsComplete)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.IsComplete)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.IsDeleted)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.IsDeleted)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.DeletedOn)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DeletedOn)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.CreatedOn)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CreatedOn)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ModifiedOn)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ModifiedOn)
-        </dd>
-
-    </dl>
+    <br />
+    <div class="text-center row">
+        <div class="row">
+            @foreach (var item in Model.ThesisParts)
+            {
+                <span class="badge">@item.Title</span>
+            }
+        </div>
+        <br />
+        <div class=" col-md-6 col-md-offset-3 ">
+            <div class="row border-bottom">
+                <div class="col-md-6">
+                    @Html.LabelFor(m => Model.StudentName)
+                </div>
+                <div class="col-md-6">
+                    <a href='@Url.Action("Account", "User", new { id = Model.StudentId })'>@Html.DisplayFor(m => Model.StudentName)</a>
+                </div>
+            </div>
+            <div class="row border-bottom">
+                <div class="col-md-6">
+                    @Html.LabelFor(m => Model.Faculty)
+                </div>
+                <div class="col-md-6">
+                    @Html.DisplayFor(m => Model.Faculty)
+                </div>
+            </div>
+            <div class="row border-bottom">
+                <div class="col-md-6">
+                    @Html.LabelFor(m => Model.Specialty)
+                </div>
+                <div class="col-md-6">
+                    @Html.DisplayFor(m => Model.Specialty)
+                </div>
+            </div>
+            <div class="row border-bottom">
+                <div class="col-md-6">
+                    @Html.LabelFor(m => Model.FinishedAt)
+                </div>
+                <div class="col-md-6">
+                    @Html.DisplayFor(m => Model.FinishedAt)
+                </div>
+            </div>
+            <div class="row border-bottom">
+                <div class="col-md-6">
+                    @Html.LabelFor(m => Model.Pages)
+                </div>
+                <div class="col-md-6">
+                    @Html.DisplayFor(m => Model.Pages)
+                </div>
+            </div>
+            <div class="row border-bottom">
+                <div class="col-md-6">
+                    @Html.LabelFor(m => Model.FinalEvaluation)
+                </div>
+                <div class="col-md-6">
+                    @Html.DisplayFor(m => Model.FinalEvaluation)
+                </div>
+            </div>
+            <div class="row border-bottom">
+                <div class="col-md-6">
+                    @Html.LabelFor(m => Model.SupervisorName)
+                </div>
+                <div class="col-md-6">
+                    <a href='@Url.Action("Account", "User", new { id = Model.SupervisorId })'>@Html.DisplayFor(m => Model.SupervisorName)</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
+    @if (User.IsInRole(GlobalConstants.ADMIN) || User.IsInRole(GlobalConstants.TEACHER))
+    {
+        <br />
+        <div class="row">
+            <div class="col-md-12 text-center">
+                @Html.ActionLink("Свали", "DownloadFile", "Theses", new { id = Model.Id, area = "Administration" }, new { target = "_blank", @class = "btn btn-lg btn-danger" })
+            </div>
+        </div>
+    }
 </div>
+
 <p>
-    @Html.ActionLink("Промяна", "Edit", new { id = Model.Id }) |
     @Html.ActionLink("Назад", "Index")
 </p>

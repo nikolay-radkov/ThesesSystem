@@ -67,8 +67,6 @@
                                 .OrderBy(t => Guid.NewGuid())
                                 .Select(t => t.Title)
                                 .FirstOrDefault();
-
-                    //TODO: if title == null get word from faculty
                 }
 
                 var pattern = @"\W+";

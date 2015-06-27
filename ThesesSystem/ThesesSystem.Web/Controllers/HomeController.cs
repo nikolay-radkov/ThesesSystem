@@ -35,7 +35,6 @@ namespace ThesesSystem.Web.Controllers
         [HttpGet]
         public ActionResult Error()
         {
-            // TODO: add custom errors
             // <customErrors mode="On" defaultRedirect="/Home/Error"/></customErrors>
             return View();
         }

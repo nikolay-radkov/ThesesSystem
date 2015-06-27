@@ -139,7 +139,6 @@
                 case "SpecialtySpecialtyProfile":
                     pageNumber = (int)Math.Ceiling((double)data.Students.All().Where(s => s.SpecialtyId == id).Count() / GlobalConstants.ELEMENTS_PER_PAGE);
                     break;
-                //TODO: Other paging
                 default:
                     pageNumber = 0;
                     break;

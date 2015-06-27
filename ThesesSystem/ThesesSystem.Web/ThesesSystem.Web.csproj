@@ -244,11 +244,15 @@
     <Compile Include="Areas\Administration\ViewModels\Specialties\SpecialtyCreateViewModel.cs" />
     <Compile Include="Areas\Administration\ViewModels\Specialties\SpecialtyUpdateViewModel.cs" />
     <Compile Include="Areas\Administration\ViewModels\Specialties\SpecialtyViewModel.cs" />
+    <Compile Include="Areas\Administration\ViewModels\Theses\ThesisCreateViewModel.cs" />
+    <Compile Include="Areas\Administration\ViewModels\Theses\ThesisDetailViewModel.cs" />
+    <Compile Include="Areas\Administration\ViewModels\Theses\ThesisViewModel.cs" />
     <Compile Include="Areas\Administration\ViewModels\ThesisThemes\ThesisThemeDetailViewModel.cs" />
     <Compile Include="Areas\Administration\ViewModels\ThesisThemes\ThesisThemeViewModel.cs" />
     <Compile Include="Areas\Administration\ViewModels\ThesisTutorials\ThesisTutorialDetailViewModel.cs" />
     <Compile Include="Areas\Administration\ViewModels\ThesisTutorials\ThesisTutorialUpdateViewModel.cs" />
     <Compile Include="Areas\Administration\ViewModels\ThesisTutorials\ThesisTutorialViewModel.cs" />
+    <Compile Include="Areas\Administration\ViewModels\Users\UserDropDownItemViewModel.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseControllers\AdministrationController.cs" />
     <Compile Include="Controllers\BaseControllers\AuthorizeController.cs" />
@@ -446,7 +450,6 @@
     <Content Include="Areas\Administration\Views\ThesisThemes\Index.cshtml" />
     <Content Include="Areas\Administration\Views\Theses\Create.cshtml" />
     <Content Include="Areas\Administration\Views\Theses\Details.cshtml" />
-    <Content Include="Areas\Administration\Views\Theses\Edit.cshtml" />
     <Content Include="Areas\Administration\Views\Theses\Index.cshtml" />
     <None Include="Scripts\jquery-2.1.4.intellisense.js" />
     <Content Include="Icon.png" />
@@ -559,9 +562,7 @@
     <Content Include="Views\Shared\_NotificationPartial.cshtml" />
     <Content Include="Views\Feedback\Index.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Areas\Administration\ViewModels\Theses\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
