@@ -14,6 +14,7 @@ namespace ThesesSystem.Web.Controllers
 
         }
 
+        [OutputCache(Duration = 2 * 60 * 60)]
         public ActionResult Index()
         {
             if (Request.IsAuthenticated)
