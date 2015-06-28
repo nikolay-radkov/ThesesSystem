@@ -10,7 +10,6 @@ namespace ThesesSystem.Web
         {
             app.MapSignalR();
             ConfigureAuth(app);
-         
         }
     }
 }

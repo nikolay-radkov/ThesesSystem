@@ -1,6 +1,5 @@
 ﻿namespace ThesesSystem.Data.TableGenerator
 {
-    using System.Collections.Generic;
     using ThesesSystem.Common.DataGenerators;
     using ThesesSystem.Models;
 

@@ -1,12 +1,11 @@
 ﻿namespace ThesesSystem.Data.TableGenerator
 {
     using Microsoft.AspNet.Identity;
+    using Microsoft.AspNet.Identity.EntityFramework;
     using System;
-    using System.Collections.Generic;
+    using System.Linq;
     using ThesesSystem.Common.DataGenerators;
     using ThesesSystem.Models;
-    using System.Linq;
-    using Microsoft.AspNet.Identity.EntityFramework;
 
     public class RoleGenerator : TableGenerator, ITableGenerator
     {

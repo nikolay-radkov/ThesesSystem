@@ -28,8 +28,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThesesSystem.Contracts", "T
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThesesSystem.Common", "ThesesSystem.Common\ThesesSystem.Common.csproj", "{AF455803-9C71-48EF-88EF-1921B2A288EE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApplication1", "ConsoleApplication1\ConsoleApplication1.csproj", "{A23E3D7B-9642-43B2-B77D-0E77F5110FA3}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{1A01F7D5-0968-48E8-97A2-42BE5A2A88FC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Tests", "Common.Tests\Common.Tests.csproj", "{0CE0B362-41BB-4C3A-8B12-8C6C9F755D13}"
@@ -66,10 +64,6 @@ Global
 		{AF455803-9C71-48EF-88EF-1921B2A288EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AF455803-9C71-48EF-88EF-1921B2A288EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AF455803-9C71-48EF-88EF-1921B2A288EE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A23E3D7B-9642-43B2-B77D-0E77F5110FA3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A23E3D7B-9642-43B2-B77D-0E77F5110FA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A23E3D7B-9642-43B2-B77D-0E77F5110FA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A23E3D7B-9642-43B2-B77D-0E77F5110FA3}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0CE0B362-41BB-4C3A-8B12-8C6C9F755D13}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0CE0B362-41BB-4C3A-8B12-8C6C9F755D13}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0CE0B362-41BB-4C3A-8B12-8C6C9F755D13}.Release|Any CPU.ActiveCfg = Release|Any CPU
