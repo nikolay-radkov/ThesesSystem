@@ -459,9 +459,6 @@
     <Content Include="Images\background 3.png" />
     <Content Include="Images\first.jpg" />
     <Content Include="Images\logo-tu.png" />
-    <Content Include="Images\question1.png" />
-    <Content Include="Images\question2.jpg" />
-    <Content Include="Images\question3.png" />
     <Content Include="Images\tu-sofia.jpg" />
     <Content Include="Images\tusofia.jpg" />
     <Content Include="Images\unknown.jpg" />
